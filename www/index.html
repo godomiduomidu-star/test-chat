@@ -239,6 +239,48 @@ button{cursor:pointer;}
 
 /* Admin chat viewer badge */
 .readonly-badge{background:rgba(240,178,50,.15);color:var(--am);padding:6px 14px;font-size:12px;text-align:center;border-bottom:1px solid rgba(240,178,50,.2);font-weight:600;letter-spacing:.5px;}
+
+/* ═══ PREMIUM THEME ═══ */
+body{background:radial-gradient(120% 60% at 50% 0%,#0d2a2c 0%,#0b141a 55%)fixed}
+.tb{background:rgba(17,27,33,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06)}
+.tb .brand{background:linear-gradient(90deg,#fff,#25d366);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:2px}
+.ib{background:rgba(255,255,255,.05)}
+.lst{padding-bottom:140px}
+.ci{margin:4px 10px;padding:11px 12px;border-radius:18px}
+.ci:active{background:rgba(255,255,255,.07)}
+.av{box-shadow:0 4px 14px rgba(0,168,132,.25)}
+.bnav{left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));padding:7px;border-radius:30px;background:rgba(24,36,43,.72);backdrop-filter:blur(24px) saturate(170%);-webkit-backdrop-filter:blur(24px) saturate(170%);border:1px solid rgba(255,255,255,.09);box-shadow:0 14px 44px rgba(0,0,0,.55);gap:4px}
+.bnav a{border-radius:23px;padding:8px 0 7px;transition:all .25s cubic-bezier(.3,1.4,.5,1)}
+.bnav a.on{color:#fff;background:linear-gradient(135deg,#00a884,#25d366);box-shadow:0 8px 20px rgba(0,168,132,.45);flex:1.35}
+.bnav a.on i{transform:translateY(-1px) scale(1.12)}
+.fab{bottom:calc(98px + env(safe-area-inset-bottom));border-radius:22px;background:linear-gradient(135deg,#25d366,#00a884);color:#fff;box-shadow:0 10px 28px rgba(37,211,102,.45)}
+.msg.out{background:linear-gradient(135deg,#00735c,#005c4b)}
+.cr-input{background:transparent;padding:6px 10px calc(10px + env(safe-area-inset-bottom))}
+.cr-input .iw{background:rgba(42,57,66,.85);backdrop-filter:blur(14px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.cr-head{background:rgba(17,27,33,.85);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.sheet{backdrop-filter:blur(4px)}
+.sheet-inner{background:linear-gradient(180deg,#14212a,#0f1a20);border-top:1px solid rgba(255,255,255,.08)}
+.btn1{background:linear-gradient(135deg,#00a884,#25d366);box-shadow:0 8px 22px rgba(0,168,132,.35)}
+.sheet-item .chk{width:24px;height:24px;border-radius:50%;border:2px solid var(--tx3);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff}
+/* ═══ CALL SCREEN ═══ */
+#cv{position:fixed;inset:0;z-index:9900;display:none;flex-direction:column;align-items:center;background:radial-gradient(120% 90% at 50% 0%,#0f4c4a 0%,#0b141a 60%,#05090c 100%);overflow:hidden}
+#cv.on{display:flex}
+#cvRemote{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+#cv.vid #cvRemote{opacity:1}
+.cv-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55),transparent 35%,transparent 60%,rgba(0,0,0,.75));pointer-events:none}
+#cvLocal{position:absolute;top:calc(16px + env(safe-area-inset-top));right:16px;width:104px;height:150px;object-fit:cover;border-radius:18px;border:2px solid rgba(255,255,255,.3);box-shadow:0 10px 30px rgba(0,0,0,.5);transform:scaleX(-1);display:none;z-index:2}
+#cv.isv #cvLocal{display:block}
+.cv-top{position:relative;z-index:1;margin-top:calc(90px + env(safe-area-inset-top));text-align:center;color:#fff}
+.cv-av{width:128px;height:128px;border-radius:50%;margin:0 auto 18px;overflow:hidden;background:linear-gradient(135deg,#00a884,#005c4b);display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:700;animation:cvp 1.8s infinite}
+.cv-av img{width:100%;height:100%;object-fit:cover}
+#cv.vid .cv-av{display:none}
+@keyframes cvp{0%{box-shadow:0 0 0 0 rgba(37,211,102,.5)}70%{box-shadow:0 0 0 34px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+.cv-top h2{font-size:26px;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.cv-top p{margin-top:6px;color:rgba(255,255,255,.75);font-size:15px;letter-spacing:.5px}
+.cv-bar{position:absolute;z-index:3;left:16px;right:16px;bottom:calc(28px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:18px;padding:16px 12px;border-radius:34px;background:rgba(255,255,255,.1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.13)}
+.cvb-w{display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.75);font-size:11px}
+.cvb{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.cvb:active{transform:scale(.9)}.cvb.on{background:#fff;color:#0b141a}.cvb.rd{background:#f15c6d}.cvb.gn{background:#25d366}
 </style>
 </head>
 <body>
@@ -307,8 +349,9 @@ button{cursor:pointer;}
   <div class="lst" id="homeBody"><div class="sp"></div></div>
   <button class="fab" onclick="newChatPicker()"><i class="fas fa-comment-dots"></i></button>
   <div class="bnav">
-    <a class="on" data-nav="chats" onclick="setTab('chats')"><i class="fas fa-comment"></i><span>Chats</span></a>
-    <a data-nav="contacts" onclick="setTab('contacts')"><i class="fas fa-users"></i><span>Contacts</span></a>
+    <a class="on" data-nav="chats" onclick="setTab('chats')"><i class="fas fa-comment-dots"></i><span>Chats</span></a>
+    <a data-nav="calls" onclick="setTab('calls')"><i class="fas fa-phone"></i><span>Calls</span></a>
+    <a data-nav="contacts" onclick="setTab('contacts')"><i class="fas fa-address-book"></i><span>Contacts</span></a>
     <a data-nav="status" onclick="setTab('status')"><i class="fas fa-circle-notch"></i><span>Status</span></a>
     <a data-nav="me" onclick="openMe()"><i class="fas fa-user"></i><span>Me</span></a>
   </div>
@@ -346,14 +389,8 @@ button{cursor:pointer;}
 </div>
 
 <!-- CALL -->
-<div id="callScr">
-  <div class="ch">
-    <button class="bk" onclick="endCall()"><i class="fas fa-times"></i></button>
-    <div style="flex:1;font-weight:600;" id="callName">User</div>
-    <div id="callType" style="font-size:12px;color:#8696a0;">Voice Call</div>
-  </div>
-  <iframe id="callFrame" allow="camera; microphone; fullscreen; display-capture"></iframe>
-</div>
+<div id="cv"><video id="cvRemote" autoplay playsinline></video><div class="cv-shade"></div><video id="cvLocal" autoplay playsinline muted></video>
+<div class="cv-top"><div class="cv-av" id="cvAv"></div><h2 id="cvName"></h2><p id="cvSt"></p></div><div class="cv-bar" id="cvBar"></div></div>
 
 <!-- SHEET -->
 <div class="sheet" id="sheet" onclick="if(event.target===this)closeSheet()">
@@ -370,7 +407,7 @@ button{cursor:pointer;}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getDatabase, ref, set, get, update, push, onValue, off, remove, onDisconnect } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, set, get, update, push, onValue, onChildAdded, off, remove, onDisconnect } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 /* ══════ CONFIG ══════ */
 const FB = {
@@ -397,7 +434,7 @@ let msgUn = null, typUn = null, userUn = null, chatUn = null, statUn = null;
 let replyTo = null, pendingAv = "", tab = "chats";
 let typingT = null, recorder = null, recChunks = [], recordT = 0;
 let unreadLocal = {}, audios = {};
-let gSel = new Set();
+let gSel = new Set(), SAVED = {}, LOG = {}, CALL = null; const watching = {};
 let adminUserList = [];
 let adminSides = [], MSGS = {}, booted = false, appEntered = false;
 const SW = window.Swal ? Swal.mixin({background:'#202c33',color:'#e9edef',confirmButtonColor:'#00a884',cancelButtonColor:'#2a3942'}) : {fire:async()=>({isConfirmed:confirm('Are you sure?'),value:undefined})};
@@ -436,7 +473,14 @@ async function cbUpload(file,fname){
   if(!url||!url.startsWith("http"))throw new Error("Upload failed: "+url.slice(0,80));
   return url;
 }
-async function upImg(f){const ext=(f.name?.split('.').pop()||'jpg').toLowerCase();return cbUpload(f,"img_"+ME.uid+"_"+Date.now()+"."+ext);}
+const IMGBB_KEY="9cc395b8912734c21e8df5b3e51a89c3";
+async function upImg(f){
+  const fd=new FormData();fd.append("image",f);
+  const r=await fetch("https://api.imgbb.com/1/upload?key="+IMGBB_KEY,{method:"POST",body:fd});
+  const j=await r.json();
+  if(!j.success)throw new Error((j.error&&j.error.message)||"imgBB upload failed");
+  return j.data.url;
+}
 async function upAudio(b){const f=new File([b],"voice_"+ME.uid+"_"+Date.now()+".webm",{type:b.type||"audio/webm"});return cbUpload(f,f.name);}
 
 /* ══════ BOOT ══════ */
@@ -493,6 +537,7 @@ window.doLogin = async function(){
     if(s.exists()){
       ME = {uid,...s.val()}; cache.set("me",ME); enterApp();
     } else {
+      if(CFG.noSignup){toast("New signups are closed");b.disabled=false;b.innerHTML='<i class="fas fa-arrow-right"></i> Continue';return;}
       ME = {uid,phone,name:"",about:"",photoURL:""};
       $("sName").value=""; $("sAbout").value="";
       $("sAvImg").style.display="none"; $("sAvInit").style.display="inline";
@@ -530,6 +575,7 @@ function enterApp(){
   listenChats();
   listenStatus();
   listenConfig();
+  listenCalls();
   setTab("chats");
 }
 function stopListeners(){
@@ -555,13 +601,19 @@ function listenConfig(){
   onValue(ref(db,"admins"),s=>{ADMINS=s.val()||{};});
 }
 function listenUsers(){
-  if(userUn)off(ref(db,"users"));
-  userUn = onValue(ref(db,"users"),s=>{
-    allUsers = s.val()||{};
-    delete allUsers[ME.uid];
-    cache.set("users",allUsers);
-    renderHome();
-  });
+  onValue(ref(db,"contacts/"+ME.uid),s=>{SAVED=s.val()||{};Object.keys(SAVED).forEach(watchU);renderHome();});
+  if(meIsAdmin())onValue(ref(db,"users"),s=>{Object.entries(s.val()||{}).forEach(([k,v])=>{if(k!==ME.uid)allUsers[k]={uid:k,...v};});renderHome();});
+}
+function watchU(uid){
+  if(!uid||watching[uid]||uid===ME.uid)return; watching[uid]=1;
+  onValue(ref(db,"users/"+uid),s=>{if(s.val())allUsers[uid]={uid,...s.val()};renderHome();});
+}
+function dispName(u){return (u&&((u.uid&&SAVED[u.uid]&&SAVED[u.uid].name)||u.name))||"User";}
+function contactList(){return Object.keys(SAVED).filter(k=>allUsers[k]).map(uid=>({uid,u:allUsers[uid]}));}
+function normPhone(raw){
+  const d=(raw||"").replace(/[^\d+]/g,"");let p;
+  if(d.startsWith("+"))p=d;else if(d.startsWith("00"))p="+"+d.slice(2);else if(d.startsWith("0"))p="+94"+d.slice(1);else if(d.length===9)p="+94"+d;else p="+"+d;
+  const n=p.replace(/\D/g,"").length;return(n<8||n>15)?"":p;
 }
 function listenChats(){
   if(chatUn)off(ref(db,"chats"));
@@ -581,7 +633,7 @@ function listenChats(){
       }
     });
     cache.set("counted",counted);cache.set("unread",unreadLocal);
-    cache.set("chats",myChats);
+    cache.set("chats",myChats);Object.values(myChats).forEach(c=>Object.keys(c.participants||{}).forEach(watchU));
     renderHome();
   });
 }
@@ -608,7 +660,7 @@ window.toggleSearch = function(){
 };
 function nameH(u){
   const b = isAdmin(u) ? '<span class="bdg"><i class="fas fa-check"></i></span>' : "";
-  return `${esc(u.name||"User")}${b}`;
+  return `${esc(dispName(u))}${b}`;
 }
 function avH(u){
   const p = u.photoURL?`<img src="${u.photoURL}">`:ini(u.name);
@@ -619,6 +671,7 @@ function avH(u){
 function renderHome(){
   if(tab==="chats")renderChats();
   else if(tab==="contacts")renderContacts();
+  else if(tab==="calls")renderCalls();
   else renderStatus();
 }
 
@@ -658,22 +711,12 @@ function renderChats(){
 }
 
 function renderContacts(){
-  const b = $("homeBody"), q = ($("searchInp")?.value||"").toLowerCase();
-  const list = Object.entries(allUsers).map(([uid,u])=>({uid,u}))
-    .filter(x=>!q || (x.u.name||"").toLowerCase().includes(q))
-    .sort((a,b)=>(a.u.name||"").localeCompare(b.u.name||""));
-  if(!list.length){
-    b.innerHTML = `<div class="empty"><i class="fas fa-users"></i><h3>No contacts yet</h3><p>Others will appear here once they join</p></div>`;
-    return;
-  }
-  b.innerHTML = list.map(({uid,u})=>`
-    <div class="ci" onclick="openChat('${uid}',false)">
-      ${avH(u)}
-      <div class="ci-info">
-        <div class="ci-top"><div class="ci-name">${nameH(u)}</div></div>
-        <div class="ci-bot"><div class="ci-msg">${esc(u.about||"Hey there!")}</div></div>
-      </div>
-    </div>`).join("");
+  const b=$("homeBody"),q=($("searchInp")?.value||"").toLowerCase();
+  const list=contactList().filter(x=>!q||dispName(x.u).toLowerCase().includes(q)).sort((a,c)=>dispName(a.u).localeCompare(dispName(c.u)));
+  const act=(ic,g,t,sub,fn)=>`<div class="ci" onclick="${fn}"><div class="av" style="background:${g}"><i class="fas ${ic}"></i></div><div class="ci-info"><div class="ci-top"><div class="ci-name">${t}</div></div><div class="ci-bot"><div class="ci-msg">${sub}</div></div></div></div>`;
+  b.innerHTML=act("fa-user-plus","linear-gradient(135deg,#25d366,#00a884)","Add contact","Phone number එකෙන් save කරන්න","addContactSheet()")
+   +act("fa-rotate","linear-gradient(135deg,#53bdeb,#2a7fb0)","Sync phone contacts","App use කරන අය හොයාගන්න","syncPhone()")
+   +(list.length?list.map(({uid,u})=>`<div class="ci" onclick="openChat('${uid}',false)">${avH(u)}<div class="ci-info"><div class="ci-top"><div class="ci-name">${nameH(u)}</div></div><div class="ci-bot"><div class="ci-msg">${esc(u.about||"Hey there!")}</div></div></div><button class="ib" onclick="event.stopPropagation();editContact('${uid}')"><i class="fas fa-pen" style="font-size:14px"></i></button></div>`).join(""):`<div class="empty"><i class="fas fa-address-book"></i><h3>No contacts yet</h3><p>ZERO CHAT use කරන අයව number එකෙන් add කරන්න</p></div>`);
 }
 
 function renderStatus(){
@@ -714,9 +757,9 @@ window.closeSheet = () => $("sheet").classList.remove("on");
 
 /* ══════ NEW CHAT PICKER ══════ */
 window.newChatPicker = function(){
-  const list = Object.entries(allUsers).map(([uid,u])=>({uid,u}));
-  if(!list.length){toast("No users yet");return;}
-  const html = `<h3>New Chat</h3>
+  const list = contactList();
+  if(!list.length){addContactSheet();return;}
+  const html = `<h3>New Chat</h3><div class="sheet-item" onclick="addContactSheet()"><i class="fas fa-user-plus" style="color:var(--gr2)"></i><div class="lbl"><b>New contact</b><small>Add by phone number</small></div></div>
     <input class="inp flat" id="pkSearch" placeholder="Search users..." oninput="filterPick(this.value)" style="margin-bottom:12px;width:100%;">
     <div id="pkList">
       ${list.map(({uid,u})=>`
@@ -740,7 +783,7 @@ window.filterPick = v => {
 /* ══════ NEW GROUP ══════ */
 window.newGroup = function(){
   gSel.clear();
-  const list = Object.entries(allUsers).map(([uid,u])=>({uid,u}));
+  const list = contactList();
   const html = `<h3>New Group</h3>
     <input class="inp flat" id="gName" placeholder="Group name" style="margin-bottom:10px;width:100%;">
     <input class="inp flat" id="gSearch" placeholder="Search members..." oninput="filterGroup(this.value)" style="margin-bottom:12px;width:100%;">
@@ -1086,7 +1129,7 @@ window.delAll = async function(mid){
   toast("Deleted for everyone");
 };
 window.forwardMsg = async function(mid){
-  const list = Object.entries(allUsers).map(([uid,u])=>({uid,u}));
+  const list = contactList();
   const html = `<h3>Forward to...</h3>
     ${list.map(({uid,u})=>`
       <div class="pk" onclick="doForward('${mid}','${uid}')">
@@ -1193,18 +1236,6 @@ window.deleteChatAdmin = async function(){
   toast("Deleted ✅"); closeChat();
 };
 
-/* ══════ CALLS ══════ */
-window.startCall = function(type){
-  if(adminViewing){toast("Admin view");return;}
-  const oid = Object.keys(curChat.participants).find(k=>k!==ME.uid);
-  const room = "zc"+[ME.uid,oid].sort().join("").replace(/[^a-z0-9]/gi,"").slice(0,20);
-  const url = `https://meet.jit.si/${room}#userInfo.displayName="${encodeURIComponent(ME.name||'User')}"&config.disableDeepLinking=true&config.prejoinPageEnabled=false&config.startWithAudioMuted=false&config.startWithVideoMuted=${type==='voice'}`;
-  $("callName").textContent = curOther?.name||"User";
-  $("callType").textContent = type==="voice"?"Voice Call":"Video Call";
-  $("callFrame").src = url;
-  $("callScr").classList.add("on");
-};
-window.endCall = function(){$("callFrame").src="";$("callScr").classList.remove("on");};
 
 /* ══════ STATUS ══════ */
 window.newStatus = async function(){
@@ -1361,14 +1392,14 @@ function renderAdminPanel(t){
     <div class="sheet-item" onclick="adminViewAllVoices()"><i class="fas fa-microphone"></i><div class="lbl"><b>View All Voice Messages</b></div></div>`;
   }
   if(t==="users"){
-    content = `<div style="max-height:60vh;overflow-y:auto;">${allU.map(u=>`
+    content = `<input class="inp flat" placeholder="Search users..." oninput="document.querySelectorAll('.ad-row').forEach(r=>r.style.display=r.textContent.toLowerCase().includes(this.value.toLowerCase())?'':'none')" style="margin-bottom:10px"><div style="max-height:60vh;overflow-y:auto;">${allU.map(u=>`
       <div class="ad-row">
         ${avH(u)}
         <div class="inf">
           <b>${esc(u.name||"User")} ${isAdmin(u)?'<span class="tag y">ADMIN</span>':''} ${u.banned?'<span class="tag r">BANNED</span>':''}</b>
           <small>${esc(u.phone||"")}</small>
         </div>
-        <button class="btn-mini ${u.banned?'btn-red on':'btn-red'}" onclick="toggleBan('${u.uid}')">${u.banned?"UNBAN":"BAN"}</button>
+        <button class="btn-mini ${u.banned?'btn-red on':'btn-red'}" onclick="toggleBan('${u.uid}')">${u.banned?"UNBAN":"BAN"}</button><button class="btn-mini btn-bl" onclick="closeSheet();openChat('${u.uid}',false)"><i class="fas fa-comment"></i></button><button class="btn-mini btn-am" onclick="adminDelUser('${u.uid}')"><i class="fas fa-trash"></i></button>
       </div>`).join("")}</div>`;
   }
   if(t==="chats"){
@@ -1386,6 +1417,7 @@ function renderAdminPanel(t){
         <div class="lbl"><b>Maintenance Mode</b><small>${CFG.maintenance?"ON":"OFF"}</small></div>
         <div class="chk" style="${CFG.maintenance?'background:var(--gr);border-color:var(--gr);':''}" onclick="toggleFlag('maintenance')"><i class="fas fa-check"></i></div>
       </div>
+      <div class="sheet-item"><i class="fas fa-user-lock"></i><div class="lbl"><b>Block new signups</b><small>${CFG.noSignup?"ON":"OFF"}</small></div><div class="chk" style="${CFG.noSignup?'background:var(--gr);border-color:var(--gr);':''}" onclick="toggleFlag('noSignup')"><i class="fas fa-check"></i></div></div>
       <div class="fld" style="margin-top:12px;">
         <label>Maintenance message</label>
         <input class="inp" id="mmMsg" value="${esc(CFG.maintenanceMsg||"We'll be back soon!")}">
@@ -1634,7 +1666,7 @@ document.addEventListener("visibilitychange",()=>{if(!ME||!appEntered)return;if(
     if(document.querySelector(".swal2-container")){try{Swal.close();}catch(e){}return;}
     if(on("viewer"))return closeViewer();
     if(on("sheet"))return closeSheet();
-    if(on("callScr"))return endCall();
+    if(CALL)return;
     if(on("chatRoom"))return closeChat();
     if(on("home")&&on("srch"))return toggleSearch();
     if(on("home")&&tab!=="chats")return setTab("chats");
@@ -1642,6 +1674,175 @@ document.addEventListener("visibilitychange",()=>{if(!ME||!appEntered)return;if(
   });
 })();
 window.addEventListener("beforeunload",()=>{if(ME)update(ref(db,"users/"+ME.uid),{online:false,lastSeen:Date.now()});});
+
+/* ══════ CONTACTS ══════ */
+window.addContactSheet=function(){
+  openSheet(`<h3>Add Contact</h3>
+  <div class="fld"><label>Name</label><input class="inp" id="acName" placeholder="Save as..." maxlength="30"></div>
+  <div class="fld"><label>Phone number</label><input class="inp" id="acPhone" type="tel" placeholder="+94 77 123 4567"></div>
+  <button class="btn1" onclick="saveContact()"><i class="fas fa-user-plus"></i> Save & Chat</button>
+  <div class="hint">ZERO CHAT use කරන අයට විතරයි message කරන්න පුළුවන්.</div>`);
+};
+window.saveContact=async function(){
+  const nm=($("acName").value||"").trim(),ph=normPhone($("acPhone").value);
+  if(!ph){toast("Enter valid phone");return;}
+  const uid=puid(ph);if(uid===ME.uid){toast("That's your own number 😄");return;}
+  try{
+    const s=await get(ref(db,"users/"+uid));
+    if(!s.exists()){SW.fire({icon:"info",title:"Not on ZERO CHAT",text:"මේ number එක ZERO CHAT use කරන්නේ නෑ."});return;}
+    await set(ref(db,`contacts/${ME.uid}/${uid}`),{name:nm||s.val().name||ph,phone:ph});
+    allUsers[uid]={uid,...s.val()};watchU(uid);closeSheet();toast("Saved ✅");openChat(uid,false);
+  }catch(e){toast("Error: "+e.message);}
+};
+window.editContact=async function(uid){
+  const r=await SW.fire({title:"Edit contact",input:"text",inputValue:dispName(allUsers[uid]),showCancelButton:true,showDenyButton:true,denyButtonText:"Remove",confirmButtonText:"Save",denyButtonColor:"#f15c6d"});
+  if(r.isDenied)await remove(ref(db,`contacts/${ME.uid}/${uid}`));
+  else if(r.isConfirmed&&(r.value||"").trim())await update(ref(db,`contacts/${ME.uid}/${uid}`),{name:r.value.trim()});
+};
+window.syncPhone=async function(){
+  const C=window.Capacitor?.Plugins?.Contacts;
+  if(!C){SW.fire({icon:"info",title:"Native plugin needed",text:"Phone contacts sync සඳහා @capacitor-community/contacts plugin එක APK build එකට add කරන්න ඕනේ. දැනට 'Add contact' use කරන්න."});return;}
+  try{
+    await C.requestPermissions?.();toast("Syncing...");
+    const r=await C.getContacts({projection:{name:true,phones:true}});
+    const seen=new Set(),found=[];
+    for(const c of r.contacts||[])for(const ph of c.phones||[]){const n=normPhone(ph.number||"");if(!n)continue;const uid=puid(n);if(uid===ME.uid||seen.has(uid)||SAVED[uid])continue;seen.add(uid);found.push({uid,n,name:c.name?.display||n});}
+    let added=0;
+    for(let i=0;i<found.length;i+=25)await Promise.all(found.slice(i,i+25).map(async f=>{const s=await get(ref(db,"users/"+f.uid));if(s.exists()){await set(ref(db,`contacts/${ME.uid}/${f.uid}`),{name:f.name,phone:f.n});added++;}}));
+    toast(added?`${added} contacts added ✅`:"No new contacts on ZERO CHAT");
+  }catch(e){toast("Sync failed");}
+};
+
+/* ══════ CALLS (WebRTC + Firebase signaling) ══════ */
+const ICE={iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"},{urls:["turn:openrelay.metered.ca:80","turn:openrelay.metered.ca:443","turn:openrelay.metered.ca:443?transport=tcp"],username:"openrelayproject",credential:"openrelayproject"}]};
+let ringCtx=null,ringT=null;
+function ring(on){
+  clearInterval(ringT);ringT=null;
+  if(!on){navigator.vibrate&&navigator.vibrate(0);return;}
+  const beep=()=>{try{ringCtx=ringCtx||new(window.AudioContext||window.webkitAudioContext)();[0,.35].forEach((d,i)=>{const o=ringCtx.createOscillator(),g=ringCtx.createGain(),t=ringCtx.currentTime+d;o.frequency.value=i?480:440;o.connect(g);g.connect(ringCtx.destination);g.gain.setValueAtTime(.15,t);g.gain.setValueAtTime(0,t+.3);o.start(t);o.stop(t+.32);});navigator.vibrate&&navigator.vibrate([400,200,400]);}catch(e){}};
+  beep();ringT=setInterval(beep,2200);
+}
+function cvRender(){
+  const c=CALL;if(!c)return;
+  const u=allUsers[c.peer]||{name:"User"},act=c.state==="active",inc=c.state==="incoming",vid=c.type==="video";
+  $("cv").classList.add("on");$("cv").classList.toggle("vid",vid&&act);$("cv").classList.toggle("isv",vid&&!inc);
+  $("cvAv").innerHTML=u.photoURL?`<img src="${u.photoURL}">`:esc(ini(u.name));
+  $("cvName").textContent=dispName(u);
+  $("cvSt").textContent=inc?(vid?"Incoming video call…":"Incoming voice call…"):act?fmtD((Date.now()-c.t0)/1000):c.state==="connecting"?"Connecting…":"Ringing…";
+  const B=(cls,ic,fn,l)=>`<div class="cvb-w"><button class="cvb ${cls}" onclick="${fn}"><i class="fas ${ic}"></i></button><span>${l}</span></div>`;
+  $("cvBar").innerHTML=inc?B("rd","fa-phone-slash","declineCall()","Decline")+B("gn",vid?"fa-video":"fa-phone","acceptCall()","Accept")
+    :B(c.muted?"on":"",c.muted?"fa-microphone-slash":"fa-microphone","cvMute()","Mute")
+     +(vid?B(c.camOff?"on":"",c.camOff?"fa-video-slash":"fa-video","cvCam()","Camera")+B("","fa-camera-rotate","cvFlip()","Flip"):"")
+     +B("rd","fa-phone-slash","hangup('ended')","End");
+}
+async function setupCall(id,peer,type,role){
+  const c=CALL;
+  c.local=await navigator.mediaDevices.getUserMedia({audio:true,video:type==="video"?{facingMode:"user"}:false});
+  const pc=c.pc=new RTCPeerConnection(ICE);
+  c.local.getTracks().forEach(t=>pc.addTrack(t,c.local));
+  $("cvLocal").srcObject=c.local;
+  pc.ontrack=e=>{$("cvRemote").srcObject=e.streams[0];};
+  pc.onicecandidate=e=>{if(e.candidate)push(ref(db,`calls/${id}/${role}ICE`),e.candidate.toJSON());};
+  pc.onconnectionstatechange=()=>{const st=pc.connectionState;if(st==="connected")callConnected();else if(st==="failed")finish("ended");};
+  c.unsubs.push(onChildAdded(ref(db,`calls/${id}/${role==="caller"?"callee":"caller"}ICE`),s=>{const v=s.val();if(pc.remoteDescription)pc.addIceCandidate(v).catch(()=>{});else c.pend.push(v);}));
+}
+async function flushICE(){const c=CALL;for(const v of c.pend.splice(0))await c.pc.addIceCandidate(v).catch(()=>{});}
+function callConnected(){
+  const c=CALL;if(!c||c.t0)return;
+  c.t0=Date.now();c.state="active";ring(false);clearTimeout(c.ringT);cvRender();
+  c.tick=setInterval(()=>{if(CALL)$("cvSt").textContent=fmtD((Date.now()-CALL.t0)/1000);},1000);
+}
+window.startCall=async function(type){
+  if(adminViewing||CALL)return;
+  if(curChat?.type==="group"){toast("Group calls coming soon");return;}
+  const bm=blockMsg();if(bm){toast(bm);return;}
+  const peer=Object.keys(curChat.participants).find(k=>k!==ME.uid),id="c"+Date.now();
+  CALL={id,peer,type,role:"caller",state:"ringing",unsubs:[],pend:[]};cvRender();ring(true);
+  try{
+    await setupCall(id,peer,type,"caller");
+    const o=await CALL.pc.createOffer();await CALL.pc.setLocalDescription(o);
+    await set(ref(db,"calls/"+id),{from:ME.uid,to:peer,type,state:"ringing",offer:{type:o.type,sdp:o.sdp},ts:Date.now()});
+    await set(ref(db,"incoming/"+peer),{id,from:ME.uid,type,ts:Date.now()});
+    CALL.unsubs.push(onValue(ref(db,"calls/"+id),async s=>{
+      const v=s.val();if(!v||!CALL||CALL.id!==id)return;
+      if(v.answer&&!CALL.pc.remoteDescription){await CALL.pc.setRemoteDescription(v.answer);await flushICE();if(!CALL.t0){CALL.state="connecting";cvRender();}}
+      if(["declined","ended","busy"].includes(v.state))finish(v.state==="ended"?(CALL.t0?"done":"noanswer"):v.state,true);
+    }));
+    CALL.ringT=setTimeout(()=>{if(CALL&&CALL.id===id&&!CALL.t0)finish("missed");},45000);
+  }catch(e){toast(e.name==="NotAllowedError"?"Camera/Mic permission denied":"Call failed");finish("failed");}
+};
+function finish(res,remote){
+  const c=CALL;if(!c)return;CALL=null;
+  ring(false);clearTimeout(c.ringT);clearInterval(c.tick);
+  c.unsubs.forEach(f=>{try{f();}catch(e){}});
+  try{c.local&&c.local.getTracks().forEach(t=>t.stop());c.pc&&c.pc.close();}catch(e){}
+  $("cvRemote").srcObject=null;$("cvLocal").srcObject=null;$("cv").classList.remove("on","vid","isv");
+  const ok=!!c.t0,dur=ok?Math.round((Date.now()-c.t0)/1000):0;
+  const st=res==="missed"?"missed":res==="declined"?"declined":res==="busy"?"busy":"ended";
+  if(!remote)update(ref(db,"calls/"+c.id),{state:st}).catch(()=>{});
+  if(c.role==="caller"&&!ok)remove(ref(db,"incoming/"+c.peer)).catch(()=>{});
+  if(c.role==="callee")remove(ref(db,"incoming/"+ME.uid)).catch(()=>{});
+  const lr=ok?"done":c.role==="callee"?(res==="declined"?"declined":"missed"):(res==="declined"||res==="busy"?res:"noanswer");
+  set(ref(db,`calllog/${ME.uid}/${c.id}`),{peer:c.peer,dir:c.role==="caller"?"out":"in",type:c.type,ts:Date.now(),dur,res:lr}).catch(()=>{});
+  if(c.role==="caller"&&res==="missed")set(ref(db,`calllog/${c.peer}/${c.id}`),{peer:ME.uid,dir:"in",type:c.type,ts:Date.now(),dur:0,res:"missed"}).catch(()=>{});
+  if(c.role==="caller"&&!ok)toast(res==="busy"?"User is busy":res==="declined"?"Call declined":res==="missed"||res==="noanswer"?"No answer":"");
+}
+window.hangup=r=>finish(r||"ended");
+window.endCall=()=>finish("ended");
+window.declineCall=()=>finish("declined");
+window.acceptCall=async function(){
+  const c=CALL;if(!c||c.state!=="incoming")return;
+  ring(false);c.state="connecting";cvRender();
+  try{
+    await setupCall(c.id,c.peer,c.type,"callee");
+    const v=(await get(ref(db,"calls/"+c.id))).val();
+    await c.pc.setRemoteDescription(v.offer);await flushICE();
+    const a=await c.pc.createAnswer();await c.pc.setLocalDescription(a);
+    await update(ref(db,"calls/"+c.id),{answer:{type:a.type,sdp:a.sdp},state:"active"});
+    remove(ref(db,"incoming/"+ME.uid));
+  }catch(e){toast(e.name==="NotAllowedError"?"Camera/Mic permission denied":"Call failed");finish("failed");}
+};
+window.cvMute=()=>{const c=CALL;c.muted=!c.muted;c.local.getAudioTracks().forEach(t=>t.enabled=!c.muted);cvRender();};
+window.cvCam=()=>{const c=CALL;c.camOff=!c.camOff;c.local.getVideoTracks().forEach(t=>t.enabled=!c.camOff);cvRender();};
+window.cvFlip=async function(){
+  const c=CALL;c.facing=c.facing==="environment"?"user":"environment";
+  try{
+    const t=(await navigator.mediaDevices.getUserMedia({video:{facingMode:c.facing}})).getVideoTracks()[0];
+    const snd=c.pc.getSenders().find(x=>x.track&&x.track.kind==="video");
+    c.local.getVideoTracks().forEach(x=>{x.stop();c.local.removeTrack(x);});
+    c.local.addTrack(t);snd&&snd.replaceTrack(t);$("cvLocal").srcObject=c.local;
+  }catch(e){toast("Can't flip camera");}
+};
+function listenCalls(){
+  onValue(ref(db,"calllog/"+ME.uid),s=>{LOG=s.val()||{};Object.values(LOG).forEach(x=>watchU(x.peer));if(tab==="calls")renderCalls();});
+  onValue(ref(db,"incoming/"+ME.uid),s=>{
+    const v=s.val();if(!v)return;
+    if(Date.now()-v.ts>50000){remove(ref(db,"incoming/"+ME.uid));return;}
+    if(CALL){if(CALL.id!==v.id){update(ref(db,"calls/"+v.id),{state:"busy"}).catch(()=>{});remove(ref(db,"incoming/"+ME.uid));}return;}
+    if(ME.blocked&&ME.blocked[v.from]){update(ref(db,"calls/"+v.id),{state:"declined"}).catch(()=>{});remove(ref(db,"incoming/"+ME.uid));return;}
+    watchU(v.from);
+    CALL={id:v.id,peer:v.from,type:v.type,role:"callee",state:"incoming",unsubs:[],pend:[]};
+    CALL.unsubs.push(onValue(ref(db,`calls/${v.id}/state`),s2=>{const st=s2.val();if(CALL&&CALL.id===v.id&&["ended","missed"].includes(st))finish(CALL.t0?"done":"missed",true);}));
+    cvRender();ring(true);
+  });
+}
+function renderCalls(){
+  const b=$("homeBody"),l=Object.entries(LOG).map(([id,x])=>({id,...x})).sort((a,c)=>c.ts-a.ts);
+  if(!l.length){b.innerHTML=`<div class="empty"><i class="fas fa-phone"></i><h3>No calls yet</h3><p>Open a chat and tap the call icon</p></div>`;return;}
+  b.innerHTML=l.map(x=>{
+    const u=allUsers[x.peer]||{name:"User"},bad=x.res==="missed",lbl={missed:"Missed",declined:"Declined",busy:"Busy",noanswer:"No answer"}[x.res]||"";
+    return `<div class="ci" onclick="callBack('${x.peer}','${x.type}')">${avH(u)}<div class="ci-info"><div class="ci-top"><div class="ci-name" style="${bad?"color:var(--rd)":""}">${nameH(u)}</div><div class="ci-time">${fmtT(x.ts)}</div></div><div class="ci-bot"><div class="ci-msg"><i class="fas fa-arrow-${x.dir==="out"?"up-right":"down-left"}" style="color:${bad?"var(--rd)":"var(--gr2)"}"></i> ${x.type==="video"?"Video":"Voice"}${x.dur?" · "+fmtD(x.dur):""}${lbl?" · "+lbl:""}</div></div></div><span style="color:var(--gr2);font-size:18px;padding:0 6px"><i class="fas fa-${x.type==="video"?"video":"phone"}"></i></span></div>`;
+  }).join("");
+}
+window.callBack=async function(uid,type){await openChat(uid,false);startCall(type);};
+
+/* ══════ ADMIN EXTRA ══════ */
+window.adminDelUser=async function(uid){
+  const r=await SW.fire({icon:"warning",title:"Delete this user?",text:"Profile, contacts & call log will be removed.",showCancelButton:true,confirmButtonColor:"#f15c6d",confirmButtonText:"Delete"});
+  if(!r.isConfirmed)return;
+  await Promise.all(["users/","contacts/","calllog/"].map(p=>remove(ref(db,p+uid)).catch(()=>{})));
+  delete allUsers[uid];toast("User deleted");renderAdminPanel("users");
+};
 </script>
 </body>
 </html>
