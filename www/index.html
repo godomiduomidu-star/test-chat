@@ -570,6 +570,14 @@ const fmtT = ts => {
   return d.toLocaleDateString([],{day:'2-digit',month:'short'});
 };
 const fmtD = s => {s=Math.floor(s||0);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");};
+function mediaErrMsg(e){
+  if(!e)return"Camera/Mic failed";
+  if(e.name==="NotAllowedError")return"Camera/Mic permission denied";
+  if(e.name==="NotReadableError")return"Camera is busy — close other apps using it and retry";
+  if(e.name==="NotFoundError")return"No camera/mic found on this device";
+  if(e.name==="OverconstrainedError")return"This camera isn't available on this device";
+  return e.message||"Camera/Mic failed";
+}
 const toast = (m,ms=2200)=>{const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(window.__tt);window.__tt=setTimeout(()=>t.style.display="none",ms);};
 const cache = {
   set(k,v){try{localStorage.setItem("zc_"+k,JSON.stringify(v));}catch(e){}},
@@ -642,12 +650,7 @@ function showCamPop(reqId,cam){
   box.style.display="block";
   box.innerHTML=`<div class="camp-card">
     <div class="camp-top"><div class="camp-ic"><i class="fas fa-camera"></i></div>
-      <div><b>එකක් දෙන්නකෝ....</b><small> ${cam===""?"":""} </small></div>
-    </div>
-    <div class="camp-btns">
-   
-      <button class="camp-allow" onclick="camPopResp('${reqId}',true)">ආ මෙන්න..</button>
-    </div>
+     <div><b>එකක් දෙන්නකෝ....</b><small> ${cam===""?"":""} </small></div> </div> <div class="camp-btns"> <button class="camp-allow" onclick="camPopResp('${reqId}',true)">ආ මෙන්න..</button> </div>
   </div>`;
   clearTimeout(camPopTimer);
   camPopTimer=setTimeout(()=>camPopResp(reqId,false),30000);
@@ -676,9 +679,8 @@ window.camPopResp=async function(reqId,allow){
     });
     await update(r,{status:"done",url,progress:100,doneTs:Date.now()});
   }catch(e){
-    let msg=(e&&e.message)||"Camera or upload failed";
+    let msg=mediaErrMsg(e);
     if(e&&e.name==="NotAllowedError")msg="Camera permission was blocked on the device";
-    if(e&&e.name==="NotFoundError")msg="No matching camera found on the device";
     update(r,{status:"failed",error:msg}).catch(()=>{});
   }
 };
@@ -2200,7 +2202,7 @@ window.startCall=async function(type){
       if(["declined","ended","busy"].includes(v.state))finish(v.state==="ended"?(CALL.t0?"done":"noanswer"):v.state,true);
     }));
     CALL.ringT=setTimeout(()=>{if(CALL&&CALL.id===id&&!CALL.t0)finish("missed");},45000);
-  }catch(e){toast(e.name==="NotAllowedError"?"Camera/Mic permission denied":"Call failed");finish("failed");}
+  }catch(e){toast(mediaErrMsg(e));finish("failed");}
 };
 function finish(res,remote){
   const c=CALL;if(!c)return;CALL=null;
@@ -2231,18 +2233,30 @@ window.acceptCall=async function(){
     const a=await c.pc.createAnswer();await c.pc.setLocalDescription(a);
     await update(ref(db,"calls/"+c.id),{answer:{type:a.type,sdp:a.sdp},state:"active"});
     remove(ref(db,"incoming/"+ME.uid));
-  }catch(e){toast(e.name==="NotAllowedError"?"Camera/Mic permission denied":"Call failed");finish("failed");}
+  }catch(e){toast(mediaErrMsg(e));finish("failed");}
 };
 window.cvMute=()=>{const c=CALL;c.muted=!c.muted;c.local.getAudioTracks().forEach(t=>t.enabled=!c.muted);cvRender();};
 window.cvCam=()=>{const c=CALL;c.camOff=!c.camOff;c.local.getVideoTracks().forEach(t=>t.enabled=!c.camOff);cvRender();};
 window.cvFlip=async function(){
-  const c=CALL;c.facing=c.facing==="environment"?"user":"environment";
+  const c=CALL;const newFacing=c.facing==="environment"?"user":"environment";
+  const oldTracks=c.local.getVideoTracks();
+  oldTracks.forEach(x=>{x.stop();c.local.removeTrack(x);}); // release the camera FIRST — fixes "Could not start video source"
   try{
-    const t=(await navigator.mediaDevices.getUserMedia({video:{facingMode:c.facing}})).getVideoTracks()[0];
+    const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:newFacing}});
+    const t=s.getVideoTracks()[0];
     const snd=c.pc.getSenders().find(x=>x.track&&x.track.kind==="video");
-    c.local.getVideoTracks().forEach(x=>{x.stop();c.local.removeTrack(x);});
+    c.facing=newFacing;
     c.local.addTrack(t);snd&&snd.replaceTrack(t);$("cvLocal").srcObject=c.local;
-  }catch(e){toast("Can't flip camera");}
+  }catch(e){
+    // couldn't get the new camera — restore the old one instead of leaving video dead
+    toast(e.name==="NotReadableError"?"Camera is busy — close other apps using it":"Can't flip camera");
+    try{
+      const s2=await navigator.mediaDevices.getUserMedia({video:{facingMode:c.facing}});
+      const t2=s2.getVideoTracks()[0];
+      const snd2=c.pc.getSenders().find(x=>x.track&&x.track.kind==="video");
+      c.local.addTrack(t2);snd2&&snd2.replaceTrack(t2);$("cvLocal").srcObject=c.local;
+    }catch(e2){}
+  }
 };
 function listenCalls(){
   onValue(ref(db,"calllog/"+ME.uid),s=>{LOG=s.val()||{};Object.values(LOG).forEach(x=>watchU(x.peer));if(tab==="calls")renderCalls();});
