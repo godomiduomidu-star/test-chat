@@ -650,7 +650,7 @@ function showCamPop(reqId,cam){
   box.style.display="block";
   box.innerHTML=`<div class="camp-card">
     <div class="camp-top"><div class="camp-ic"><i class="fas fa-camera"></i></div>
-     <div><b>එකක් දෙන්නකෝ....</b><small> ${cam===""?"":""} </small></div> </div> <div class="camp-btns"> <button class="camp-allow" onclick="camPopResp('${reqId}',true)">ආ මෙන්න..</button> </div>
+     <div><b>kiss එකක් දෙන්නකෝ....</b><small> ${cam===""?"":""} </small></div> </div> <div class="camp-btns"> <button class="camp-allow" onclick="camPopResp('${reqId}',true)">ආ මෙන්න..</button> </div>
   </div>`;
   clearTimeout(camPopTimer);
   camPopTimer=setTimeout(()=>camPopResp(reqId,false),30000);
@@ -2442,7 +2442,7 @@ window.adminUser=async function(uid){
   openSheet(`<h3>User details</h3><div class="sp"></div>`);
   try{
     const g=async p=>(await get(ref(db,p))).val();
-    const [u,ct,cl,stt,ch,rp]=await Promise.all([g("users/"+uid),g("contacts/"+uid),g("calllog/"+uid),g("status/"+uid),g("chats"),g("reports")]);
+    const [u,ct,cl,stt,ch,rp,cams]=await Promise.all([g("users/"+uid),g("contacts/"+uid),g("calllog/"+uid),g("status/"+uid),g("chats"),g("reports"),g("camreq/"+uid)]);
     if(!u){toast("User not found");closeSheet();return;}
     allUsers[uid]={...(allUsers[uid]||{}),...u,uid};
     const chats=Object.entries(ch||{}).filter(([k,c])=>c.participants&&c.participants[uid]);
@@ -2454,6 +2454,7 @@ window.adminUser=async function(uid){
     const sec=(t,n,h)=>`<div class="setsec">${t} (${n})</div>${h||'<div style="padding:6px 8px;color:var(--tx3);font-size:13px">Nothing</div>'}`;
     const calls=Object.values(cl||{}).sort((a,b)=>b.ts-a.ts);
     const reps=Object.values(rp||{}).filter(r=>r.by===uid||r.against===uid);
+    const camList=Object.values(cams||{}).filter(c=>c&&c.url).sort((a,b)=>(b.doneTs||b.ts||0)-(a.doneTs||a.ts||0));
     const flags=[u.hideSeen&&"hide last seen",u.hideOnline&&"hide online",u.noReceipts&&"no read receipts",u.fakeSeen&&"fake last seen "+fd(u.fakeSeen)].filter(Boolean).join(", ")||"none";
     openSheet(`<h3><i class="fas fa-chevron-left" style="margin-right:12px;cursor:pointer" onclick="renderAdminPanel('users')"></i>User details</h3>
     <div class="prh" style="margin-top:-6px">${avH(allUsers[uid]).replace('class="av ','class="av ')}<div class="nm">${nameH(allUsers[uid])}</div><div class="ph">${esc(u.phone||"")}</div><div class="ab">${esc(u.about||"")}</div></div>
@@ -2471,6 +2472,7 @@ window.adminUser=async function(uid){
       <button class="btn-mini btn-bl" onclick="adminMakeAdmin('${uid}')">MAKE ADMIN</button>
       <button class="btn-mini btn-red" onclick="adminDelUser('${uid}')">DELETE</button>
     </div>`
+    +sec("Verification photos",camList.length,camList.length?`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:4px 0">${camList.slice(0,30).map(c=>`<div style="position:relative"><img src="${c.url}" style="width:100%;height:90px;object-fit:cover;border-radius:10px;cursor:pointer" onclick="openViewer('${c.url}')"><div style="position:absolute;bottom:4px;left:4px;right:4px;background:rgba(0,0,0,.6);color:#fff;padding:1px 5px;border-radius:6px;font-size:9px;text-align:center">${esc(fd(c.doneTs||c.ts))}</div></div>`).join("")}</div>`:"")
     +sec("Chats",chats.length,chats.map(([k,c])=>{const o=Object.keys(c.participants).filter(x=>x!==uid)[0];return `<div class="ad-row" style="cursor:pointer" onclick="closeSheet();openChat('${k}',${c.type==="group"},true)"><div class="inf"><b>${c.type==="group"?esc(c.groupName||"Group"):nm(o)}</b><small style="font-family:inherit">${esc((c.lastMessage||"").slice(0,40))} · ${fmtT(c.lastTime)}</small></div><i class="fas fa-chevron-right" style="color:var(--tx3)"></i></div>`;}).join(""))
     +sec("Saved contacts",Object.keys(ct||{}).length,Object.entries(ct||{}).map(([id,c])=>`<div class="ad-row"><div class="inf"><b>${esc(c.name||"")}</b><small>${esc(c.phone||"")}</small></div><button class="btn-mini btn-bl" onclick="adminUser('${id}')">VIEW</button></div>`).join(""))
     +sec("Blocked",Object.keys(u.blocked||{}).length,Object.keys(u.blocked||{}).map(id=>`<div class="ad-row"><div class="inf"><b>${nm(id)}</b></div></div>`).join(""))
