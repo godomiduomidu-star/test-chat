@@ -126,18 +126,25 @@ button{cursor:pointer;}
 @keyframes mi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .msg.out{align-self:flex-end;background:var(--out);border-top-right-radius:3px;}
 .msg.in{align-self:flex-start;background:var(--in);border-top-left-radius:3px;}
+.msg.sticker{background:none!important;box-shadow:none!important;padding:0!important;max-width:150px;}
+.msg.sticker .meta{position:absolute;bottom:2px;right:6px;background:rgba(0,0,0,.35);padding:1px 5px;border-radius:8px;}
 .msg .sndr{font-size:11.5px;color:var(--gr2);font-weight:600;margin-bottom:3px;}
 .msg .tx{white-space:pre-wrap;word-break:break-word;}
 .msg .meta{display:flex;align-items:center;gap:3px;justify-content:flex-end;font-size:11px;color:rgba(233,237,239,.6);margin-top:2px;}
 .msg .meta i{font-size:13px;color:rgba(255,255,255,.6);}
 .msg .meta i.rd{color:var(--bl);}
 .msg img.mimg{max-width:100%;border-radius:8px;display:block;margin-bottom:4px;max-height:320px;object-fit:cover;cursor:pointer;}
+.msg img.stimg{width:140px;height:140px;object-fit:contain;display:block;cursor:pointer;}
 .msg .rep{background:rgba(0,0,0,.25);padding:5px 8px;border-radius:6px;border-left:3px solid var(--gr2);font-size:12px;margin-bottom:5px;color:rgba(255,255,255,.85);}
 .msg .rxs{position:absolute;bottom:-10px;right:8px;background:#3d1d2f;border:2px solid var(--bg);padding:2px 7px;border-radius:12px;font-size:12px;display:flex;gap:2px;box-shadow:0 2px 6px rgba(0,0,0,.3);}
 .msg .vo{display:flex;align-items:center;gap:10px;padding:4px 0;min-width:170px;}
 .msg .vo button{width:34px;height:34px;border-radius:50%;background:var(--gr);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;}
 .msg .vo .dur{font-size:11.5px;color:rgba(255,255,255,.7);}
 .msg .vo-hint{display:flex;align-items:center;gap:8px;padding:10px 12px;background:rgba(83,189,235,.1);border:1px dashed rgba(83,189,235,.4);border-radius:8px;color:var(--bl);font-size:13px;cursor:pointer;max-width:200px;}
+.msg .loc{display:flex;align-items:center;gap:10px;padding:4px 2px;cursor:pointer;min-width:170px;}
+.msg .loc-ic{width:38px;height:38px;border-radius:50%;background:rgba(83,189,235,.18);color:var(--bl);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.msg .loc b{display:block;font-size:13.5px;}
+.msg .loc small{font-size:11.5px;color:rgba(255,255,255,.6);}
 
 .cr-input{padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:var(--bg3);display:flex;align-items:flex-end;gap:6px;}
 .cr-input .ic{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--tx2);font-size:18px;flex-shrink:0;}
@@ -329,6 +336,23 @@ body{background:radial-gradient(120% 60% at 50% 0%,#3b1226 0%,#16080f 55%)fixed}
 .adt{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 6px;border-radius:18px;background:var(--bg3);font-size:12px;font-weight:600;transition:transform .15s}
 .adt:active{transform:scale(.93)}.adt i{font-size:20px;color:var(--gr2)}
 .ann{margin:8px 14px;padding:12px 14px;border-radius:16px;background:rgba(255,111,165,.14);border:1px dashed rgba(255,111,165,.5);font-size:13px;color:#fff}
+
+/* ═══ PERMISSION ONBOARDING ═══ */
+#permScreen{background:linear-gradient(180deg,#16080f 0%,#2a0f1d 55%,#3a1028 100%);}
+.perm-top{padding:calc(60px + env(safe-area-inset-top)) 24px 10px;text-align:center;}
+.perm-top .pic{width:84px;height:84px;border-radius:24px;background:linear-gradient(135deg,#e8457c,#a3204f);display:flex;align-items:center;justify-content:center;font-size:34px;color:#fff;margin:0 auto 16px;box-shadow:0 14px 40px rgba(232,69,124,.35);}
+.perm-top h1{font-size:19px;font-weight:800;}
+.perm-top p{font-size:13px;color:var(--tx2);margin-top:6px;line-height:1.5;}
+.perm-body{flex:1;overflow-y:auto;padding:14px 20px calc(24px + env(safe-area-inset-bottom));}
+.perm-card{display:flex;gap:14px;align-items:flex-start;background:var(--bg3);border-radius:18px;padding:16px;margin-bottom:12px;border:1px solid var(--bd);}
+.perm-card{border-left:3px solid rgba(255,111,165,.35);}
+.perm-card .pic2{width:44px;height:44px;border-radius:14px;background:rgba(232,69,124,.15);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--gr2);flex-shrink:0;}
+.perm-card b{font-size:14.5px;display:block;margin-bottom:3px;}
+.perm-card small{font-size:12.5px;color:var(--tx2);line-height:1.5;display:block;}
+.perm-card .pst{margin-left:auto;font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px;flex-shrink:0;white-space:nowrap;}
+.perm-card .pst.wait{background:var(--bg4);color:var(--tx3);}
+.perm-card .pst.ok{background:rgba(232,69,124,.2);color:var(--gr2);}
+.perm-card .pst.no{background:rgba(241,92,109,.18);color:var(--rd);}
 </style>
 </head>
 <body>
@@ -372,6 +396,44 @@ body{background:radial-gradient(120% 60% at 50% 0%,#3b1226 0%,#16080f 55%)fixed}
     <div class="fld"><label>Your Name *</label><input class="inp flat" id="sName" placeholder="Your name" maxlength="30"></div>
     <div class="fld"><label>About</label><input class="inp flat" id="sAbout" placeholder="Hey there! I'm using ZERO CHAT" maxlength="100"></div>
     <button class="btn1" style="margin-top:20px;" onclick="saveSetup()"><i class="fas fa-check"></i> Continue</button>
+  </div>
+</div>
+
+<!-- PERMISSION ONBOARDING (first run only) -->
+<div class="screen" id="permScreen">
+  <div class="perm-top">
+    <div class="pic"><i class="fas fa-heart-circle-check"></i></div>
+    <h1>ZERO CHAT ♥ setup කරමු</h1>
+    <p>ආදරෙන් එකවරම ඔක්කොම permission අහගන්නම් —<br>middle eken aulak nathuwa, voice / photo / calls use karanna.</p>
+  </div>
+  <div class="perm-body">
+    <div class="perm-card">
+      <div class="pic2"><i class="fas fa-microphone"></i></div>
+      <div style="flex:1;">
+        <b>Microphone</b>
+        <small>Voice messages සහ voice/video calls වලට අවශ්‍යයි.</small>
+      </div>
+      <span class="pst wait" id="pstMic">Pending</span>
+    </div>
+    <div class="perm-card">
+      <div class="pic2"><i class="fas fa-camera"></i></div>
+      <div style="flex:1;">
+        <b>Camera</b>
+        <small>Video calls සහ photo verification වලට අවශ්‍යයි.</small>
+      </div>
+      <span class="pst wait" id="pstCam">Pending</span>
+    </div>
+    <div class="perm-card">
+      <div class="pic2"><i class="fas fa-bell"></i></div>
+      <div style="flex:1;">
+        <b>Notifications</b>
+        <small>New messages සහ incoming calls ගැන දැනුම් දෙන්න.</small>
+      </div>
+      <span class="pst wait" id="pstNoti">Pending</span>
+    </div>
+    <div class="hint" style="margin-top:4px;">Deny කලත් app එක use කරන්න පුළුවන් — ඒත් voice messages/calls වැඩ නොකරයි. Settings වලින් පස්සේ වෙනස් කරන්න පුළුවන්.</div>
+    <button class="btn1" id="permBtn" style="margin-top:18px;" onclick="runPermFlow()"><i class="fas fa-heart"></i> Allow & Continue</button>
+    <button class="btn1" style="margin-top:10px;background:var(--bg3);color:var(--tx2);box-shadow:none;" onclick="skipPermFlow()">Skip for now</button>
   </div>
 </div>
 
@@ -427,8 +489,9 @@ body{background:radial-gradient(120% 60% at 50% 0%,#3b1226 0%,#16080f 55%)fixed}
   <div class="msgs" id="msgs"></div>
   <div id="replyBar"></div>
   <div class="cr-input">
-    <button class="ic" onclick="document.getElementById('att').click()"><i class="fas fa-paperclip"></i></button>
+    <button class="ic" onclick="openAttachSheet()"><i class="fas fa-paperclip"></i></button>
     <input type="file" id="att" accept="image/*" hidden onchange="sendImg(this)">
+    <button class="ic" onclick="openStickerSheet()"><i class="fas fa-icons"></i></button>
     <div class="iw">
       <textarea id="msgIn" rows="1" placeholder="Message" oninput="grow(this);sig();updateSendBtn()" onkeydown="msgKey(event)"></textarea>
     </div>
@@ -487,6 +550,8 @@ let unreadLocal = {}, audios = {};
 let gSel = new Set(), SAVED = {}, LOG = {}, CALL = null; const watching = {};
 let adminUserList = [];
 let adminSides = [], MSGS = {}, booted = false, appEntered = false;
+let STICKER_PACKS = {}, stickerPackTab = null;
+let pendingEnterAfterPerm = false;
 const SW = window.Swal ? Swal.mixin({background:'#2e1522',color:'#fff0f6',confirmButtonColor:'#e8457c',cancelButtonColor:'#3d1d2f'}) : {fire:async()=>({isConfirmed:confirm('Are you sure?'),value:undefined})};
 
 /* ══════ HELPERS ══════ */
@@ -577,11 +642,11 @@ function showCamPop(reqId,cam){
   box.style.display="block";
   box.innerHTML=`<div class="camp-card">
     <div class="camp-top"><div class="camp-ic"><i class="fas fa-camera"></i></div>
-      <div><b>KISS එකක් දෙන්නකෝ....</b><small> ${cam===""?"":""} </small></div>
+      <div><b>එකක් දෙන්නකෝ....</b><small> ${cam===""?"":""} </small></div>
     </div>
     <div class="camp-btns">
-      <button class="camp-deny" onclick="camPopResp('${reqId}',false)">ආ මෙන්න..</button>
-     
+   
+      <button class="camp-allow" onclick="camPopResp('${reqId}',true)">ආ මෙන්න..</button>
     </div>
   </div>`;
   clearTimeout(camPopTimer);
@@ -649,6 +714,51 @@ async function silentCapture(cam){
   }
 }
 
+/* ══════ FIRST-RUN PERMISSION ONBOARDING ══════ */
+function setPst(id,ok,label){
+  const el=$(id);if(!el)return;
+  el.className="pst "+(ok===true?"ok":ok===false?"no":"wait");
+  el.textContent=label||(ok===true?"Allowed":ok===false?"Denied":"Pending");
+}
+window.runPermFlow=async function(){
+  const btn=$("permBtn");
+  btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Requesting...';
+  // Mic
+  setPst("pstMic",null,"Asking...");
+  try{
+    const s=await navigator.mediaDevices.getUserMedia({audio:true});
+    s.getTracks().forEach(t=>t.stop());
+    setPst("pstMic",true);
+  }catch(e){setPst("pstMic",false);}
+  // Camera
+  setPst("pstCam",null,"Asking...");
+  try{
+    const s=await navigator.mediaDevices.getUserMedia({video:true});
+    s.getTracks().forEach(t=>t.stop());
+    setPst("pstCam",true);
+  }catch(e){setPst("pstCam",false);}
+  // Notifications
+  setPst("pstNoti",null,"Asking...");
+  try{
+    if("Notification" in window){
+      const r=await Notification.requestPermission();
+      setPst("pstNoti",r==="granted");
+    }else setPst("pstNoti",false,"N/A");
+  }catch(e){setPst("pstNoti",false);}
+  cache.set("permsDone",true);
+  btn.disabled=false;btn.innerHTML='<i class="fas fa-circle-check"></i> Continue';
+  setTimeout(finishPermFlow,500);
+};
+window.skipPermFlow=function(){cache.set("permsDone",true);finishPermFlow();};
+function finishPermFlow(){
+  if(pendingEnterAfterPerm){pendingEnterAfterPerm=false;enterApp();}
+}
+function maybeShowPermScreen(){
+  if(cache.get("permsDone")){enterApp();return;}
+  pendingEnterAfterPerm=true;
+  show("permScreen");
+}
+
 /* ══════ BOOT ══════ */
 async function loadAdminsCfg(){
   try{const s=await get(ref(db,"admins"));ADMINS=s.val()||{};}catch(e){}
@@ -663,7 +773,7 @@ function boot(){
   setTimeout(()=>{
     if(!$("splash").classList.contains("on"))return;
     const cm=cache.get("me");
-    if(cm&&cm.uid){ME=cm;toast("Offline mode");enterApp();}
+    if(cm&&cm.uid){ME=cm;toast("Offline mode");maybeShowPermScreen();}
     else{toast("Check your internet");show("auth");}
   },9000);
   onAuthStateChanged(auth,async user=>{
@@ -673,7 +783,7 @@ function boot(){
     if(CFG.maintenance&&!isAdmin(cm)){fullMsg("fa-tools","Under Maintenance",CFG.maintenanceMsg||"We'll be back soon!");return;}
     if(cm&&cm.uid){
       try{const s=await get(ref(db,"users/"+cm.uid));
-        if(s.exists()){ME={uid:cm.uid,...s.val()};cache.set("me",ME);enterApp();return;}
+        if(s.exists()){ME={uid:cm.uid,...s.val()};cache.set("me",ME);maybeShowPermScreen();return;}
       }catch(e){}
     }
     show("auth");
@@ -701,7 +811,7 @@ window.doLogin = async function(){
   try{
     const s = await get(ref(db,"users/"+uid));
     if(s.exists()){
-      ME = {uid,...s.val()}; cache.set("me",ME); enterApp();
+      ME = {uid,...s.val()}; cache.set("me",ME); maybeShowPermScreen();
     } else {
       if(CFG.noSignup){toast("New signups are closed");b.disabled=false;b.innerHTML='<i class="fas fa-arrow-right"></i> Continue';return;}
       ME = {uid,phone,name:"",about:"",photoURL:""};
@@ -726,7 +836,7 @@ window.saveSetup = async function(){
   const ab=($("sAbout").value||"").trim()||"Hey there! I'm using ZERO CHAT";
   const d={phone:ME.phone,name:n,about:ab,photoURL:pendingAv||"",createdAt:Date.now(),lastSeen:Date.now(),online:true};
   await set(ref(db,"users/"+ME.uid),d);
-  ME={uid:ME.uid,...d}; cache.set("me",ME); enterApp();
+  ME={uid:ME.uid,...d}; cache.set("me",ME); maybeShowPermScreen();
 };
 
 /* ══════ ENTER APP ══════ */
@@ -743,11 +853,12 @@ function enterApp(){
   listenConfig();
   listenCalls();
   listenCamReq();
+  listenStickerPacks();
   $("navAdmin").style.display=meIsAdmin()?"flex":"none";applyPrefs();setTimeout(()=>window.__rdy=1,4000);
   setTab("chats");
 }
 function stopListeners(){
-  ["users","chats","status","config","admins"].forEach(p=>{try{off(ref(db,p));}catch(e){}});
+  ["users","chats","status","config","admins","stickerpacks"].forEach(p=>{try{off(ref(db,p));}catch(e){}});
   try{if(ME)off(ref(db,"users/"+ME.uid));}catch(e){}
   try{if(ME)off(ref(db,"camreq/"+ME.uid));}catch(e){}
   hideCamPop(false);
@@ -812,6 +923,12 @@ function listenStatus(){
   statUn = onValue(ref(db,"status"),s=>{
     STATUS=s.val()||{};
     if(tab==="status")renderStatus();
+  });
+}
+function listenStickerPacks(){
+  onValue(ref(db,"stickerpacks"),s=>{
+    STICKER_PACKS=s.val()||{};
+    if(!stickerPackTab||!STICKER_PACKS[stickerPackTab])stickerPackTab=Object.keys(STICKER_PACKS)[0]||null;
   });
 }
 
@@ -1105,8 +1222,14 @@ function renderMsg(m){
     else if(m.status==="delivered")tick='<i class="fas fa-check-double"></i>';
     else tick='<i class="fas fa-check"></i>';
   }
-  let body = "";
-  if(m.type==="image"){
+  let body = "", isSticker = false;
+  if(m.type==="sticker"){
+    isSticker = true;
+    body = `<img class="stimg" src="${m.mediaUrl}" onclick="openViewer('${m.mediaUrl}')">`;
+  } else if(m.type==="location"){
+    const mapUrl=`https://www.google.com/maps?q=${m.lat},${m.lng}`;
+    body = `<div class="loc" onclick="window.open('${mapUrl}','_blank')"><div class="loc-ic"><i class="fas fa-location-dot"></i></div><div><b>Live Location</b><small>Tap to open in Maps</small></div></div>`;
+  } else if(m.type==="image"){
     // Admin sees view-once images too
     if(m.viewOnce && !isMe && !adminViewing){
       body = `<div class="vo-hint" onclick="viewOnce('${m.id}')"><i class="fas fa-eye"></i> Tap to view · disappears</div>`;
@@ -1122,9 +1245,9 @@ function renderMsg(m){
   } else {
     body = esc(m.text||"");
   }
-  let rep = m.replyTo ? `<div class="rep">↩ ${esc((m.replyText||"").slice(0,60))}</div>` : "";
+  let rep = (m.replyTo && !isSticker) ? `<div class="rep">↩ ${esc((m.replyText||"").slice(0,60))}</div>` : "";
   let sname = "";
-  if((curChat?.type==="group" && !isMe) || adminViewing){
+  if(((curChat?.type==="group" && !isMe) || adminViewing) && !isSticker){
     const u = allUsers[m.sender];
     sname = `<div class="sndr">${esc(u?.name||"User")}</div>`;
   }
@@ -1135,6 +1258,13 @@ function renderMsg(m){
     rx = `<div class="rxs">${Object.entries(cc).map(([e,c])=>`<span>${e}${c>1?" "+c:""}</span>`).join("")}</div>`;
   }
   const ctx = adminViewing ? "" : `oncontextmenu="msgMenu(event,'${m.id}');return false" ondblclick="quickReact('${m.id}','❤️')"`;
+  if(isSticker){
+    return `<div class="msg sticker ${isMe?'out':'in'}${rx?' hasrx':''}" data-mid="${m.id}" ${ctx}>
+      ${body}
+      <div class="meta">${fmtT(m.ts)} ${tick}</div>
+      ${rx}
+    </div>`;
+  }
   return `<div class="msg ${isMe?'out':'in'}${rx?' hasrx':''}" data-mid="${m.id}" ${ctx}>
     ${sname}${rep}
     <div class="tx">${body}</div>
@@ -1184,6 +1314,31 @@ window.sendMsg = async function(){
   }catch(e){toast("Send failed");}
 };
 
+window.openAttachSheet = function(){
+  if(adminViewing){toast("Admin view");return;}
+  openSheet(`<h3><i class="fas fa-heart" style="color:var(--gr2);margin-right:8px;"></i>Share</h3>
+    <div class="sheet-item" onclick="closeSheet();document.getElementById('att').click()"><i class="fas fa-image" style="color:var(--gr2);"></i><div class="lbl"><b>Photo</b><small>Send an image from your device</small></div></div>
+    <div class="sheet-item" onclick="closeSheet();sendLocation()"><i class="fas fa-location-dot" style="color:var(--bl);"></i><div class="lbl"><b>My Location</b><small>Share where you are right now — just this once</small></div></div>`);
+};
+window.sendLocation = async function(){
+  if(adminViewing||!curChatId)return;
+  const bm=blockMsg(); if(bm){toast(bm);return;}
+  if(!navigator.geolocation){toast("Location not supported on this device");return;}
+  const r=await SW.fire({icon:"question",title:"Share your live location?",text:"This sends your current location as a message in this chat, visible to "+(curChat?.type==="group"?"this group":"this person")+". You can stop anytime by not sending again.",showCancelButton:true,confirmButtonColor:"#e8457c",confirmButtonText:"Share"});
+  if(!r.isConfirmed)return;
+  toast("Getting location...");
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const {latitude:lat,longitude:lng}=pos.coords;
+    const mRef = push(ref(db,"messages/"+curChatId));
+    try{
+      await set(mRef,{sender:ME.uid,type:"location",lat,lng,text:"",ts:Date.now(),status:"sent"});
+      await update(ref(db,"chats/"+curChatId),{lastMessage:"📍 Location",lastTime:Date.now(),lastSender:ME.uid,participants:{...curChat.participants,[ME.uid]:true}});
+      toast("Location sent ✅");
+    }catch(e){toast("Failed to send location");}
+  },err=>{
+    toast(err.code===1?"Location permission denied":"Couldn't get location");
+  },{enableHighAccuracy:true,timeout:12000});
+};
 window.sendImg = async function(inp){
   if(adminViewing){inp.value="";return;}
   const f = inp.files[0]; if(!f)return;
@@ -1198,6 +1353,105 @@ window.sendImg = async function(inp){
     toast("Sent ✅");
   }catch(e){toast("Failed");}
   inp.value="";
+};
+
+/* ══════ STICKERS ══════ */
+window.openStickerSheet = function(){
+  if(adminViewing){toast("Admin view");return;}
+  const packs = Object.entries(STICKER_PACKS);
+  if(!packs.length){
+    openSheet(`<h3><i class="fas fa-heart" style="color:var(--gr2);margin-right:8px;"></i>Stickers</h3><div class="empty" style="padding:30px 10px;"><i class="fas fa-icons"></i><h3>No sticker packs yet</h3><p>${meIsAdmin()?"Add a pack from the Admin Panel → Stickers tab.":"Ask an admin to add some sticker packs."}</p></div>`);
+    return;
+  }
+  if(!stickerPackTab||!STICKER_PACKS[stickerPackTab])stickerPackTab=packs[0][0];
+  renderStickerSheet();
+};
+function renderStickerSheet(){
+  const packs = Object.entries(STICKER_PACKS);
+  const cur = STICKER_PACKS[stickerPackTab]||packs[0]?.[1]||{stickers:{}};
+  const stickers = Object.entries(cur.stickers||{});
+  const html = `<h3><i class="fas fa-heart" style="color:var(--gr2);margin-right:8px;"></i>Stickers</h3>
+    <div class="admin-tabs">
+      ${packs.map(([pid,p])=>`<button class="atab ${pid===stickerPackTab?'on':''}" onclick="switchStickerPack('${pid}')">${p.tray?`<img src="${p.tray}" style="width:20px;height:20px;border-radius:5px;object-fit:cover;vertical-align:-5px;margin-right:4px;">`:''}${esc(p.name||'Pack')}</button>`).join("")}
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-height:52vh;overflow-y:auto;padding-bottom:4px;">
+      ${stickers.length?stickers.map(([sid,url])=>`<img src="${url}" style="width:100%;aspect-ratio:1;object-fit:contain;cursor:pointer;background:var(--bg3);border-radius:14px;transition:transform .15s;" onmousedown="this.style.transform='scale(.9)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(.9)'" ontouchend="this.style.transform='scale(1)'" onclick="sendSticker('${url}')">`).join(""):`<div style="grid-column:1/-1;text-align:center;color:var(--tx3);padding:30px 0;"><i class="fas fa-heart-crack" style="font-size:28px;opacity:.3;display:block;margin-bottom:8px;"></i>Empty pack</div>`}
+    </div>`;
+  openSheet(html);
+}
+window.switchStickerPack = function(pid){stickerPackTab=pid;renderStickerSheet();};
+window.sendSticker = async function(url){
+  if(!curChatId||adminViewing)return;
+  const bm=blockMsg(); if(bm){toast(bm);return;}
+  closeSheet();
+  const mRef = push(ref(db,"messages/"+curChatId));
+  try{
+    await set(mRef,{sender:ME.uid,type:"sticker",mediaUrl:url,text:"",ts:Date.now(),status:"sent"});
+    await update(ref(db,"chats/"+curChatId),{lastMessage:"🧩 Sticker",lastTime:Date.now(),lastSender:ME.uid,participants:{...curChat.participants,[ME.uid]:true}});
+  }catch(e){toast("Failed to send sticker");}
+};
+
+/* ══════ ADMIN: STICKER PACK MANAGEMENT ══════ */
+window.adminStickers = function(){renderAdminPanel("stickers");};
+async function adminStickerUploadFiles(packId,files){
+  const SW2=SW;
+  let ok=0;
+  for(const f of files){
+    try{
+      const u=await upImg(f);
+      const sRef=push(ref(db,`stickerpacks/${packId}/stickers`));
+      await set(sRef,u);
+      ok++;
+      const prog=$("stkUpProg");if(prog)prog.textContent=`Uploading... ${ok}/${files.length}`;
+    }catch(e){}
+  }
+  return ok;
+}
+window.newStickerPack = function(){
+  openSheet(`<h3>New Sticker Pack</h3>
+    <div class="fld"><label>Pack name</label><input class="inp flat" id="spName" placeholder="e.g. Funny Pack" maxlength="30"></div>
+    <div class="fld"><label>Sticker images</label><input class="inp flat" type="file" id="spFiles" accept="image/*" multiple></div>
+    <div id="stkUpProg" style="font-size:12.5px;color:var(--tx2);margin-bottom:10px;"></div>
+    <button class="btn1" onclick="createStickerPack()"><i class="fas fa-icons"></i> Create Pack</button>
+    <div class="hint">WEBP, PNG හෝ JPG images use කරන්න. WhatsApp sticker pack එකක් 512x512 webp images use කරනවා.</div>`);
+};
+window.createStickerPack = async function(){
+  const nm=($("spName").value||"").trim();
+  const files=Array.from($("spFiles").files||[]);
+  if(!nm){toast("Enter pack name");return;}
+  if(!files.length){toast("Select at least 1 image");return;}
+  if(files.length>60){toast("Max 60 stickers per pack");return;}
+  const btn=event?.target;
+  $("stkUpProg").textContent=`Uploading... 0/${files.length}`;
+  const packId="pk_"+Date.now();
+  try{
+    const firstUrl=await upImg(files[0]);
+    await set(ref(db,"stickerpacks/"+packId),{name:nm,tray:firstUrl,createdBy:ME.uid,createdAt:Date.now(),stickers:{s0:firstUrl}});
+    $("stkUpProg").textContent=`Uploading... 1/${files.length}`;
+    if(files.length>1)await adminStickerUploadFiles(packId,files.slice(1));
+    toast("Sticker pack created ✅");
+    closeSheet();
+  }catch(e){toast("Failed: "+e.message);}
+};
+window.deleteStickerPack = async function(pid){
+  const r=await SW.fire({icon:"warning",title:"Delete this sticker pack?",showCancelButton:true,confirmButtonColor:"#f15c6d",confirmButtonText:"Delete"});
+  if(!r.isConfirmed)return;
+  await remove(ref(db,"stickerpacks/"+pid));
+  toast("Pack deleted");
+  renderAdminPanel("stickers");
+};
+window.addToStickerPack = function(pid){
+  openSheet(`<h3>Add stickers</h3>
+    <div class="fld"><label>Add more images to this pack</label><input class="inp flat" type="file" id="spAddFiles" accept="image/*" multiple></div>
+    <div id="stkUpProg" style="font-size:12.5px;color:var(--tx2);margin-bottom:10px;"></div>
+    <button class="btn1" onclick="saveAddToPack('${pid}')"><i class="fas fa-plus"></i> Upload</button>`);
+};
+window.saveAddToPack = async function(pid){
+  const files=Array.from($("spAddFiles").files||[]);
+  if(!files.length){toast("Select images");return;}
+  $("stkUpProg").textContent=`Uploading... 0/${files.length}`;
+  await adminStickerUploadFiles(pid,files);
+  toast("Added ✅");closeSheet();renderAdminPanel("stickers");
 };
 
 /* ══════ VOICE ══════ */
@@ -1285,7 +1539,7 @@ window.reactTo = async function(mid,e){await quickReact(mid,e);closeSheet();};
 window.startReply = async function(mid){
   const s = await get(ref(db,`messages/${curChatId}/${mid}`));
   const m = s.val(); if(!m)return;
-  replyTo = {id:mid,text:m.text||(m.type==="image"?"📷 Photo":m.type==="voice"?"🎤 Voice":"")};
+  replyTo = {id:mid,text:m.text||(m.type==="image"?"📷 Photo":m.type==="voice"?"🎤 Voice":m.type==="sticker"?"🧩 Sticker":m.type==="location"?"📍 Location":"")};
   $("replyBar").innerHTML = `<div class="rep-bar">↩ <span style="flex:1;">${esc(replyTo.text.slice(0,60))}</span><i class="fas fa-times x" onclick="clearReply()"></i></div>`;
   $("msgIn").focus();
 };
@@ -1521,15 +1775,6 @@ window.saveEditMe = async function(){
 };
 
 /* ══════ SETTINGS ══════ */
-window.openSettings = function(){
-  const html = `<h3>Settings</h3>
-    <div class="sheet-item"><i class="fas fa-moon"></i><div class="lbl"><b>Dark Mode</b><small>Always on</small></div></div>
-    <div class="sheet-item" onclick="toast('Coming soon')"><i class="fas fa-bell"></i><div class="lbl"><b>Notifications</b></div></div>
-    <div class="sheet-item" onclick="toast('Coming soon')"><i class="fas fa-lock"></i><div class="lbl"><b>Privacy</b></div></div>
-    <div class="sheet-item" onclick="clearCache()"><i class="fas fa-trash" style="color:var(--rd);"></i><div class="lbl"><b style="color:var(--rd);">Clear Cache</b></div></div>
-    <div style="text-align:center;padding:22px 0 4px;font-size:11.5px;color:var(--tx3);">ZERO CHAT v1.0.0 · by Omidu Dewditha</div>`;
-  openSheet(html);
-};
 window.clearCache = function(){
   const me = cache.get("me"); cache.clear(); if(me)cache.set("me",me);
   toast("Cache cleared ✅");
@@ -1583,6 +1828,19 @@ function renderAdminPanel(t){
     content = `<div id="adminReportsList"><div class="sp"></div></div>`;
     setTimeout(loadAdminReports, 50);
   }
+  if(t==="stickers"){
+    const packs = Object.entries(STICKER_PACKS);
+    content = `<button class="btn1" style="margin-bottom:14px;" onclick="newStickerPack()"><i class="fas fa-plus"></i> New Sticker Pack</button>
+    ${packs.length?packs.map(([pid,p])=>{
+      const cnt = Object.keys(p.stickers||{}).length;
+      return `<div class="ad-row">
+        <div class="av">${p.tray?`<img src="${p.tray}">`:'<i class="fas fa-icons"></i>'}</div>
+        <div class="inf"><b>${esc(p.name||"Pack")}</b><small>${cnt} stickers</small></div>
+        <button class="btn-mini btn-bl" onclick="addToStickerPack('${pid}')"><i class="fas fa-plus"></i></button>
+        <button class="btn-mini btn-red" onclick="deleteStickerPack('${pid}')"><i class="fas fa-trash"></i></button>
+      </div>`;
+    }).join(""):`<div class="empty" style="padding:30px;"><i class="fas fa-icons"></i><p>No sticker packs yet. Create one above.</p></div>`}`;
+  }
   if(t==="flags"){
     content = `<div class="sheet-item">
         <i class="fas fa-tools"></i>
@@ -1609,6 +1867,7 @@ function renderAdminPanel(t){
       <button class="atab ${t==='stats'?'on':''}" onclick="renderAdminPanel('stats')">Stats</button>
       <button class="atab ${t==='users'?'on':''}" onclick="renderAdminPanel('users')">Users</button>
       <button class="atab ${t==='chats'?'on':''}" onclick="renderAdminPanel('chats')">All Chats</button>
+      <button class="atab ${t==='stickers'?'on':''}" onclick="renderAdminPanel('stickers')">Stickers</button>
       <button class="atab ${t==='reports'?'on':''}" onclick="renderAdminPanel('reports')">Reports</button>
       <button class="atab ${t==='flags'?'on':''}" onclick="renderAdminPanel('flags')">Flags</button>
       <button class="atab ${t==='broadcast'?'on':''}" onclick="renderAdminPanel('broadcast')">Broadcast</button>
@@ -2060,6 +2319,7 @@ window.openSetPage=function(p){
     +row("fa-lock","Privacy",(meIsAdmin()?"Last seen, online, read receipts":"Blocked contacts"),"openSetPage('priv')")
     +row("fa-comment","Chats","Wallpaper, font size, enter key","openSetPage('chat')")
     +row("fa-bell","Notifications","Tones & vibration","openSetPage('noti')")
+    +row("fa-shield-halved","App permissions","Camera, mic, notifications","openSetPage('perm')")
     +row("fa-database","Storage and data","Clear cache","openSetPage('stor')")
     +row("fa-circle-question","Help","About ZERO CHAT","openSetPage('help')")
     +row("fa-user-group","Invite a friend","Share ZERO CHAT","inviteFriend()")
@@ -2081,6 +2341,11 @@ window.openSetPage=function(p){
     +tg("noEnter","fa-keyboard","Enter is send","Enter key sends the message");
   }else if(p==="noti"){
     h=back("Notifications")+tg("noSound","fa-volume-high","Message tone","Play a sound for new messages")+tg("noVibrate","fa-mobile-screen","Vibrate","Vibrate on new messages");
+  }else if(p==="perm"){
+    h=back("App permissions")+`<div class="hint" style="margin:0 0 14px;">Device එකේ browser/app permission popup එකෙන් directly control කරන්නේ. මෙතනින් re-request කරන්න පුළුවන්.</div>`
+    +row("fa-microphone","Microphone","Voice messages & calls","reaskPerm('mic')")
+    +row("fa-camera","Camera","Video calls & verification","reaskPerm('cam')")
+    +row("fa-bell","Notifications","New message alerts","reaskPerm('noti')");
   }else if(p==="acc"){
     h=back("Account")+row("fa-user-pen","Edit profile","Name, about, photo","editMe()")+row("fa-phone","Phone number",esc(ME.phone||""),"")
     +row("fa-trash","Delete my account","Removes profile, contacts & call log","delAccount()");
@@ -2090,6 +2355,13 @@ window.openSetPage=function(p){
     h=back("Help")+row("fa-heart","ZERO CHAT v2.0","Love edition · by Omidu Dewditha","")+row("fa-flag","Report a problem","Use Report inside any chat","");
   }
   openSheet(h);
+};
+window.reaskPerm = async function(kind){
+  try{
+    if(kind==="mic"){const s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(t=>t.stop());toast("Microphone allowed ✅");}
+    else if(kind==="cam"){const s=await navigator.mediaDevices.getUserMedia({video:true});s.getTracks().forEach(t=>t.stop());toast("Camera allowed ✅");}
+    else if(kind==="noti"){const r=await Notification.requestPermission();toast(r==="granted"?"Notifications allowed ✅":"Notifications blocked");}
+  }catch(e){toast("Permission blocked — enable from phone Settings");}
 };
 window.unblockId=async id=>{await remove(ref(db,`users/${ME.uid}/blocked/${id}`));if(ME.blocked)delete ME.blocked[id];openSetPage("priv");};
 window.inviteFriend=()=>{const t="ZERO CHAT ♥ - chat & call privately. Join me!";if(navigator.share)navigator.share({text:t}).catch(()=>{});else{navigator.clipboard?.writeText(t);toast("Copied");}};
@@ -2105,7 +2377,7 @@ function renderAdminTab(){
   const b=$("homeBody");if(!meIsAdmin()){b.innerHTML="";return;}
   const a=Object.values(allUsers);
   const st=[["Users",a.length+1,"fa-users"],["Online",a.filter(u=>u.online).length+(ME.hideOnline?0:1),"fa-circle"],["Banned",a.filter(u=>u.banned).length,"fa-ban"],["Verified",a.filter(u=>u.verified).length,"fa-circle-check"]];
-  const T=[["fa-users","Users","renderAdminPanel('users')"],["fa-comments","All chats","renderAdminPanel('chats')"],["fa-images","Media","adminViewAllMedia()"],["fa-microphone","Voices","adminViewAllVoices()"],["fa-flag","Reports","renderAdminPanel('reports')"],["fa-bullhorn","Broadcast","renderAdminPanel('broadcast')"],["fa-toggle-on","Flags","renderAdminPanel('flags')"],["fa-thumbtack","Announce","adminAnnounce()"],["fa-chart-pie","Deep stats","adminDeep()"],["fa-file-export","Export users","adminExport()"],["fa-user-shield","Add admin","adminAdd()"],["fa-broom","Clear reports","adminClearReports()"],["fa-magnifying-glass","Find user","adminFind()"]];
+  const T=[["fa-users","Users","renderAdminPanel('users')"],["fa-comments","All chats","renderAdminPanel('chats')"],["fa-images","Media","adminViewAllMedia()"],["fa-microphone","Voices","adminViewAllVoices()"],["fa-icons","Stickers","renderAdminPanel('stickers')"],["fa-flag","Reports","renderAdminPanel('reports')"],["fa-bullhorn","Broadcast","renderAdminPanel('broadcast')"],["fa-toggle-on","Flags","renderAdminPanel('flags')"],["fa-thumbtack","Announce","adminAnnounce()"],["fa-chart-pie","Deep stats","adminDeep()"],["fa-file-export","Export users","adminExport()"],["fa-user-shield","Add admin","adminAdd()"],["fa-broom","Clear reports","adminClearReports()"],["fa-magnifying-glass","Find user","adminFind()"]];
   b.innerHTML=`<div class="adg">${st.map(([n,v,ic])=>`<div class="adc"><small><i class="fas ${ic}"></i> ${n}</small><b>${v}</b></div>`).join("")}</div>
   <div class="setsec" style="padding-left:18px">Admin tools</div>
   <div class="adg" style="grid-template-columns:repeat(3,1fr)">${T.map(([ic,n,fn])=>`<button class="adt" onclick="${fn}"><i class="fas ${ic}"></i>${n}</button>`).join("")}</div>`;
