@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#0b141a">
+<meta name="theme-color" content="#16080f">
 <title>ZERO CHAT</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 :root{
-  --bg:#0b141a;--bg2:#111b21;--bg3:#202c33;--bg4:#2a3942;
-  --tx:#e9edef;--tx2:#8696a0;--tx3:#667781;
-  --gr:#00a884;--gr2:#25d366;--gr3:#005c4b;
-  --bl:#53bdeb;--rd:#f15c6d;--am:#f0b232;
-  --out:#005c4b;--in:#202c33;--bd:rgba(134,150,160,.15);
+  --bg:#16080f;--bg2:#1f0d17;--bg3:#2e1522;--bg4:#3d1d2f;
+  --tx:#fff0f6;--tx2:#cfa3b8;--tx3:#9a7186;
+  --gr:#e8457c;--gr2:#ff6fa5;--gr3:#a3204f;
+  --bl:#9ad7ff;--rd:#f15c6d;--am:#f0b232;
+  --out:#a3204f;--in:#2e1522;--bd:rgba(214,150,180,.15);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;overflow:hidden;}
@@ -24,8 +24,8 @@ button{cursor:pointer;}
 .screen.on{display:flex;}
 
 /* SPLASH */
-#splash{background:linear-gradient(160deg,#0b141a 0%,#0d1f24 55%,#062825 100%);align-items:center;justify-content:center;z-index:999;}
-#splash .lg{width:130px;height:130px;border-radius:32px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px rgba(0,168,132,.35);animation:pop .7s cubic-bezier(.34,1.56,.64,1) both;}
+#splash{background:linear-gradient(160deg,#16080f 0%,#2a0f1d 55%,#3a1028 100%);align-items:center;justify-content:center;z-index:999;}
+#splash .lg{width:130px;height:130px;border-radius:32px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px rgba(232,69,124,.35);animation:pop .7s cubic-bezier(.34,1.56,.64,1) both;}
 #splash .lg img{width:100%;height:100%;object-fit:cover;}
 #splash h1{font-size:26px;font-weight:900;letter-spacing:4px;color:#fff;margin-top:24px;}
 #splash p{font-size:11px;color:var(--tx2);margin-top:6px;letter-spacing:2px;text-transform:uppercase;}
@@ -33,9 +33,9 @@ button{cursor:pointer;}
 @keyframes pop{from{transform:scale(.5) rotate(-10deg);opacity:0}to{transform:none;opacity:1}}
 
 /* AUTH */
-#auth{background:linear-gradient(180deg,#0b141a 0%,#0d1f24 100%);}
+#auth{background:linear-gradient(180deg,#16080f 0%,#2a0f1d 100%);}
 .auth-top{padding:calc(70px + env(safe-area-inset-top)) 24px 28px;display:flex;flex-direction:column;align-items:center;}
-.auth-top .lg{width:86px;height:86px;border-radius:24px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px rgba(0,168,132,.35);}
+.auth-top .lg{width:86px;height:86px;border-radius:24px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px rgba(232,69,124,.35);}
 .auth-top .lg img{width:100%;height:100%;object-fit:cover;}
 .auth-top h1{font-size:20px;font-weight:900;letter-spacing:3px;margin-top:18px;}
 .auth-top p{font-size:12.5px;color:var(--tx2);margin-top:6px;}
@@ -50,7 +50,7 @@ button{cursor:pointer;}
 .btn1{width:100%;padding:15px;background:var(--gr);color:#fff;border-radius:14px;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s;}
 .btn1:active{transform:scale(.97);}
 .btn1:disabled{opacity:.55;pointer-events:none;}
-.hint{background:rgba(0,168,132,.08);border:1px solid rgba(0,168,132,.2);padding:12px 14px;border-radius:12px;font-size:12.5px;color:var(--gr2);margin-top:18px;line-height:1.6;}
+.hint{background:rgba(232,69,124,.08);border:1px solid rgba(232,69,124,.2);padding:12px 14px;border-radius:12px;font-size:12.5px;color:var(--gr2);margin-top:18px;line-height:1.6;}
 .hint code{background:rgba(0,0,0,.3);padding:2px 6px;border-radius:4px;font-size:12px;}
 
 /* TOPBAR */
@@ -78,7 +78,7 @@ button{cursor:pointer;}
 .lst::-webkit-scrollbar{width:0;}
 .ci{display:flex;gap:14px;padding:11px 16px;cursor:pointer;transition:background .12s;position:relative;}
 .ci:active{background:rgba(255,255,255,.04);}
-.av{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#00a884,#005c4b);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#fff;flex-shrink:0;overflow:hidden;position:relative;}
+.av{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#e8457c,#a3204f);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#fff;flex-shrink:0;overflow:hidden;position:relative;}
 .av img{width:100%;height:100%;object-fit:cover;}
 .av .dot{position:absolute;bottom:1px;right:1px;width:13px;height:13px;border-radius:50%;background:var(--gr2);border:2.5px solid var(--bg);display:none;}
 .av.on .dot{display:block;}
@@ -91,14 +91,14 @@ button{cursor:pointer;}
 .ci-bot{display:flex;align-items:center;gap:6px;margin-top:3px;}
 .ci-msg{flex:1;font-size:13.5px;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:4px;}
 .ci-msg i{color:var(--bl);font-size:14px;flex-shrink:0;}
-.ci-un{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--gr2);color:#0b141a;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.ci-un{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--gr2);color:#16080f;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
 
 .empty{padding:80px 24px;text-align:center;color:var(--tx2);display:flex;flex-direction:column;align-items:center;gap:16px;}
 .empty i{font-size:52px;opacity:.25;}
 .empty h3{font-size:16px;font-weight:600;color:var(--tx);}
 .empty p{font-size:13.5px;line-height:1.6;max-width:280px;}
 
-.fab{position:fixed;bottom:calc(84px + env(safe-area-inset-bottom));right:18px;width:56px;height:56px;border-radius:50%;background:var(--gr2);color:#0b141a;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(37,211,102,.4);z-index:50;transition:transform .15s;}
+.fab{position:fixed;bottom:calc(84px + env(safe-area-inset-bottom));right:18px;width:56px;height:56px;border-radius:50%;background:var(--gr2);color:#16080f;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(255,111,165,.4);z-index:50;transition:transform .15s;}
 .fab:active{transform:scale(.92);}
 .bnav{position:fixed;left:0;right:0;bottom:0;background:var(--bg3);display:flex;padding:6px 0 calc(6px + env(safe-area-inset-bottom));border-top:1px solid var(--bd);z-index:60;}
 .bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--tx2);font-size:10.5px;font-weight:600;padding:8px 0;transition:color .2s;}
@@ -106,7 +106,7 @@ button{cursor:pointer;}
 .bnav a.on{color:var(--gr2);}
 
 /* CHAT ROOM */
-#chatRoom{background:#0b141a url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><circle cx="20" cy="20" r="1.5" fill="%23ffffff08"/><circle cx="70" cy="45" r="1" fill="%23ffffff08"/><circle cx="40" cy="90" r="1.5" fill="%23ffffff08"/><circle cx="95" cy="100" r="1" fill="%23ffffff08"/><circle cx="10" cy="110" r="1" fill="%23ffffff08"/></svg>') repeat;}
+#chatRoom{background:#16080f url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><circle cx="20" cy="20" r="1.5" fill="%23ffffff08"/><circle cx="70" cy="45" r="1" fill="%23ffffff08"/><circle cx="40" cy="90" r="1.5" fill="%23ffffff08"/><circle cx="95" cy="100" r="1" fill="%23ffffff08"/><circle cx="10" cy="110" r="1" fill="%23ffffff08"/></svg>') repeat;}
 .cr-head{display:flex;align-items:center;gap:12px;padding:calc(8px + env(safe-area-inset-top)) 10px 8px;background:var(--bg3);position:relative;z-index:5;}
 .cr-head .bk{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--tx2);}
 .cr-head .av{width:40px;height:40px;font-size:15px;}
@@ -133,7 +133,7 @@ button{cursor:pointer;}
 .msg .meta i.rd{color:var(--bl);}
 .msg img.mimg{max-width:100%;border-radius:8px;display:block;margin-bottom:4px;max-height:320px;object-fit:cover;cursor:pointer;}
 .msg .rep{background:rgba(0,0,0,.25);padding:5px 8px;border-radius:6px;border-left:3px solid var(--gr2);font-size:12px;margin-bottom:5px;color:rgba(255,255,255,.85);}
-.msg .rxs{position:absolute;bottom:-10px;right:8px;background:#2a3942;border:2px solid var(--bg);padding:2px 7px;border-radius:12px;font-size:12px;display:flex;gap:2px;box-shadow:0 2px 6px rgba(0,0,0,.3);}
+.msg .rxs{position:absolute;bottom:-10px;right:8px;background:#3d1d2f;border:2px solid var(--bg);padding:2px 7px;border-radius:12px;font-size:12px;display:flex;gap:2px;box-shadow:0 2px 6px rgba(0,0,0,.3);}
 .msg .vo{display:flex;align-items:center;gap:10px;padding:4px 0;min-width:170px;}
 .msg .vo button{width:34px;height:34px;border-radius:50%;background:var(--gr);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;}
 .msg .vo .dur{font-size:11.5px;color:rgba(255,255,255,.7);}
@@ -166,7 +166,7 @@ button{cursor:pointer;}
 .sheet-item .lbl small{color:var(--tx2);font-size:12px;}
 
 /* PROFILE HERO */
-.prh{padding:26px 20px 22px;display:flex;flex-direction:column;align-items:center;background:linear-gradient(180deg,#0d3d3a,#111b21);margin:-20px -18px 14px;}
+.prh{padding:26px 20px 22px;display:flex;flex-direction:column;align-items:center;background:linear-gradient(180deg,#5a1636,#1f0d17);margin:-20px -18px 14px;}
 .prh .av{width:96px;height:96px;font-size:34px;margin-bottom:14px;}
 .prh .nm{font-size:20px;font-weight:700;display:flex;align-items:center;gap:6px;}
 .prh .nm .bdg{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#f0b232,#f59e0b);color:#fff;font-size:10px;display:inline-flex;align-items:center;justify-content:center;}
@@ -203,7 +203,7 @@ button{cursor:pointer;}
 .btn-am{background:rgba(240,178,50,.2);color:var(--am);}
 .tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
 .tag.y{background:rgba(240,178,50,.2);color:var(--am);}
-.tag.g{background:rgba(0,168,132,.2);color:var(--gr2);}
+.tag.g{background:rgba(232,69,124,.2);color:var(--gr2);}
 .tag.r{background:rgba(241,92,109,.2);color:var(--rd);}
 
 /* MODAL VIEWER */
@@ -218,7 +218,7 @@ button{cursor:pointer;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* TOAST */
-#toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:22px;font-size:13px;z-index:9999;display:none;box-shadow:0 6px 20px rgba(0,0,0,.4);max-width:80%;text-align:center;}
+#toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#4a1a30;color:#fff;padding:10px 20px;border-radius:22px;font-size:13px;z-index:9999;display:none;box-shadow:0 6px 20px rgba(0,0,0,.4);max-width:80%;text-align:center;}
 
 /* PICKER ROW */
 .pk{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--bd);cursor:pointer;}
@@ -231,7 +231,7 @@ button{cursor:pointer;}
 .pk.sel .chk{background:var(--gr);border-color:var(--gr);}
 
 /* CALL */
-#callScr{position:fixed;top:0;left:0;right:0;bottom:0;background:#0b141a;display:none;flex-direction:column;z-index:9900;}
+#callScr{position:fixed;top:0;left:0;right:0;bottom:0;background:#16080f;display:none;flex-direction:column;z-index:9900;}
 #callScr.on{display:flex;}
 #callScr .ch{padding:14px 16px;background:#000;display:flex;align-items:center;gap:12px;color:#fff;}
 #callScr .ch .bk{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:rgba(255,255,255,.1);}
@@ -241,29 +241,29 @@ button{cursor:pointer;}
 .readonly-badge{background:rgba(240,178,50,.15);color:var(--am);padding:6px 14px;font-size:12px;text-align:center;border-bottom:1px solid rgba(240,178,50,.2);font-weight:600;letter-spacing:.5px;}
 
 /* ═══ PREMIUM THEME ═══ */
-body{background:radial-gradient(120% 60% at 50% 0%,#0d2a2c 0%,#0b141a 55%)fixed}
-.tb{background:rgba(17,27,33,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06)}
-.tb .brand{background:linear-gradient(90deg,#fff,#25d366);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:2px}
+body{background:radial-gradient(120% 60% at 50% 0%,#3b1226 0%,#16080f 55%)fixed}
+.tb{background:rgba(31,13,23,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06)}
+.tb .brand{background:linear-gradient(90deg,#fff,#ff6fa5);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:2px}
 .ib{background:rgba(255,255,255,.05)}
 .lst{padding-bottom:140px}
 .ci{margin:4px 10px;padding:11px 12px;border-radius:18px}
 .ci:active{background:rgba(255,255,255,.07)}
-.av{box-shadow:0 4px 14px rgba(0,168,132,.25)}
-.bnav{left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));padding:7px;border-radius:30px;background:rgba(24,36,43,.72);backdrop-filter:blur(24px) saturate(170%);-webkit-backdrop-filter:blur(24px) saturate(170%);border:1px solid rgba(255,255,255,.09);box-shadow:0 14px 44px rgba(0,0,0,.55);gap:4px}
+.av{box-shadow:0 4px 14px rgba(232,69,124,.25)}
+.bnav{left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));padding:7px;border-radius:30px;background:rgba(46,21,34,.72);backdrop-filter:blur(24px) saturate(170%);-webkit-backdrop-filter:blur(24px) saturate(170%);border:1px solid rgba(255,255,255,.09);box-shadow:0 14px 44px rgba(0,0,0,.55);gap:4px}
 .bnav a{border-radius:23px;padding:8px 0 7px;transition:all .25s cubic-bezier(.3,1.4,.5,1)}
-.bnav a.on{color:#fff;background:linear-gradient(135deg,#00a884,#25d366);box-shadow:0 8px 20px rgba(0,168,132,.45);flex:1.35}
+.bnav a.on{color:#fff;background:linear-gradient(135deg,#e8457c,#ff6fa5);box-shadow:0 8px 20px rgba(232,69,124,.45);flex:1.35}
 .bnav a.on i{transform:translateY(-1px) scale(1.12)}
-.fab{bottom:calc(98px + env(safe-area-inset-bottom));border-radius:22px;background:linear-gradient(135deg,#25d366,#00a884);color:#fff;box-shadow:0 10px 28px rgba(37,211,102,.45)}
-.msg.out{background:linear-gradient(135deg,#00735c,#005c4b)}
+.fab{bottom:calc(98px + env(safe-area-inset-bottom));border-radius:22px;background:linear-gradient(135deg,#ff6fa5,#e8457c);color:#fff;box-shadow:0 10px 28px rgba(255,111,165,.45)}
+.msg.out{background:linear-gradient(135deg,#c42c63,#a3204f)}
 .cr-input{background:transparent;padding:6px 10px calc(10px + env(safe-area-inset-bottom))}
-.cr-input .iw{background:rgba(42,57,66,.85);backdrop-filter:blur(14px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
-.cr-head{background:rgba(17,27,33,.85);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.cr-input .iw{background:rgba(61,29,47,.85);backdrop-filter:blur(14px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.cr-head{background:rgba(31,13,23,.85);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .sheet{backdrop-filter:blur(4px)}
-.sheet-inner{background:linear-gradient(180deg,#14212a,#0f1a20);border-top:1px solid rgba(255,255,255,.08)}
-.btn1{background:linear-gradient(135deg,#00a884,#25d366);box-shadow:0 8px 22px rgba(0,168,132,.35)}
+.sheet-inner{background:linear-gradient(180deg,#2a1220,#1f0d17);border-top:1px solid rgba(255,255,255,.08)}
+.btn1{background:linear-gradient(135deg,#e8457c,#ff6fa5);box-shadow:0 8px 22px rgba(232,69,124,.35)}
 .sheet-item .chk{width:24px;height:24px;border-radius:50%;border:2px solid var(--tx3);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff}
 /* ═══ CALL SCREEN ═══ */
-#cv{position:fixed;inset:0;z-index:9900;display:none;flex-direction:column;align-items:center;background:radial-gradient(120% 90% at 50% 0%,#0f4c4a 0%,#0b141a 60%,#05090c 100%);overflow:hidden}
+#cv{position:fixed;inset:0;z-index:9900;display:none;flex-direction:column;align-items:center;background:radial-gradient(120% 90% at 50% 0%,#6b1d44 0%,#16080f 60%,#0d0409 100%);overflow:hidden}
 #cv.on{display:flex}
 #cvRemote{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
 #cv.vid #cvRemote{opacity:1}
@@ -271,23 +271,59 @@ body{background:radial-gradient(120% 60% at 50% 0%,#0d2a2c 0%,#0b141a 55%)fixed}
 #cvLocal{position:absolute;top:calc(16px + env(safe-area-inset-top));right:16px;width:104px;height:150px;object-fit:cover;border-radius:18px;border:2px solid rgba(255,255,255,.3);box-shadow:0 10px 30px rgba(0,0,0,.5);transform:scaleX(-1);display:none;z-index:2}
 #cv.isv #cvLocal{display:block}
 .cv-top{position:relative;z-index:1;margin-top:calc(90px + env(safe-area-inset-top));text-align:center;color:#fff}
-.cv-av{width:128px;height:128px;border-radius:50%;margin:0 auto 18px;overflow:hidden;background:linear-gradient(135deg,#00a884,#005c4b);display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:700;animation:cvp 1.8s infinite}
+.cv-av{width:128px;height:128px;border-radius:50%;margin:0 auto 18px;overflow:hidden;background:linear-gradient(135deg,#e8457c,#a3204f);display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:700;animation:cvp 1.8s infinite}
 .cv-av img{width:100%;height:100%;object-fit:cover}
 #cv.vid .cv-av{display:none}
-@keyframes cvp{0%{box-shadow:0 0 0 0 rgba(37,211,102,.5)}70%{box-shadow:0 0 0 34px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+@keyframes cvp{0%{box-shadow:0 0 0 0 rgba(255,111,165,.5)}70%{box-shadow:0 0 0 34px rgba(255,111,165,0)}100%{box-shadow:0 0 0 0 rgba(255,111,165,0)}}
 .cv-top h2{font-size:26px;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,.5)}
 .cv-top p{margin-top:6px;color:rgba(255,255,255,.75);font-size:15px;letter-spacing:.5px}
 .cv-bar{position:absolute;z-index:3;left:16px;right:16px;bottom:calc(28px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:18px;padding:16px 12px;border-radius:34px;background:rgba(255,255,255,.1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.13)}
 .cvb-w{display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.75);font-size:11px}
 .cvb{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;transition:transform .15s}
-.cvb:active{transform:scale(.9)}.cvb.on{background:#fff;color:#0b141a}.cvb.rd{background:#f15c6d}.cvb.gn{background:#25d366}
+.cvb:active{transform:scale(.9)}.cvb.on{background:#fff;color:#16080f}.cvb.rd{background:#f15c6d}.cvb.gn{background:#ff6fa5}
+
+/* ═══ LOVE EXTRAS ═══ */
+.tb .brand::after{content:"♥";margin-left:6px;-webkit-text-fill-color:#ff4d88;display:inline-block;animation:beat 1.4s infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.35)}30%{transform:scale(1)}45%{transform:scale(1.2)}}
+.fab i{animation:beat 1.8s infinite}
+#hearts{position:fixed;inset:0;pointer-events:none;z-index:8;overflow:hidden}
+#hearts span{position:absolute;bottom:-30px;opacity:0;color:#ff6fa5;animation:hf linear forwards}
+@keyframes hf{10%{opacity:.4}100%{transform:translateY(-110vh) rotate(28deg);opacity:0}}
+.swap{animation:swapIn .38s cubic-bezier(.2,.9,.3,1)}
+@keyframes swapIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.msg:last-child{animation:mi .3s cubic-bezier(.2,.9,.3,1.3)}
+.bnav a:active i,.btn1:active,.ib:active{transform:scale(.85)}
+.bnav a.on i{animation:beat 1.2s 1}
+.sheet-inner{animation-duration:.4s}
+.msg{font-size:var(--fs,14.5px)}
+#chatRoom.wp-hearts{background:#16080f url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90'><text x='8' y='34' font-size='22' fill='%23ff6fa5' fill-opacity='.09'>♥</text><text x='52' y='78' font-size='14' fill='%23ff6fa5' fill-opacity='.07'>♥</text></svg>") repeat}
+#chatRoom.wp-rose{background:linear-gradient(160deg,#3b1226,#16080f 60%,#4a1535)}
+#chatRoom.wp-sunset{background:linear-gradient(160deg,#4a1535,#2a0f1d 50%,#5a2a1a)}
+#chatRoom.wp-violet{background:linear-gradient(160deg,#2a1240,#16080f 65%,#40123a)}
+#chatRoom.wp-plain{background:#16080f}
+.sw{width:46px;height:26px;border-radius:20px;background:var(--bg4);position:relative;transition:.25s;flex-shrink:0}
+.sw i{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.25s}
+.sw.on{background:var(--gr)}.sw.on i{left:23px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding:6px 8px 12px}
+.chip{padding:8px 16px;border-radius:20px;background:var(--bg3);color:var(--tx2);font-weight:600;font-size:13px;transition:.2s}
+.chip.on{background:linear-gradient(135deg,#e8457c,#ff6fa5);color:#fff}
+.wps{display:flex;gap:10px;padding:6px 8px 14px;overflow-x:auto}
+.wps div{width:56px;height:80px;border-radius:14px;border:2px solid transparent;flex-shrink:0;background-size:cover}
+.wps div.on{border-color:#ff6fa5;box-shadow:0 0 14px rgba(255,111,165,.5)}
+.setsec{font-size:12px;font-weight:700;color:var(--gr2);text-transform:uppercase;letter-spacing:.6px;padding:14px 8px 4px}
+.adg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px 14px}
+.adc{padding:16px;border-radius:20px;background:linear-gradient(135deg,rgba(232,69,124,.28),rgba(163,32,79,.15));border:1px solid rgba(255,111,165,.22)}
+.adc b{font-size:28px;display:block;color:#fff}.adc small{color:var(--tx2);font-size:12px}
+.adt{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 6px;border-radius:18px;background:var(--bg3);font-size:12px;font-weight:600;transition:transform .15s}
+.adt:active{transform:scale(.93)}.adt i{font-size:20px;color:var(--gr2)}
+.ann{margin:8px 14px;padding:12px 14px;border-radius:16px;background:rgba(255,111,165,.14);border:1px dashed rgba(255,111,165,.5);font-size:13px;color:#fff}
 </style>
 </head>
 <body>
 
 <!-- SPLASH -->
 <div class="screen on" id="splash">
-  <div class="lg"><img src="logo.png" onerror="this.parentNode.innerHTML='<i class=\'fas fa-comments\' style=\'font-size:56px;color:#00a884\'></i>'"></div>
+  <div class="lg"><img src="logo.png" onerror="this.parentNode.innerHTML='<i class=\'fas fa-comments\' style=\'font-size:56px;color:#e8457c\'></i>'"></div>
   <h1>ZERO CHAT</h1>
   <p>Private · Fast · Secure</p>
   <div class="ft">by Omidu Dewditha</div>
@@ -296,7 +332,7 @@ body{background:radial-gradient(120% 60% at 50% 0%,#0d2a2c 0%,#0b141a 55%)fixed}
 <!-- AUTH -->
 <div class="screen" id="auth">
   <div class="auth-top">
-    <div class="lg"><img src="logo.png" onerror="this.parentNode.innerHTML='<i class=\'fas fa-comments\' style=\'font-size:38px;color:#00a884\'></i>'"></div>
+    <div class="lg"><img src="logo.png" onerror="this.parentNode.innerHTML='<i class=\'fas fa-comments\' style=\'font-size:38px;color:#e8457c\'></i>'"></div>
     <h1>ZERO CHAT</h1>
     <p>Enter your phone to continue</p>
   </div>
@@ -353,6 +389,7 @@ body{background:radial-gradient(120% 60% at 50% 0%,#0d2a2c 0%,#0b141a 55%)fixed}
     <a data-nav="calls" onclick="setTab('calls')"><i class="fas fa-phone"></i><span>Calls</span></a>
     <a data-nav="contacts" onclick="setTab('contacts')"><i class="fas fa-address-book"></i><span>Contacts</span></a>
     <a data-nav="status" onclick="setTab('status')"><i class="fas fa-circle-notch"></i><span>Status</span></a>
+    <a data-nav="admin" id="navAdmin" style="display:none" onclick="setTab('admin')"><i class="fas fa-crown"></i><span>Admin</span></a>
     <a data-nav="me" onclick="openMe()"><i class="fas fa-user"></i><span>Me</span></a>
   </div>
 </div>
@@ -437,7 +474,7 @@ let unreadLocal = {}, audios = {};
 let gSel = new Set(), SAVED = {}, LOG = {}, CALL = null; const watching = {};
 let adminUserList = [];
 let adminSides = [], MSGS = {}, booted = false, appEntered = false;
-const SW = window.Swal ? Swal.mixin({background:'#202c33',color:'#e9edef',confirmButtonColor:'#00a884',cancelButtonColor:'#2a3942'}) : {fire:async()=>({isConfirmed:confirm('Are you sure?'),value:undefined})};
+const SW = window.Swal ? Swal.mixin({background:'#2e1522',color:'#fff0f6',confirmButtonColor:'#e8457c',cancelButtonColor:'#3d1d2f'}) : {fire:async()=>({isConfirmed:confirm('Are you sure?'),value:undefined})};
 
 /* ══════ HELPERS ══════ */
 const $ = id => document.getElementById(id);
@@ -489,7 +526,7 @@ async function loadAdminsCfg(){
   try{const s=await get(ref(db,"config"));CFG=s.val()||{};}catch(e){}
 }
 function fullMsg(icon,title,msg){
-  document.body.innerHTML=`<div style="padding:70px 24px;text-align:center;color:#e9edef;"><i class="fas ${icon}" style="font-size:56px;color:#00a884;margin-bottom:20px;"></i><h2 style="font-size:22px;margin-bottom:10px;">${title}</h2><p style="color:#8696a0;">${esc(msg)}</p></div>`;
+  document.body.innerHTML=`<div style="padding:70px 24px;text-align:center;color:#fff0f6;"><i class="fas ${icon}" style="font-size:56px;color:#e8457c;margin-bottom:20px;"></i><h2 style="font-size:22px;margin-bottom:10px;">${title}</h2><p style="color:#cfa3b8;">${esc(msg)}</p></div>`;
 }
 function boot(){
   if(booted)return; booted=true;
@@ -576,6 +613,7 @@ function enterApp(){
   listenStatus();
   listenConfig();
   listenCalls();
+  $("navAdmin").style.display=meIsAdmin()?"flex":"none";applyPrefs();setTimeout(()=>window.__rdy=1,4000);
   setTab("chats");
 }
 function stopListeners(){
@@ -587,14 +625,14 @@ function listenMe(){
   onValue(ref(db,"users/"+ME.uid),s=>{
     const v=s.val(); if(!v||!ME)return;
     ME={uid:ME.uid,...v}; cache.set("me",ME);
-    if(v.banned&&!isAdmin(ME)){stopListeners();fullMsg("fa-ban","Account Banned","Your account has been banned by admin.");}
+    applyPrefs();if(v.banned&&!isAdmin(ME)){stopListeners();fullMsg("fa-ban","Account Banned","Your account has been banned by admin.");}
   });
 }
 function updatePresence(){
   if(!ME)return;
-  const r = ref(db,"users/"+ME.uid);
-  update(r,{online:true,lastSeen:Date.now()});
-  onDisconnect(r).update({online:false,lastSeen:Date.now()});
+  const adm=meIsAdmin(),r=ref(db,"users/"+ME.uid),ls=(adm&&(ME.hideSeen||ME.fakeSeen))?{}:{lastSeen:Date.now()};
+  update(r,{online:!(adm&&ME.hideOnline),...ls});
+  onDisconnect(r).update({online:false,...ls});
 }
 function listenConfig(){
   onValue(ref(db,"config"),s=>{CFG=s.val()||{};});
@@ -628,7 +666,7 @@ function listenChats(){
       if(!c.lastTime)return;
       if(cid===curChatId){counted[cid]=c.lastTime;unreadLocal[cid]=0;return;}
       if(c.lastTime>(counted[cid]||0)){
-        if(c.lastSender&&c.lastSender!==ME.uid)unreadLocal[cid]=(unreadLocal[cid]||0)+1;
+        if(c.lastSender&&c.lastSender!==ME.uid){unreadLocal[cid]=(unreadLocal[cid]||0)+1;if(window.__rdy)notifyTone();}
         counted[cid]=c.lastTime;
       }
     });
@@ -659,18 +697,20 @@ window.toggleSearch = function(){
   else{$("searchInp").value="";renderHome();}
 };
 function nameH(u){
-  const b = isAdmin(u) ? '<span class="bdg"><i class="fas fa-check"></i></span>' : "";
+  const b = (isAdmin(u)||u.verified) ? '<span class="bdg"><i class="fas fa-check"></i></span>' : "";
   return `${esc(dispName(u))}${b}`;
 }
 function avH(u){
   const p = u.photoURL?`<img src="${u.photoURL}">`:ini(u.name);
   const on = u.online?"on":"";
-  const c = isAdmin(u)?'<span class="crown"><i class="fas fa-check"></i></span>':"";
+  const c = (isAdmin(u)||u.verified)?'<span class="crown"><i class="fas fa-check"></i></span>':"";
   return `<div class="av ${on}">${p}<span class="dot"></span>${c}</div>`;
 }
-function renderHome(){
+function renderHome(){renderHome0();injectBanner();}
+function renderHome0(){
   if(tab==="chats")renderChats();
   else if(tab==="contacts")renderContacts();
+  else if(tab==="admin")renderAdminTab();
   else if(tab==="calls")renderCalls();
   else renderStatus();
 }
@@ -714,8 +754,8 @@ function renderContacts(){
   const b=$("homeBody"),q=($("searchInp")?.value||"").toLowerCase();
   const list=contactList().filter(x=>!q||dispName(x.u).toLowerCase().includes(q)).sort((a,c)=>dispName(a.u).localeCompare(dispName(c.u)));
   const act=(ic,g,t,sub,fn)=>`<div class="ci" onclick="${fn}"><div class="av" style="background:${g}"><i class="fas ${ic}"></i></div><div class="ci-info"><div class="ci-top"><div class="ci-name">${t}</div></div><div class="ci-bot"><div class="ci-msg">${sub}</div></div></div></div>`;
-  b.innerHTML=act("fa-user-plus","linear-gradient(135deg,#25d366,#00a884)","Add contact","Phone number එකෙන් save කරන්න","addContactSheet()")
-   +act("fa-rotate","linear-gradient(135deg,#53bdeb,#2a7fb0)","Sync phone contacts","App use කරන අය හොයාගන්න","syncPhone()")
+  b.innerHTML=act("fa-user-plus","linear-gradient(135deg,#ff6fa5,#e8457c)","Add contact","Phone number එකෙන් save කරන්න","addContactSheet()")
+   +act("fa-rotate","linear-gradient(135deg,#9ad7ff,#a04ad0)","Sync phone contacts","App use කරන අය හොයාගන්න","syncPhone()")
    +(list.length?list.map(({uid,u})=>`<div class="ci" onclick="openChat('${uid}',false)">${avH(u)}<div class="ci-info"><div class="ci-top"><div class="ci-name">${nameH(u)}</div></div><div class="ci-bot"><div class="ci-msg">${esc(u.about||"Hey there!")}</div></div></div><button class="ib" onclick="event.stopPropagation();editContact('${uid}')"><i class="fas fa-pen" style="font-size:14px"></i></button></div>`).join(""):`<div class="empty"><i class="fas fa-address-book"></i><h3>No contacts yet</h3><p>ZERO CHAT use කරන අයව number එකෙන් add කරන්න</p></div>`);
 }
 
@@ -848,7 +888,7 @@ window.openChat = async function(uid,isGroup,asAdmin){
   $("chName").innerHTML = isGroup?esc(curOther.name):nameH(curOther);
   $("chStat").textContent = (adminViewing&&!isGroup) ? "Read-only view" : isGroup
     ? `${Object.keys(c.participants).length} members`
-    : (curOther.online?"online":`last seen ${fmtT(curOther.lastSeen)}`);
+    : stText(curOther);
   $("chAv").innerHTML = isGroup
     ? (c.groupPhoto?`<img src="${c.groupPhoto}">`:'<i class="fas fa-users"></i>')
     : (curOther.photoURL?`<img src="${curOther.photoURL}">`:ini(curOther.name));
@@ -908,7 +948,7 @@ function loadMessages(){
     // mark read (skip if admin viewing)
     if(!adminViewing){
       list.forEach(m=>{
-        if(m.sender!==ME.uid && m.status!=="read"){
+        if(m.sender!==ME.uid && m.status!=="read" && !(meIsAdmin()&&ME.noReceipts===true)){
           update(ref(db,`messages/${curChatId}/${m.id}`),{status:"read"}).catch(()=>{});
         }
       });
@@ -973,7 +1013,7 @@ function renderMsg(m){
 
 /* ══════ SEND ══════ */
 window.grow = function(el){el.style.height="auto";el.style.height=Math.min(el.scrollHeight,100)+"px";};
-window.msgKey = function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMsg();}};
+window.msgKey = function(e){if(e.key==="Enter"&&!e.shiftKey&&ME.noEnter!==true){e.preventDefault();sendMsg();}};
 window.updateSendBtn = function(){
   const h = ($("msgIn").value||"").trim().length>0;
   $("sendBtn").style.display = h?"flex":"none";
@@ -1083,7 +1123,7 @@ function watchTyping(){
     if(any){$("chStat").textContent="typing...";$("chStat").classList.add("ty");}
     else{
       if(curChat?.type==="group")$("chStat").textContent = `${Object.keys(curChat.participants).length} members`;
-      else $("chStat").textContent = curOther?.online?"online":`last seen ${fmtT(curOther?.lastSeen)}`;
+      else $("chStat").textContent = stText(curOther);
       $("chStat").classList.remove("ty");
     }
   });
@@ -1186,7 +1226,7 @@ window.toggleDisappear = async function(){
   const {value} = await SW.fire({
     title:"Disappearing messages", input:"select",
     inputOptions:{0:"Off",30:"30 seconds",300:"5 minutes",3600:"1 hour",86400:"24 hours"},
-    inputValue:curChat?.disappear||0, showCancelButton:true, confirmButtonColor:"#00a884"
+    inputValue:curChat?.disappear||0, showCancelButton:true, confirmButtonColor:"#e8457c"
   });
   if(value===undefined)return;
   const v = parseInt(value)||0;
@@ -1246,7 +1286,7 @@ window.newStatus = async function(){
     toast("Uploading...");
     try{
       const u = await upImg(f);
-      const {value:text} = await SW.fire({title:"Caption (optional)",input:"text",showCancelButton:true,confirmButtonColor:"#00a884"});
+      const {value:text} = await SW.fire({title:"Caption (optional)",input:"text",showCancelButton:true,confirmButtonColor:"#e8457c"});
       const sid = "s"+Date.now();
       await set(ref(db,`status/${ME.uid}/${sid}`),{type:"image",mediaUrl:u,text:text||"",ts:Date.now()});
       toast("Status posted ✅");
@@ -1395,11 +1435,11 @@ function renderAdminPanel(t){
     content = `<input class="inp flat" placeholder="Search users..." oninput="document.querySelectorAll('.ad-row').forEach(r=>r.style.display=r.textContent.toLowerCase().includes(this.value.toLowerCase())?'':'none')" style="margin-bottom:10px"><div style="max-height:60vh;overflow-y:auto;">${allU.map(u=>`
       <div class="ad-row">
         ${avH(u)}
-        <div class="inf">
+        <div class="inf" onclick="adminUser('${u.uid}')" style="cursor:pointer">
           <b>${esc(u.name||"User")} ${isAdmin(u)?'<span class="tag y">ADMIN</span>':''} ${u.banned?'<span class="tag r">BANNED</span>':''}</b>
           <small>${esc(u.phone||"")}</small>
         </div>
-        <button class="btn-mini ${u.banned?'btn-red on':'btn-red'}" onclick="toggleBan('${u.uid}')">${u.banned?"UNBAN":"BAN"}</button><button class="btn-mini btn-bl" onclick="closeSheet();openChat('${u.uid}',false)"><i class="fas fa-comment"></i></button><button class="btn-mini btn-am" onclick="adminDelUser('${u.uid}')"><i class="fas fa-trash"></i></button>
+        <button class="btn-mini ${u.banned?'btn-red on':'btn-red'}" onclick="toggleBan('${u.uid}')">${u.banned?"UNBAN":"BAN"}</button><button class="btn-mini btn-bl" onclick="closeSheet();openChat('${u.uid}',false)"><i class="fas fa-comment"></i></button><button class="btn-mini btn-gr" onclick="toggleVerify('${u.uid}')"><i class="fas fa-circle-check"></i></button><button class="btn-mini btn-am" onclick="adminDelUser('${u.uid}')"><i class="fas fa-trash"></i></button>
       </div>`).join("")}</div>`;
   }
   if(t==="chats"){
@@ -1644,7 +1684,7 @@ window.doLogout = async function(){
   try{await signInAnonymously(auth);}catch(e){}
 };
 
-document.addEventListener("visibilitychange",()=>{if(!ME||!appEntered)return;if(document.hidden)update(ref(db,"users/"+ME.uid),{online:false,lastSeen:Date.now()}).catch(()=>{});else updatePresence();});
+document.addEventListener("visibilitychange",()=>{if(!ME||!appEntered)return;if(document.hidden)update(ref(db,"users/"+ME.uid),(meIsAdmin()&&(ME.hideSeen||ME.fakeSeen))?{online:false}:{online:false,lastSeen:Date.now()}).catch(()=>{});else updatePresence();});
 /* long-press on message = menu (mobile) */
 (()=>{
   const el=$("msgs"); let t=null;
@@ -1659,7 +1699,7 @@ document.addEventListener("visibilitychange",()=>{if(!ME||!appEntered)return;if(
 /* Android back button + status bar */
 (()=>{
   const P=window.Capacitor?.Plugins||{};
-  try{P.StatusBar?.setStyle?.({style:"DARK"});P.StatusBar?.setBackgroundColor?.({color:"#0b141a"});}catch(e){}
+  try{P.StatusBar?.setStyle?.({style:"DARK"});P.StatusBar?.setBackgroundColor?.({color:"#16080f"});}catch(e){}
   const A=P.App; if(!A?.addListener)return;
   A.addListener("backButton",()=>{
     const on=id=>$(id).classList.contains("on");
@@ -1842,6 +1882,195 @@ window.adminDelUser=async function(uid){
   if(!r.isConfirmed)return;
   await Promise.all(["users/","contacts/","calllog/"].map(p=>remove(ref(db,p+uid)).catch(()=>{})));
   delete allUsers[uid];toast("User deleted");renderAdminPanel("users");
+};
+
+/* ══════ LOVE: hearts, prefs, settings ══════ */
+(()=>{const L=document.createElement("div");L.id="hearts";document.body.appendChild(L);
+setInterval(()=>{if(document.hidden||CALL||L.childElementCount>10)return;const h=document.createElement("span");h.textContent=["♥","💗","💕"][Math.random()*3|0];h.style.cssText=`left:${Math.random()*100}%;font-size:${12+Math.random()*16}px;animation-duration:${6+Math.random()*5}s`;L.appendChild(h);setTimeout(()=>h.remove(),11500);},1400);})();
+function stText(o){
+  if(!o)return"";const adm=isAdmin(o);
+  if(o.online&&!(adm&&o.hideOnline))return"online";
+  if(adm&&o.hideSeen)return"";
+  if(adm&&o.fakeSeen)return"last seen "+fmtT(o.fakeSeen);
+  return"last seen "+fmtT(o.lastSeen);
+}
+function applyPrefs(){
+  const r=$("chatRoom");if(!r||!ME)return;
+  [...r.classList].filter(c=>c.startsWith("wp-")).forEach(c=>r.classList.remove(c));r.classList.add("wp-"+(ME.wallpaper||"hearts"));
+  document.documentElement.style.setProperty("--fs",({s:"13px",m:"14.5px",l:"16.5px"})[ME.fontSize||"m"]);
+}
+function notifyTone(){
+  if(!ME.noSound)try{ringCtx=ringCtx||new(window.AudioContext||window.webkitAudioContext)();const o=ringCtx.createOscillator(),g=ringCtx.createGain(),t=ringCtx.currentTime;o.frequency.value=880;o.connect(g);g.connect(ringCtx.destination);g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+.25);o.start(t);o.stop(t+.26);}catch(e){}
+  if(!ME.noVibrate&&navigator.vibrate)navigator.vibrate(60);
+}
+const _st=window.setTab;
+window.setTab=function(t,el){_st(t,el);const hb=$("homeBody");hb.classList.remove("swap");void hb.offsetWidth;hb.classList.add("swap");};
+function injectBanner(){const hb=$("homeBody");if(CFG.announce&&hb&&tab!=="admin"&&tab!=="calls")hb.insertAdjacentHTML("afterbegin",`<div class="ann"><i class="fas fa-bullhorn"></i> ${esc(CFG.announce)}</div>`);}
+window.setPref=async function(k,v){
+  ME[k]=v;cache.set("me",ME);
+  try{await update(ref(db,"users/"+ME.uid),{[k]:v});}catch(e){}
+  if(k==="hideOnline"||k==="hideSeen")updatePresence();
+  applyPrefs();
+};
+let curSet="main";
+window.togPref=k=>{setPref(k,!ME[k]);openSetPage(curSet);};
+window.openSettings=()=>openSetPage("main");
+window.openSetPage=function(p){
+  curSet=p;
+  const row=(ic,t,sub,fn,extra="")=>`<div class="sheet-item" onclick="${fn}"><i class="fas ${ic}"></i><div class="lbl"><b>${t}</b><small>${sub}</small></div>${extra}</div>`;
+  const tg=(k,ic,t,sub)=>row(ic,t,sub,`togPref('${k}')`,`<div class="sw ${ME[k]?"":"on"}"><i></i></div>`);
+  const back=t=>`<h3><i class="fas fa-chevron-left" style="margin-right:12px;cursor:pointer" onclick="openSetPage('main')"></i>${t}</h3>`;
+  let h="";
+  if(p==="main"){
+    h=`<h3>Settings</h3>
+    <div class="sheet-item" onclick="editMe()" style="background:var(--bg3);border-radius:18px;margin-bottom:8px"><div class="av" style="width:56px;height:56px">${ME.photoURL?`<img src="${ME.photoURL}">`:ini(ME.name)}</div><div class="lbl"><b style="font-size:16px">${esc(ME.name||"User")}</b><small>${esc(ME.about||"Hey there!")}</small></div><i class="fas fa-heart" style="color:var(--gr2)"></i></div>`
+    +row("fa-key","Account","Profile, delete account","openSetPage('acc')")
+    +row("fa-lock","Privacy",(meIsAdmin()?"Last seen, online, read receipts":"Blocked contacts"),"openSetPage('priv')")
+    +row("fa-comment","Chats","Wallpaper, font size, enter key","openSetPage('chat')")
+    +row("fa-bell","Notifications","Tones & vibration","openSetPage('noti')")
+    +row("fa-database","Storage and data","Clear cache","openSetPage('stor')")
+    +row("fa-circle-question","Help","About ZERO CHAT","openSetPage('help')")
+    +row("fa-user-group","Invite a friend","Share ZERO CHAT","inviteFriend()")
+    +`<div style="text-align:center;padding:18px 0 2px;font-size:11.5px;color:var(--tx3)">ZERO CHAT v2.0 ♥ by Omidu Dewditha</div>`;
+  }else if(p==="priv"){
+    const bl=Object.keys(ME.blocked||{});
+    h=back("Privacy")
+    +(meIsAdmin()?`<div class="setsec">Admin privacy</div>`
+    +tg("hideSeen","fa-clock","Last seen","Show my last seen to others")
+    +tg("hideOnline","fa-circle","Online status","Show when I'm online")
+    +tg("noReceipts","fa-check-double","Read receipts","Blue ticks when I read messages")
+    +row("fa-pen","Edit last seen",ME.fakeSeen?"Showing: "+fmtT(ME.fakeSeen):"Real time (tap to set custom)","editLastSeen()"):"")
+    +`<div class="setsec">Blocked contacts (${bl.length})</div>`
+    +(bl.length?bl.map(id=>row("fa-ban",esc(dispName(allUsers[id]||{uid:id,name:"User"})),"Tap to unblock",`unblockId('${id}')`)).join(""):`<div style="padding:10px 8px;color:var(--tx3);font-size:13px">No blocked contacts</div>`);
+  }else if(p==="chat"){
+    const W=[["hearts","Love ♥","#e8457c"],["rose","Rose","#7a1d45"],["sunset","Sunset","#8a3a35"],["violet","Violet","#4a1d6a"],["plain","Plain","#16080f"]];
+    h=back("Chats")+`<div class="setsec">Chat wallpaper</div><div class="wps">${W.map(([k,n,c])=>`<div class="${(ME.wallpaper||"hearts")===k?"on":""}" style="background:${c}" title="${n}" onclick="setPref('wallpaper','${k}').then(()=>openSetPage('chat'))"></div>`).join("")}</div>
+    <div class="setsec">Font size</div><div class="chips">${[["s","Small"],["m","Medium"],["l","Large"]].map(([k,n])=>`<button class="chip ${(ME.fontSize||"m")===k?"on":""}" onclick="setPref('fontSize','${k}').then(()=>openSetPage('chat'))">${n}</button>`).join("")}</div>`
+    +tg("noEnter","fa-keyboard","Enter is send","Enter key sends the message");
+  }else if(p==="noti"){
+    h=back("Notifications")+tg("noSound","fa-volume-high","Message tone","Play a sound for new messages")+tg("noVibrate","fa-mobile-screen","Vibrate","Vibrate on new messages");
+  }else if(p==="acc"){
+    h=back("Account")+row("fa-user-pen","Edit profile","Name, about, photo","editMe()")+row("fa-phone","Phone number",esc(ME.phone||""),"")
+    +row("fa-trash","Delete my account","Removes profile, contacts & call log","delAccount()");
+  }else if(p==="stor"){
+    h=back("Storage and data")+row("fa-broom","Clear cache","Frees local data","clearCache()");
+  }else{
+    h=back("Help")+row("fa-heart","ZERO CHAT v2.0","Love edition · by Omidu Dewditha","")+row("fa-flag","Report a problem","Use Report inside any chat","");
+  }
+  openSheet(h);
+};
+window.unblockId=async id=>{await remove(ref(db,`users/${ME.uid}/blocked/${id}`));if(ME.blocked)delete ME.blocked[id];openSetPage("priv");};
+window.inviteFriend=()=>{const t="ZERO CHAT ♥ - chat & call privately. Join me!";if(navigator.share)navigator.share({text:t}).catch(()=>{});else{navigator.clipboard?.writeText(t);toast("Copied");}};
+window.delAccount=async function(){
+  const r=await SW.fire({icon:"warning",title:"Delete account?",text:"This cannot be undone.",showCancelButton:true,confirmButtonColor:"#f15c6d",confirmButtonText:"Delete"});
+  if(!r.isConfirmed)return;
+  await Promise.all(["users/","contacts/","calllog/"].map(p=>remove(ref(db,p+ME.uid)).catch(()=>{})));
+  cache.clear();location.reload();
+};
+
+/* ══════ ADMIN TAB ══════ */
+function renderAdminTab(){
+  const b=$("homeBody");if(!meIsAdmin()){b.innerHTML="";return;}
+  const a=Object.values(allUsers);
+  const st=[["Users",a.length+1,"fa-users"],["Online",a.filter(u=>u.online).length+(ME.hideOnline?0:1),"fa-circle"],["Banned",a.filter(u=>u.banned).length,"fa-ban"],["Verified",a.filter(u=>u.verified).length,"fa-circle-check"]];
+  const T=[["fa-users","Users","renderAdminPanel('users')"],["fa-comments","All chats","renderAdminPanel('chats')"],["fa-images","Media","adminViewAllMedia()"],["fa-microphone","Voices","adminViewAllVoices()"],["fa-flag","Reports","renderAdminPanel('reports')"],["fa-bullhorn","Broadcast","renderAdminPanel('broadcast')"],["fa-toggle-on","Flags","renderAdminPanel('flags')"],["fa-thumbtack","Announce","adminAnnounce()"],["fa-chart-pie","Deep stats","adminDeep()"],["fa-file-export","Export users","adminExport()"],["fa-user-shield","Add admin","adminAdd()"],["fa-broom","Clear reports","adminClearReports()"],["fa-magnifying-glass","Find user","adminFind()"]];
+  b.innerHTML=`<div class="adg">${st.map(([n,v,ic])=>`<div class="adc"><small><i class="fas ${ic}"></i> ${n}</small><b>${v}</b></div>`).join("")}</div>
+  <div class="setsec" style="padding-left:18px">Admin tools</div>
+  <div class="adg" style="grid-template-columns:repeat(3,1fr)">${T.map(([ic,n,fn])=>`<button class="adt" onclick="${fn}"><i class="fas ${ic}"></i>${n}</button>`).join("")}</div>`;
+}
+window.toggleVerify=async uid=>{const u=allUsers[uid];if(!u)return;await update(ref(db,"users/"+uid),{verified:!u.verified});u.verified=!u.verified;toast(u.verified?"Verified ✅":"Badge removed");renderAdminPanel("users");};
+window.adminAnnounce=async function(){
+  const r=await SW.fire({title:"Announcement banner",input:"text",inputValue:CFG.announce||"",inputPlaceholder:"Empty = remove",showCancelButton:true});
+  if(r.isConfirmed===false)return;await update(ref(db,"config"),{announce:(r.value||"").trim()});CFG.announce=(r.value||"").trim();toast("Updated");renderHome();
+};
+window.adminExport=()=>{
+  const d=Object.entries(allUsers).map(([uid,u])=>({uid,name:u.name,phone:u.phone,banned:!!u.banned,verified:!!u.verified,createdAt:u.createdAt}));
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:"application/json"}));a.download="zerochat_users.json";a.click();toast("Exported ✅");
+};
+window.adminAdd=async function(){
+  const r=await SW.fire({title:"Add admin",input:"tel",inputPlaceholder:"+94 77 123 4567",showCancelButton:true});
+  const p=normPhone(r.value||"");if(!r.isConfirmed||!p)return;
+  try{await set(ref(db,"admins/"+p.replace("+","")),true);toast("Admin added ✅");}catch(e){toast("Not allowed");}
+};
+window.adminClearReports=async function(){
+  const r=await SW.fire({icon:"warning",title:"Clear all reports?",showCancelButton:true,confirmButtonColor:"#f15c6d"});
+  if(r.isConfirmed){await remove(ref(db,"reports")).catch(()=>{});toast("Cleared");}
+};
+window.adminDeep=async function(){
+  toast("Counting...");
+  try{
+    const [m,c,k]=await Promise.all([get(ref(db,"messages")),get(ref(db,"chats")),get(ref(db,"calls"))]);
+    let t=0,im=0,vo=0;Object.values(m.val()||{}).forEach(x=>Object.values(x||{}).forEach(y=>{t++;if(y.type==="image")im++;if(y.type==="voice")vo++;}));
+    SW.fire({title:"Deep stats",html:`Chats: <b>${Object.keys(c.val()||{}).length}</b><br>Messages: <b>${t}</b><br>Images: <b>${im}</b> · Voice: <b>${vo}</b><br>Calls: <b>${Object.keys(k.val()||{}).length}</b>`});
+  }catch(e){toast("Failed");}
+};
+
+window.editLastSeen=async function(){
+  if(!meIsAdmin())return;
+  const t0=ME.fakeSeen||Date.now();
+  const r=await SW.fire({title:"Edit last seen",html:`<input id="fsIn" type="datetime-local" class="swal2-input" value="${new Date(t0-new Date().getTimezoneOffset()*60000).toISOString().slice(0,16)}">`,showCancelButton:true,showDenyButton:true,denyButtonText:"Real time",confirmButtonText:"Set",preConfirm:()=>document.getElementById("fsIn").value});
+  if(r.isDenied)await setPref("fakeSeen",null);
+  else if(r.isConfirmed&&r.value)await setPref("fakeSeen",new Date(r.value).getTime());
+  else return;
+  updatePresence();openSetPage("priv");toast("Saved ✅");
+};
+
+/* ══════ ADMIN: FULL USER DETAILS ══════ */
+window.adminFind=async function(){
+  const r=await SW.fire({title:"Find user",input:"tel",inputPlaceholder:"+94 77 123 4567",showCancelButton:true});
+  const p=normPhone(r.value||"");if(!r.isConfirmed||!p)return;adminUser(puid(p));
+};
+window.adminUser=async function(uid){
+  openSheet(`<h3>User details</h3><div class="sp"></div>`);
+  try{
+    const g=async p=>(await get(ref(db,p))).val();
+    const [u,ct,cl,stt,ch,rp]=await Promise.all([g("users/"+uid),g("contacts/"+uid),g("calllog/"+uid),g("status/"+uid),g("chats"),g("reports")]);
+    if(!u){toast("User not found");closeSheet();return;}
+    allUsers[uid]={...(allUsers[uid]||{}),...u,uid};
+    const chats=Object.entries(ch||{}).filter(([k,c])=>c.participants&&c.participants[uid]);
+    const msgs=await Promise.all(chats.map(([k])=>g("messages/"+k)));
+    let sent=0,vo=0;const imgs=[];
+    msgs.forEach(m=>Object.values(m||{}).forEach(x=>{if(x.sender===uid){sent++;if(x.type==="image")imgs.push(x.mediaUrl);if(x.type==="voice")vo++;}}));
+    const nm=id=>esc((allUsers[id]||{}).name||id),fd=t=>t?new Date(t).toLocaleString():"—";
+    const kv=(a,b)=>`<div class="rw"><span>${a}</span><b style="max-width:62%;text-align:right;word-break:break-word">${b}</b></div>`;
+    const sec=(t,n,h)=>`<div class="setsec">${t} (${n})</div>${h||'<div style="padding:6px 8px;color:var(--tx3);font-size:13px">Nothing</div>'}`;
+    const calls=Object.values(cl||{}).sort((a,b)=>b.ts-a.ts);
+    const reps=Object.values(rp||{}).filter(r=>r.by===uid||r.against===uid);
+    const flags=[u.hideSeen&&"hide last seen",u.hideOnline&&"hide online",u.noReceipts&&"no read receipts",u.fakeSeen&&"fake last seen "+fd(u.fakeSeen)].filter(Boolean).join(", ")||"none";
+    openSheet(`<h3><i class="fas fa-chevron-left" style="margin-right:12px;cursor:pointer" onclick="renderAdminPanel('users')"></i>User details</h3>
+    <div class="prh" style="margin-top:-6px">${avH(allUsers[uid]).replace('class="av ','class="av ')}<div class="nm">${nameH(allUsers[uid])}</div><div class="ph">${esc(u.phone||"")}</div><div class="ab">${esc(u.about||"")}</div></div>
+    <div class="adp"><h4><i class="fas fa-id-card"></i> PROFILE</h4>
+      ${kv("User ID",esc(uid))}${kv("Joined",fd(u.createdAt))}${kv("Online now",u.online?"Yes":"No")}${kv("Real last seen",fd(u.lastSeen))}${kv("Privacy flags",esc(flags))}${kv("Status",(u.banned?"BANNED ":"")+(u.verified?"VERIFIED ":"")+(isAdmin(allUsers[uid])?"ADMIN":"")||"Normal")}
+      ${kv("Chats",chats.length)}${kv("Messages sent",sent)}${kv("Images / Voice",imgs.length+" / "+vo)}${kv("Calls",calls.length)}
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0">
+      <button class="btn-mini btn-red" onclick="toggleBan('${uid}')">${u.banned?"UNBAN":"BAN"}</button>
+      <button class="btn-mini btn-gr" onclick="toggleVerify('${uid}')">${u.verified?"UNVERIFY":"VERIFY"}</button>
+      <button class="btn-mini btn-bl" onclick="closeSheet();openChat('${uid}',false)">MESSAGE</button>
+      <button class="btn-mini btn-am" onclick="adminRename('${uid}')">RENAME</button>
+      <button class="btn-mini btn-am" onclick="adminNoPhoto('${uid}')">REMOVE PHOTO</button>
+      <button class="btn-mini btn-bl" onclick="adminMakeAdmin('${uid}')">MAKE ADMIN</button>
+      <button class="btn-mini btn-red" onclick="adminDelUser('${uid}')">DELETE</button>
+    </div>`
+    +sec("Chats",chats.length,chats.map(([k,c])=>{const o=Object.keys(c.participants).filter(x=>x!==uid)[0];return `<div class="ad-row" style="cursor:pointer" onclick="closeSheet();openChat('${k}',${c.type==="group"},true)"><div class="inf"><b>${c.type==="group"?esc(c.groupName||"Group"):nm(o)}</b><small style="font-family:inherit">${esc((c.lastMessage||"").slice(0,40))} · ${fmtT(c.lastTime)}</small></div><i class="fas fa-chevron-right" style="color:var(--tx3)"></i></div>`;}).join(""))
+    +sec("Saved contacts",Object.keys(ct||{}).length,Object.entries(ct||{}).map(([id,c])=>`<div class="ad-row"><div class="inf"><b>${esc(c.name||"")}</b><small>${esc(c.phone||"")}</small></div><button class="btn-mini btn-bl" onclick="adminUser('${id}')">VIEW</button></div>`).join(""))
+    +sec("Blocked",Object.keys(u.blocked||{}).length,Object.keys(u.blocked||{}).map(id=>`<div class="ad-row"><div class="inf"><b>${nm(id)}</b></div></div>`).join(""))
+    +sec("Call log",calls.length,calls.slice(0,30).map(x=>`<div class="ad-row"><div class="inf"><b>${nm(x.peer)}</b><small style="font-family:inherit">${x.dir==="out"?"Outgoing":"Incoming"} ${x.type} · ${x.res||""} · ${fmtD(x.dur)} · ${fd(x.ts)}</small></div></div>`).join(""))
+    +sec("Images sent",imgs.length,imgs.length?`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">${imgs.slice(-30).map(m=>`<img src="${m}" style="width:100%;height:90px;object-fit:cover;border-radius:10px" onclick="openViewer('${m}')">`).join("")}</div>`:"")
+    +sec("Status posts",Object.keys(stt||{}).length,Object.values(stt||{}).map(x=>`<div class="ad-row"><div class="inf"><b>${esc(x.text||"📷 Photo")}</b><small>${fd(x.ts)}</small></div>${x.mediaUrl?`<button class="btn-mini btn-bl" onclick="openViewer('${x.mediaUrl}')">VIEW</button>`:""}</div>`).join(""))
+    +sec("Reports",reps.length,reps.map(r=>`<div class="ad-row"><div class="inf"><b>${nm(r.by)} → ${nm(r.against)}</b><small style="font-family:inherit">${esc(r.reason||"")}</small></div></div>`).join("")));
+  }catch(e){toast("Error: "+e.message);}
+};
+window.adminRename=async function(uid){
+  const r=await SW.fire({title:"Rename user",input:"text",inputValue:(allUsers[uid]||{}).name||"",showCancelButton:true});
+  if(r.isConfirmed&&(r.value||"").trim()){await update(ref(db,"users/"+uid),{name:r.value.trim()});toast("Renamed ✅");adminUser(uid);}
+};
+window.adminNoPhoto=async uid=>{await update(ref(db,"users/"+uid),{photoURL:""});toast("Photo removed");adminUser(uid);};
+window.adminMakeAdmin=async function(uid){
+  const p=((allUsers[uid]||{}).phone||"").replace("+","");if(!p)return;
+  const r=await SW.fire({icon:"question",title:"Make this user admin?",showCancelButton:true});
+  if(!r.isConfirmed)return;
+  try{await set(ref(db,"admins/"+p),true);toast("Admin added ✅");}catch(e){toast("Not allowed");}
 };
 </script>
 </body>
