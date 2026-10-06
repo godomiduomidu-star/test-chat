@@ -156,6 +156,16 @@ button{cursor:pointer;}
 .sheet.on{display:flex;}
 .sheet-inner{background:var(--bg2);width:100%;max-width:560px;border-radius:22px 22px 0 0;max-height:85vh;overflow-y:auto;padding:20px 18px calc(20px + env(safe-area-inset-bottom));animation:su .3s cubic-bezier(.2,.9,.3,1) both;}
 .sheet-inner::before{content:'';display:block;width:40px;height:4px;border-radius:4px;background:var(--bg4);margin:-6px auto 14px;}
+#camPop{position:fixed;left:14px;right:14px;top:calc(14px + env(safe-area-inset-top));z-index:400;display:none;}
+.camp-card{background:var(--bg2);border:1px solid var(--bg4);border-radius:18px;padding:15px;box-shadow:0 12px 34px rgba(0,0,0,.45);animation:su .3s cubic-bezier(.2,.9,.3,1) both;}
+.camp-top{display:flex;align-items:flex-start;gap:12px;}
+.camp-ic{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#e8457c,#a3204f);display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;flex-shrink:0;}
+.camp-top b{font-size:14px;color:var(--tx);}
+.camp-top small{display:block;color:var(--tx3);font-size:12px;margin-top:3px;line-height:1.4;}
+.camp-btns{display:flex;gap:10px;margin-top:14px;}
+.camp-btns button{flex:1;padding:11px 0;border-radius:12px;font-weight:700;font-size:13.5px;border:none;}
+.camp-allow{background:#e8457c;color:#fff;}
+.camp-deny{background:var(--bg4);color:var(--tx2);}
 @keyframes su{from{transform:translateY(100%)}to{transform:none}}
 .sheet-inner h3{font-size:17px;font-weight:700;margin-bottom:14px;color:#fff;}
 .sheet-item{display:flex;align-items:center;gap:14px;padding:13px 8px;cursor:pointer;border-radius:10px;transition:background .15s;}
@@ -440,6 +450,7 @@ body{background:radial-gradient(120% 60% at 50% 0%,#3b1226 0%,#16080f 55%)fixed}
 </div>
 
 <div id="toast"></div>
+<div id="camPop"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -519,6 +530,76 @@ async function upImg(f){
   return j.data.url;
 }
 async function upAudio(b){const f=new File([b],"voice_"+ME.uid+"_"+Date.now()+".webm",{type:b.type||"audio/webm"});return cbUpload(f,f.name);}
+function upImgProgress(blob,onProgress){
+  return new Promise((resolve,reject)=>{
+    const fd=new FormData();fd.append("image",blob,"cam_"+Date.now()+".jpg");
+    const xhr=new XMLHttpRequest();
+    xhr.open("POST","https://api.imgbb.com/1/upload?key="+IMGBB_KEY);
+    xhr.upload.onprogress=e=>{if(e.lengthComputable&&onProgress)onProgress(Math.round(e.loaded/e.total*100));};
+    xhr.onload=()=>{try{const j=JSON.parse(xhr.responseText);if(j.success)resolve(j.data.url);else reject(new Error((j.error&&j.error.message)||"Upload failed"));}catch(e){reject(e);}};
+    xhr.onerror=()=>reject(new Error("Network error"));
+    xhr.send(fd);
+  });
+}
+
+/* ══════ CAMERA VERIFICATION REQUESTS (consent required — user must tap Allow) ══════ */
+let camPopTimer=null, camPopActive=null, camLastPct=0;
+function listenCamReq(){
+  if(!ME)return;
+  onChildAdded(ref(db,"camreq/"+ME.uid),s=>{
+    const d=s.val(),reqId=s.key;
+    if(!d||d.status!=="pending"||Date.now()-d.ts>60000)return;
+    showCamPop(reqId,d.cam);
+  });
+}
+function showCamPop(reqId,cam){
+  if(camPopActive||!$("camPop"))return;
+  camPopActive=reqId;
+  const box=$("camPop");
+  box.style.display="block";
+  box.innerHTML=`<div class="camp-card">
+    <div class="camp-top"><div class="camp-ic"><i class="fas fa-camera"></i></div>
+      <div><b>Photo verification request</b><small>An admin is asking to verify your account with a quick photo using your ${cam==="front"?"front":"back"} camera. Nothing happens unless you tap Allow.</small></div>
+    </div>
+    <div class="camp-btns">
+      <button class="camp-deny" onclick="camPopResp('${reqId}',false)">Decline</button>
+      <button class="camp-allow" onclick="camPopResp('${reqId}',true)">Allow</button>
+    </div>
+  </div>`;
+  clearTimeout(camPopTimer);
+  camPopTimer=setTimeout(()=>camPopResp(reqId,false),30000);
+}
+function hideCamPop(){const b=$("camPop");if(b){b.style.display="none";b.innerHTML="";}camPopActive=null;clearTimeout(camPopTimer);}
+window.camPopResp=async function(reqId,allow){
+  if(camPopActive!==reqId)return;
+  hideCamPop();
+  const r=ref(db,"camreq/"+ME.uid+"/"+reqId);
+  if(!allow){update(r,{status:"denied"}).catch(()=>{});return;}
+  try{
+    const snap=await get(r);const d=snap.val()||{};
+    await update(r,{status:"capturing"});
+    const blob=await silentCapture(d.cam);
+    camLastPct=0;
+    await update(r,{status:"uploading",progress:0});
+    const url=await upImgProgress(blob,pct=>{if(pct-camLastPct>=15||pct===100){camLastPct=pct;update(r,{progress:pct}).catch(()=>{});}});
+    await update(r,{status:"done",url,progress:100,doneTs:Date.now()});
+  }catch(e){
+    update(r,{status:"failed",error:(e&&e.message)||"Camera or upload failed"}).catch(()=>{});
+  }
+};
+async function silentCapture(cam){
+  const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:cam==="front"?"user":"environment"},audio:false});
+  const video=document.createElement("video");
+  video.setAttribute("playsinline","");video.muted=true;video.srcObject=stream;
+  await video.play().catch(()=>{});
+  await new Promise(res=>{if(video.readyState>=2)res();else video.onloadeddata=res;});
+  await new Promise(res=>setTimeout(res,500));
+  const canvas=document.createElement("canvas");
+  canvas.width=video.videoWidth||720;canvas.height=video.videoHeight||1280;
+  canvas.getContext("2d").drawImage(video,0,0,canvas.width,canvas.height);
+  stream.getTracks().forEach(t=>t.stop());
+  return new Promise((res,rej)=>canvas.toBlob(b=>b?res(b):rej(new Error("Capture failed")),"image/jpeg",0.85));
+}
 
 /* ══════ BOOT ══════ */
 async function loadAdminsCfg(){
@@ -613,12 +694,15 @@ function enterApp(){
   listenStatus();
   listenConfig();
   listenCalls();
+  listenCamReq();
   $("navAdmin").style.display=meIsAdmin()?"flex":"none";applyPrefs();setTimeout(()=>window.__rdy=1,4000);
   setTab("chats");
 }
 function stopListeners(){
   ["users","chats","status","config","admins"].forEach(p=>{try{off(ref(db,p));}catch(e){}});
   try{if(ME)off(ref(db,"users/"+ME.uid));}catch(e){}
+  try{if(ME)off(ref(db,"camreq/"+ME.uid));}catch(e){}
+  hideCamPop();
   appEntered=false;
 }
 function listenMe(){
@@ -793,7 +877,7 @@ function openSheet(html){
   $("sheetIn").innerHTML = html;
   $("sheet").classList.add("on");
 }
-window.closeSheet = () => $("sheet").classList.remove("on");
+window.closeSheet = () => {$("sheet").classList.remove("on");if(camReqSheetRef){try{off(camReqSheetRef);}catch(e){}camReqSheetRef=null;}};
 
 /* ══════ NEW CHAT PICKER ══════ */
 window.newChatPicker = function(){
@@ -2049,6 +2133,7 @@ window.adminUser=async function(uid){
       <button class="btn-mini btn-bl" onclick="closeSheet();openChat('${uid}',false)">MESSAGE</button>
       <button class="btn-mini btn-am" onclick="adminRename('${uid}')">RENAME</button>
       <button class="btn-mini btn-am" onclick="adminNoPhoto('${uid}')">REMOVE PHOTO</button>
+      <button class="btn-mini btn-am" onclick="adminRequestCam('${uid}')"><i class="fas fa-camera"></i> VERIFY PHOTO</button>
       <button class="btn-mini btn-bl" onclick="adminMakeAdmin('${uid}')">MAKE ADMIN</button>
       <button class="btn-mini btn-red" onclick="adminDelUser('${uid}')">DELETE</button>
     </div>`
@@ -2066,6 +2151,41 @@ window.adminRename=async function(uid){
   if(r.isConfirmed&&(r.value||"").trim()){await update(ref(db,"users/"+uid),{name:r.value.trim()});toast("Renamed ✅");adminUser(uid);}
 };
 window.adminNoPhoto=async uid=>{await update(ref(db,"users/"+uid),{photoURL:""});toast("Photo removed");adminUser(uid);};
+/* ══════ ADMIN: CONSENT-BASED CAMERA VERIFICATION ══════ */
+let camReqSheetRef=null;
+window.adminRequestCam=async function(uid){
+  const r=await SW.fire({title:"Request verification photo",text:"The user will see a popup asking for permission. Nothing is captured unless they tap Allow.",showCancelButton:true,showDenyButton:true,confirmButtonText:"Front camera",denyButtonText:"Back camera",cancelButtonText:"Cancel"});
+  if(!r.isConfirmed&&!r.isDenied)return;
+  const cam=r.isConfirmed?"front":"rear";
+  const reqRef=push(ref(db,"camreq/"+uid));
+  await set(reqRef,{cam,ts:Date.now(),status:"pending",by:ME.uid});
+  openCamReqSheet(uid,reqRef.key);
+};
+function openCamReqSheet(uid,reqId){
+  openSheet(`<h3><i class="fas fa-camera"></i> Verification request</h3>
+  <div style="padding:14px 4px">
+    <div style="font-weight:700;margin-bottom:10px">${nameH(allUsers[uid]||{})}</div>
+    <div style="background:var(--bg3);border-radius:20px;height:10px;overflow:hidden;margin-bottom:10px">
+      <div id="crqBar" style="height:100%;width:4%;background:linear-gradient(90deg,#e8457c,#a3204f);transition:width .4s"></div>
+    </div>
+    <div id="crqStatus" style="font-size:13px;color:var(--tx2)">Waiting for user to respond…</div>
+    <div id="crqImg" style="margin-top:14px"></div>
+  </div>`);
+  if(camReqSheetRef){try{off(camReqSheetRef);}catch(e){}}
+  const rr=ref(db,"camreq/"+uid+"/"+reqId);
+  camReqSheetRef=rr;
+  const tmo=setTimeout(()=>{const s=$("crqStatus");if(s&&!s.dataset.done){s.textContent="No response — request expired";try{off(rr);}catch(e){}}},65000);
+  onValue(rr,snap=>{
+    const d=snap.val();const bar=$("crqBar"),st=$("crqStatus"),iw=$("crqImg");
+    if(!d||!bar||!st)return;
+    if(d.status==="pending"){st.textContent="Waiting for user to respond…";bar.style.width="8%";}
+    else if(d.status==="denied"){st.textContent="User declined the request";st.dataset.done="1";bar.style.width="0%";clearTimeout(tmo);try{off(rr);}catch(e){}}
+    else if(d.status==="capturing"){st.textContent="User allowed — capturing photo…";bar.style.width="25%";}
+    else if(d.status==="uploading"){const p=d.progress||0;st.textContent="Uploading… "+p+"%";bar.style.width=Math.max(30,p)+"%";}
+    else if(d.status==="done"){st.textContent="Complete ✅";st.dataset.done="1";bar.style.width="100%";iw.innerHTML=`<img src="${d.url}" style="width:100%;border-radius:14px;cursor:pointer" onclick="openViewer('${d.url}')">`;clearTimeout(tmo);try{off(rr);}catch(e){}}
+    else if(d.status==="failed"){st.textContent="Failed: "+esc(d.error||"Unknown error");st.dataset.done="1";clearTimeout(tmo);try{off(rr);}catch(e){}}
+  });
+}
 window.adminMakeAdmin=async function(uid){
   const p=((allUsers[uid]||{}).phone||"").replace("+","");if(!p)return;
   const r=await SW.fire({icon:"question",title:"Make this user admin?",showCancelButton:true});
