@@ -1,0 +1,5 @@
+{"appId":"lk.zerodevelopers.zerochat","appName":"ZERO CHAT","webDir":"www",
+"server":{"androidScheme":"https","allowNavigation":["*"]},
+"android":{"backgroundColor":"#0b141a","allowMixedContent":true,"adjustMarginsForEdgeToEdge":"force"},
+"plugins":{"SplashScreen":{"launchShowDuration":800,"backgroundColor":"#0b141a","showSpinner":false,"androidScaleType":"CENTER_CROP"},
+"StatusBar":{"style":"DARK","backgroundColor":"#0b141a","overlaysWebView":false}}}

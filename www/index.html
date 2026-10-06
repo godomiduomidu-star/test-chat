@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0b141a">
+<title>ZERO CHAT</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+:root{
+  --bg:#0b141a;--bg2:#111b21;--bg3:#202c33;--bg4:#2a3942;
+  --tx:#e9edef;--tx2:#8696a0;--tx3:#667781;
+  --gr:#00a884;--gr2:#25d366;--gr3:#005c4b;
+  --bl:#53bdeb;--rd:#f15c6d;--am:#f0b232;
+  --out:#005c4b;--in:#202c33;--bd:rgba(134,150,160,.15);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--tx);font-size:15px;line-height:1.35;overscroll-behavior:none;}
+input,textarea,button{font-family:inherit;font-size:inherit;color:inherit;background:none;border:none;outline:none;}
+button{cursor:pointer;}
+.screen{position:fixed;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;background:var(--bg);z-index:1;}
+.screen.on{display:flex;}
+
+/* SPLASH */
+#splash{background:linear-gradient(160deg,#0b141a 0%,#0d1f24 55%,#062825 100%);align-items:center;justify-content:center;z-index:999;}
+#splash .lg{width:130px;height:130px;border-radius:32px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px rgba(0,168,132,.35);animation:pop .7s cubic-bezier(.34,1.56,.64,1) both;}
+#splash .lg img{width:100%;height:100%;object-fit:cover;}
+#splash h1{font-size:26px;font-weight:900;letter-spacing:4px;color:#fff;margin-top:24px;}
+#splash p{font-size:11px;color:var(--tx2);margin-top:6px;letter-spacing:2px;text-transform:uppercase;}
+#splash .ft{position:absolute;bottom:36px;font-size:11px;color:var(--tx3);}
+@keyframes pop{from{transform:scale(.5) rotate(-10deg);opacity:0}to{transform:none;opacity:1}}
+
+/* AUTH */
+#auth{background:linear-gradient(180deg,#0b141a 0%,#0d1f24 100%);}
+.auth-top{padding:calc(70px + env(safe-area-inset-top)) 24px 28px;display:flex;flex-direction:column;align-items:center;}
+.auth-top .lg{width:86px;height:86px;border-radius:24px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px rgba(0,168,132,.35);}
+.auth-top .lg img{width:100%;height:100%;object-fit:cover;}
+.auth-top h1{font-size:20px;font-weight:900;letter-spacing:3px;margin-top:18px;}
+.auth-top p{font-size:12.5px;color:var(--tx2);margin-top:6px;}
+.auth-body{flex:1;background:var(--bg2);border-radius:28px 28px 0 0;padding:26px 22px calc(24px + env(safe-area-inset-bottom));overflow-y:auto;}
+.auth-body h2{font-size:18px;font-weight:700;margin-bottom:6px;}
+.auth-body .sub{font-size:13px;color:var(--tx2);margin-bottom:20px;}
+.ig{position:relative;margin-bottom:14px;}
+.ig>i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:14px;pointer-events:none;}
+.inp{width:100%;padding:15px 16px 15px 44px;background:var(--bg3);border-radius:14px;font-size:16px;color:var(--tx);border:1.5px solid transparent;transition:border-color .2s;}
+.inp:focus{border-color:var(--gr);}
+.inp.flat{padding:13px 16px;}
+.btn1{width:100%;padding:15px;background:var(--gr);color:#fff;border-radius:14px;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s;}
+.btn1:active{transform:scale(.97);}
+.btn1:disabled{opacity:.55;pointer-events:none;}
+.hint{background:rgba(0,168,132,.08);border:1px solid rgba(0,168,132,.2);padding:12px 14px;border-radius:12px;font-size:12.5px;color:var(--gr2);margin-top:18px;line-height:1.6;}
+.hint code{background:rgba(0,0,0,.3);padding:2px 6px;border-radius:4px;font-size:12px;}
+
+/* TOPBAR */
+.tb{display:flex;align-items:center;gap:12px;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;background:var(--bg3);position:sticky;top:0;z-index:10;}
+.tb .brand{flex:1;font-size:20px;font-weight:800;letter-spacing:.3px;color:#fff;}
+.ib{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--tx2);font-size:18px;transition:background .15s;}
+.ib:hover{background:rgba(255,255,255,.06);}
+
+/* SEARCH */
+.srch{padding:0 12px 10px;background:var(--bg3);display:none;}
+.srch.on{display:block;}
+.srch .in{position:relative;}
+.srch input{width:100%;padding:11px 40px;background:var(--bg2);border-radius:10px;font-size:15px;color:var(--tx);}
+.srch .si{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:14px;}
+.srch .sc{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:14px;cursor:pointer;padding:4px;}
+
+/* TABS */
+.tr{display:none;padding:0 8px;background:var(--bg3);border-bottom:1px solid var(--bd);}
+.tab-btn{flex:1;padding:12px 8px;font-size:13px;font-weight:700;color:var(--tx2);display:flex;align-items:center;justify-content:center;gap:6px;position:relative;transition:color .2s;}
+.tab-btn.on{color:var(--gr2);}
+.tab-btn.on::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gr2);border-radius:3px 3px 0 0;}
+
+/* LIST */
+.lst{flex:1;overflow-y:auto;padding-bottom:100px;}
+.lst::-webkit-scrollbar{width:0;}
+.ci{display:flex;gap:14px;padding:11px 16px;cursor:pointer;transition:background .12s;position:relative;}
+.ci:active{background:rgba(255,255,255,.04);}
+.av{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#00a884,#005c4b);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#fff;flex-shrink:0;overflow:hidden;position:relative;}
+.av img{width:100%;height:100%;object-fit:cover;}
+.av .dot{position:absolute;bottom:1px;right:1px;width:13px;height:13px;border-radius:50%;background:var(--gr2);border:2.5px solid var(--bg);display:none;}
+.av.on .dot{display:block;}
+.av .crown{position:absolute;top:-2px;right:-2px;width:19px;height:19px;border-radius:50%;background:linear-gradient(135deg,#f0b232,#f59e0b);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg);}
+.ci-info{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;}
+.ci-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.ci-name{font-weight:500;font-size:16px;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px;}
+.ci-name .bdg{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#f0b232,#f59e0b);color:#fff;font-size:8px;flex-shrink:0;}
+.ci-time{font-size:12px;color:var(--tx3);flex-shrink:0;}
+.ci-bot{display:flex;align-items:center;gap:6px;margin-top:3px;}
+.ci-msg{flex:1;font-size:13.5px;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:4px;}
+.ci-msg i{color:var(--bl);font-size:14px;flex-shrink:0;}
+.ci-un{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--gr2);color:#0b141a;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+
+.empty{padding:80px 24px;text-align:center;color:var(--tx2);display:flex;flex-direction:column;align-items:center;gap:16px;}
+.empty i{font-size:52px;opacity:.25;}
+.empty h3{font-size:16px;font-weight:600;color:var(--tx);}
+.empty p{font-size:13.5px;line-height:1.6;max-width:280px;}
+
+.fab{position:fixed;bottom:calc(84px + env(safe-area-inset-bottom));right:18px;width:56px;height:56px;border-radius:50%;background:var(--gr2);color:#0b141a;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(37,211,102,.4);z-index:50;transition:transform .15s;}
+.fab:active{transform:scale(.92);}
+.bnav{position:fixed;left:0;right:0;bottom:0;background:var(--bg3);display:flex;padding:6px 0 calc(6px + env(safe-area-inset-bottom));border-top:1px solid var(--bd);z-index:60;}
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--tx2);font-size:10.5px;font-weight:600;padding:8px 0;transition:color .2s;}
+.bnav a i{font-size:20px;margin-bottom:1px;}
+.bnav a.on{color:var(--gr2);}
+
+/* CHAT ROOM */
+#chatRoom{background:#0b141a url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><circle cx="20" cy="20" r="1.5" fill="%23ffffff08"/><circle cx="70" cy="45" r="1" fill="%23ffffff08"/><circle cx="40" cy="90" r="1.5" fill="%23ffffff08"/><circle cx="95" cy="100" r="1" fill="%23ffffff08"/><circle cx="10" cy="110" r="1" fill="%23ffffff08"/></svg>') repeat;}
+.cr-head{display:flex;align-items:center;gap:12px;padding:calc(8px + env(safe-area-inset-top)) 10px 8px;background:var(--bg3);position:relative;z-index:5;}
+.cr-head .bk{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--tx2);}
+.cr-head .av{width:40px;height:40px;font-size:15px;}
+.cr-head .info{flex:1;min-width:0;}
+.cr-head .info .nm{font-weight:600;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px;}
+.cr-head .info .nm .bdg{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#f0b232,#f59e0b);color:#fff;font-size:8px;display:inline-flex;align-items:center;justify-content:center;}
+.cr-head .info .st{font-size:12px;color:var(--tx2);margin-top:1px;}
+.cr-head .info .st.ty{color:var(--gr2);}
+.cr-head .acts{display:flex;gap:2px;}
+
+.msgs{flex:1;overflow-y:auto;padding:12px 8px 8px;display:flex;flex-direction:column;gap:2px;}
+.msgs::-webkit-scrollbar{width:0;}
+.msg{max-width:80%;padding:6px 9px 6px 11px;border-radius:10px;font-size:14.5px;line-height:1.4;word-wrap:break-word;position:relative;box-shadow:0 1px .5px rgba(0,0,0,.13);-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+.msg.hasrx{margin-bottom:14px;}
+.swal2-container{z-index:20000!important;}
+.msgs{scroll-behavior:auto;}
+@keyframes mi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.msg.out{align-self:flex-end;background:var(--out);border-top-right-radius:3px;}
+.msg.in{align-self:flex-start;background:var(--in);border-top-left-radius:3px;}
+.msg .sndr{font-size:11.5px;color:var(--gr2);font-weight:600;margin-bottom:3px;}
+.msg .tx{white-space:pre-wrap;word-break:break-word;}
+.msg .meta{display:flex;align-items:center;gap:3px;justify-content:flex-end;font-size:11px;color:rgba(233,237,239,.6);margin-top:2px;}
+.msg .meta i{font-size:13px;color:rgba(255,255,255,.6);}
+.msg .meta i.rd{color:var(--bl);}
+.msg img.mimg{max-width:100%;border-radius:8px;display:block;margin-bottom:4px;max-height:320px;object-fit:cover;cursor:pointer;}
+.msg .rep{background:rgba(0,0,0,.25);padding:5px 8px;border-radius:6px;border-left:3px solid var(--gr2);font-size:12px;margin-bottom:5px;color:rgba(255,255,255,.85);}
+.msg .rxs{position:absolute;bottom:-10px;right:8px;background:#2a3942;border:2px solid var(--bg);padding:2px 7px;border-radius:12px;font-size:12px;display:flex;gap:2px;box-shadow:0 2px 6px rgba(0,0,0,.3);}
+.msg .vo{display:flex;align-items:center;gap:10px;padding:4px 0;min-width:170px;}
+.msg .vo button{width:34px;height:34px;border-radius:50%;background:var(--gr);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.msg .vo .dur{font-size:11.5px;color:rgba(255,255,255,.7);}
+.msg .vo-hint{display:flex;align-items:center;gap:8px;padding:10px 12px;background:rgba(83,189,235,.1);border:1px dashed rgba(83,189,235,.4);border-radius:8px;color:var(--bl);font-size:13px;cursor:pointer;max-width:200px;}
+
+.cr-input{padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:var(--bg3);display:flex;align-items:flex-end;gap:6px;}
+.cr-input .ic{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--tx2);font-size:18px;flex-shrink:0;}
+.cr-input .ic:hover{background:rgba(255,255,255,.06);}
+.cr-input .ic.sd{background:var(--gr);color:#fff;}
+.cr-input .ic.rc{background:var(--rd);color:#fff;animation:pl 1s infinite;}
+@keyframes pl{50%{transform:scale(1.1)}}
+.cr-input .iw{flex:1;background:var(--bg4);border-radius:22px;padding:0 14px;display:flex;align-items:center;min-height:42px;}
+.cr-input textarea{flex:1;padding:11px 0;font-size:15px;color:var(--tx);resize:none;max-height:100px;line-height:1.4;}
+.cr-input textarea::placeholder{color:var(--tx3);}
+.rep-bar{background:var(--bg4);border-left:3px solid var(--gr2);padding:8px 12px;display:flex;align-items:center;gap:10px;margin:0 8px 4px;border-radius:6px;font-size:12px;}
+.rep-bar .x{margin-left:auto;color:var(--tx2);cursor:pointer;font-size:16px;}
+
+/* SHEETS — bottom sheets that really work */
+.sheet{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:9000;display:none;align-items:flex-end;justify-content:center;}
+.sheet.on{display:flex;}
+.sheet-inner{background:var(--bg2);width:100%;max-width:560px;border-radius:22px 22px 0 0;max-height:85vh;overflow-y:auto;padding:20px 18px calc(20px + env(safe-area-inset-bottom));animation:su .3s cubic-bezier(.2,.9,.3,1) both;}
+.sheet-inner::before{content:'';display:block;width:40px;height:4px;border-radius:4px;background:var(--bg4);margin:-6px auto 14px;}
+@keyframes su{from{transform:translateY(100%)}to{transform:none}}
+.sheet-inner h3{font-size:17px;font-weight:700;margin-bottom:14px;color:#fff;}
+.sheet-item{display:flex;align-items:center;gap:14px;padding:13px 8px;cursor:pointer;border-radius:10px;transition:background .15s;}
+.sheet-item:hover{background:rgba(255,255,255,.05);}
+.sheet-item>i{width:26px;text-align:center;color:var(--tx2);font-size:17px;}
+.sheet-item .lbl{flex:1;}
+.sheet-item .lbl b{display:block;font-size:14.5px;font-weight:600;color:var(--tx);}
+.sheet-item .lbl small{color:var(--tx2);font-size:12px;}
+
+/* PROFILE HERO */
+.prh{padding:26px 20px 22px;display:flex;flex-direction:column;align-items:center;background:linear-gradient(180deg,#0d3d3a,#111b21);margin:-20px -18px 14px;}
+.prh .av{width:96px;height:96px;font-size:34px;margin-bottom:14px;}
+.prh .nm{font-size:20px;font-weight:700;display:flex;align-items:center;gap:6px;}
+.prh .nm .bdg{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#f0b232,#f59e0b);color:#fff;font-size:10px;display:inline-flex;align-items:center;justify-content:center;}
+.prh .ph{font-size:13px;color:var(--tx2);margin-top:4px;}
+.prh .ab{font-size:13px;color:var(--tx2);margin-top:8px;max-width:280px;text-align:center;}
+
+/* FIELDS */
+.fld{margin-bottom:14px;}
+.fld label{font-size:12px;color:var(--tx2);font-weight:600;display:block;margin-bottom:6px;}
+.fld .inp{padding:13px 16px;background:var(--bg3);border-radius:12px;font-size:15px;padding-left:16px;}
+
+/* ADMIN PANEL */
+.adp{background:linear-gradient(135deg,rgba(240,178,50,.15),rgba(240,178,50,.05));border:1px solid rgba(240,178,50,.3);border-radius:14px;padding:14px;margin:14px 0;}
+.adp h4{color:#f0b232;font-size:13px;font-weight:800;display:flex;align-items:center;gap:6px;margin-bottom:10px;letter-spacing:.5px;}
+.adp .rw{display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:12.5px;border-bottom:1px solid rgba(240,178,50,.15);}
+.adp .rw:last-child{border-bottom:none;}
+.adp .rw b{color:#fff;}
+.admin-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;padding-bottom:4px;}
+.admin-tabs::-webkit-scrollbar{display:none;}
+.atab{padding:7px 14px;border-radius:20px;font-size:12.5px;font-weight:700;background:var(--bg3);color:var(--tx2);white-space:nowrap;transition:all .2s;}
+.atab.on{background:var(--gr);color:#fff;}
+.ad-row{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--bd);}
+.ad-row:last-child{border-bottom:none;}
+.ad-row .av{width:42px;height:42px;font-size:15px;}
+.ad-row .inf{flex:1;min-width:0;}
+.ad-row .inf b{font-size:13.5px;font-weight:600;display:block;color:var(--tx);}
+.ad-row .inf small{font-size:11.5px;color:var(--tx2);font-family:monospace;}
+.btn-mini{padding:6px 12px;font-size:11.5px;border-radius:8px;font-weight:700;transition:all .2s;}
+.btn-mini:active{transform:scale(.95);}
+.btn-red{background:rgba(241,92,109,.2);color:var(--rd);}
+.btn-red.on{background:var(--rd);color:#fff;}
+.btn-gr{background:var(--gr);color:#fff;}
+.btn-bl{background:rgba(83,189,235,.2);color:var(--bl);}
+.btn-am{background:rgba(240,178,50,.2);color:var(--am);}
+.tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+.tag.y{background:rgba(240,178,50,.2);color:var(--am);}
+.tag.g{background:rgba(0,168,132,.2);color:var(--gr2);}
+.tag.r{background:rgba(241,92,109,.2);color:var(--rd);}
+
+/* MODAL VIEWER */
+.viewer{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:9500;display:none;align-items:center;justify-content:center;padding:20px;}
+.viewer.on{display:flex;flex-direction:column;}
+.viewer img{max-width:100%;max-height:80vh;border-radius:8px;object-fit:contain;}
+.viewer .vb{color:#fff;text-align:center;font-size:12px;margin-bottom:12px;}
+.viewer .vc{margin-top:14px;padding:12px 24px;background:rgba(255,255,255,.1);color:#fff;border-radius:24px;font-weight:600;}
+
+/* LOADING */
+.sp{width:26px;height:26px;border:3px solid var(--bg3);border-top-color:var(--gr);border-radius:50%;animation:spin .7s linear infinite;margin:30px auto;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOAST */
+#toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:22px;font-size:13px;z-index:9999;display:none;box-shadow:0 6px 20px rgba(0,0,0,.4);max-width:80%;text-align:center;}
+
+/* PICKER ROW */
+.pk{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--bd);cursor:pointer;}
+.pk .av{width:46px;height:46px;font-size:17px;}
+.pk .info{flex:1;min-width:0;}
+.pk .info b{font-weight:600;font-size:14.5px;color:var(--tx);display:flex;align-items:center;gap:5px;}
+.pk .info b .bdg{width:13px;height:13px;border-radius:50%;background:linear-gradient(135deg,#f0b232,#f59e0b);color:#fff;font-size:8px;display:inline-flex;align-items:center;justify-content:center;}
+.pk .info small{font-size:12px;color:var(--tx2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
+.pk .chk{width:22px;height:22px;border-radius:50%;border:2px solid var(--tx3);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;flex-shrink:0;}
+.pk.sel .chk{background:var(--gr);border-color:var(--gr);}
+
+/* CALL */
+#callScr{position:fixed;top:0;left:0;right:0;bottom:0;background:#0b141a;display:none;flex-direction:column;z-index:9900;}
+#callScr.on{display:flex;}
+#callScr .ch{padding:14px 16px;background:#000;display:flex;align-items:center;gap:12px;color:#fff;}
+#callScr .ch .bk{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:rgba(255,255,255,.1);}
+#callScr iframe{flex:1;width:100%;border:none;}
+
+/* Admin chat viewer badge */
+.readonly-badge{background:rgba(240,178,50,.15);color:var(--am);padding:6px 14px;font-size:12px;text-align:center;border-bottom:1px solid rgba(240,178,50,.2);font-weight:600;letter-spacing:.5px;}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div class="screen on" id="splash">
+  <div class="lg"><img src="logo.png" onerror="this.parentNode.innerHTML='<i class=\'fas fa-comments\' style=\'font-size:56px;color:#00a884\'></i>'"></div>
+  <h1>ZERO CHAT</h1>
+  <p>Private · Fast · Secure</p>
+  <div class="ft">by Omidu Dewditha</div>
+</div>
+
+<!-- AUTH -->
+<div class="screen" id="auth">
+  <div class="auth-top">
+    <div class="lg"><img src="logo.png" onerror="this.parentNode.innerHTML='<i class=\'fas fa-comments\' style=\'font-size:38px;color:#00a884\'></i>'"></div>
+    <h1>ZERO CHAT</h1>
+    <p>Enter your phone to continue</p>
+  </div>
+  <div class="auth-body">
+    <h2>Your Phone Number</h2>
+    <div class="sub">SMS verification නෑ. Phone එක type කරලා start කරන්න.</div>
+    <div class="ig"><i class="fas fa-phone"></i><input class="inp" id="phoneInp" type="tel" placeholder="+94 77 123 4567" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn1" id="loginBtn" onclick="doLogin()"><i class="fas fa-arrow-right"></i> Continue</button>
+    <div class="hint"><b>📱 Country code එකත් එක්ක</b><br>උදා: <code>0771234567</code> හෝ <code>+94771234567</code><br>එකපාරක් login වුණාම ආයෙ අහන්නේ නෑ.</div>
+  </div>
+</div>
+
+<!-- SETUP -->
+<div class="screen" id="setup">
+  <div class="tb"><div class="brand">Setup Profile</div></div>
+  <div style="flex:1;overflow-y:auto;padding:24px;">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div class="av" style="width:110px;height:110px;font-size:40px;margin:0 auto;cursor:pointer;" onclick="document.getElementById('avFile').click()">
+        <span id="sAvInit"><i class="fas fa-user"></i></span>
+        <img id="sAvImg" style="display:none;">
+      </div>
+      <input type="file" id="avFile" accept="image/*" hidden onchange="pickSetupAv(this)">
+      <div style="color:var(--gr);font-size:13px;margin-top:10px;font-weight:600;"><i class="fas fa-camera"></i> Add Photo (optional)</div>
+    </div>
+    <div class="fld"><label>Your Name *</label><input class="inp flat" id="sName" placeholder="Your name" maxlength="30"></div>
+    <div class="fld"><label>About</label><input class="inp flat" id="sAbout" placeholder="Hey there! I'm using ZERO CHAT" maxlength="100"></div>
+    <button class="btn1" style="margin-top:20px;" onclick="saveSetup()"><i class="fas fa-check"></i> Continue</button>
+  </div>
+</div>
+
+<!-- HOME -->
+<div class="screen" id="home">
+  <div class="tb">
+    <div class="brand">ZERO CHAT</div>
+    <button class="ib" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
+    <button class="ib" onclick="openMenu()"><i class="fas fa-ellipsis-vertical"></i></button>
+  </div>
+  <div class="srch" id="srch">
+    <div class="in">
+      <i class="fas fa-search si"></i>
+      <input id="searchInp" placeholder="Search..." oninput="renderHome()">
+      <i class="fas fa-times sc" onclick="toggleSearch()"></i>
+    </div>
+  </div>
+  <div class="tr">
+    <button class="tab-btn on" data-tab="chats" onclick="setTab('chats',this)"><i class="fas fa-comment"></i> Chats</button>
+    <button class="tab-btn" data-tab="contacts" onclick="setTab('contacts',this)"><i class="fas fa-users"></i> Contacts</button>
+    <button class="tab-btn" data-tab="status" onclick="setTab('status',this)"><i class="fas fa-circle-notch"></i> Status</button>
+  </div>
+  <div class="lst" id="homeBody"><div class="sp"></div></div>
+  <button class="fab" onclick="newChatPicker()"><i class="fas fa-comment-dots"></i></button>
+  <div class="bnav">
+    <a class="on" data-nav="chats" onclick="setTab('chats')"><i class="fas fa-comment"></i><span>Chats</span></a>
+    <a data-nav="contacts" onclick="setTab('contacts')"><i class="fas fa-users"></i><span>Contacts</span></a>
+    <a data-nav="status" onclick="setTab('status')"><i class="fas fa-circle-notch"></i><span>Status</span></a>
+    <a data-nav="me" onclick="openMe()"><i class="fas fa-user"></i><span>Me</span></a>
+  </div>
+</div>
+
+<!-- CHAT ROOM -->
+<div class="screen" id="chatRoom">
+  <div class="cr-head">
+    <button class="bk" onclick="closeChat()"><i class="fas fa-arrow-left"></i></button>
+    <div class="av" id="chAv"></div>
+    <div class="info">
+      <div class="nm" id="chName">User</div>
+      <div class="st" id="chStat">online</div>
+    </div>
+    <div class="acts">
+      <button class="bk" onclick="startCall('voice')"><i class="fas fa-phone"></i></button>
+      <button class="bk" onclick="startCall('video')"><i class="fas fa-video"></i></button>
+      <button class="bk" onclick="chatMenu()"><i class="fas fa-ellipsis-vertical"></i></button>
+    </div>
+  </div>
+  <div id="adminBadge" class="readonly-badge" style="display:none;">
+    <i class="fas fa-shield-alt"></i> Admin View — Read Only
+  </div>
+  <div class="msgs" id="msgs"></div>
+  <div id="replyBar"></div>
+  <div class="cr-input">
+    <button class="ic" onclick="document.getElementById('att').click()"><i class="fas fa-paperclip"></i></button>
+    <input type="file" id="att" accept="image/*" hidden onchange="sendImg(this)">
+    <div class="iw">
+      <textarea id="msgIn" rows="1" placeholder="Message" oninput="grow(this);sig();updateSendBtn()" onkeydown="msgKey(event)"></textarea>
+    </div>
+    <button class="ic" id="micBtn" onclick="recVoice()"><i class="fas fa-microphone"></i></button>
+    <button class="ic sd" id="sendBtn" style="display:none;" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<!-- CALL -->
+<div id="callScr">
+  <div class="ch">
+    <button class="bk" onclick="endCall()"><i class="fas fa-times"></i></button>
+    <div style="flex:1;font-weight:600;" id="callName">User</div>
+    <div id="callType" style="font-size:12px;color:#8696a0;">Voice Call</div>
+  </div>
+  <iframe id="callFrame" allow="camera; microphone; fullscreen; display-capture"></iframe>
+</div>
+
+<!-- SHEET -->
+<div class="sheet" id="sheet" onclick="if(event.target===this)closeSheet()">
+  <div class="sheet-inner" id="sheetIn"></div>
+</div>
+
+<!-- IMAGE VIEWER -->
+<div class="viewer" id="viewer" onclick="if(event.target===this)closeViewer()">
+  <div id="viewerContent" style="width:100%;display:flex;flex-direction:column;align-items:center;"></div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getDatabase, ref, set, get, update, push, onValue, off, remove, onDisconnect } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* ══════ CONFIG ══════ */
+const FB = {
+  apiKey: "AIzaSyAKzo74C2oB8VqtOisZbSTpTMuYSy83QAk",
+  authDomain: "eduzonelk-92932.firebaseapp.com",
+  databaseURL: "https://eduzonelk-92932-default-rtdb.firebaseio.com",
+  projectId: "eduzonelk-92932",
+  storageBucket: "eduzonelk-92932.firebasestorage.app",
+  messagingSenderId: "849907036256",
+  appId: "1:849907036256:web:d7fce6322573d34baf1305"
+};
+const CB_HASH = "563dd801f916dcb00e1c8bdef";
+
+/* ══════ INIT ══════ */
+const app = initializeApp(FB);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+/* ══════ STATE ══════ */
+let ME = null, ADMINS = {}, CFG = {};
+let allUsers = {}, myChats = {}, STATUS = {};
+let curChatId = null, curChat = null, curOther = null, adminViewing = false;
+let msgUn = null, typUn = null, userUn = null, chatUn = null, statUn = null;
+let replyTo = null, pendingAv = "", tab = "chats";
+let typingT = null, recorder = null, recChunks = [], recordT = 0;
+let unreadLocal = {}, audios = {};
+let gSel = new Set();
+let adminUserList = [];
+let adminSides = [], MSGS = {}, booted = false, appEntered = false;
+const SW = window.Swal ? Swal.mixin({background:'#202c33',color:'#e9edef',confirmButtonColor:'#00a884',cancelButtonColor:'#2a3942'}) : {fire:async()=>({isConfirmed:confirm('Are you sure?'),value:undefined})};
+
+/* ══════ HELPERS ══════ */
+const $ = id => document.getElementById(id);
+const show = id => document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id));
+const esc = s => (s||"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const ini = n => (n||"?").trim().split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase()||"?";
+const nph = p => (p||"").replace(/[\s\-()]/g,"");
+const puid = p => "u" + nph(p).replace(/[^0-9]/g,"");
+const fmtT = ts => {
+  if(!ts)return"";
+  const d=new Date(ts),n=new Date();
+  if(d.toDateString()===n.toDateString())return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  const y=new Date(n);y.setDate(y.getDate()-1);
+  if(d.toDateString()===y.toDateString())return"Yesterday";
+  return d.toLocaleDateString([],{day:'2-digit',month:'short'});
+};
+const fmtD = s => {s=Math.floor(s||0);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");};
+const toast = (m,ms=2200)=>{const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(window.__tt);window.__tt=setTimeout(()=>t.style.display="none",ms);};
+const cache = {
+  set(k,v){try{localStorage.setItem("zc_"+k,JSON.stringify(v));}catch(e){}},
+  get(k,d=null){try{const v=localStorage.getItem("zc_"+k);return v?JSON.parse(v):d;}catch(e){return d;}},
+  clear(){Object.keys(localStorage).filter(k=>k.startsWith("zc_")).forEach(k=>localStorage.removeItem(k));}
+};
+
+/* ══════ CATBOX UPLOAD ══════ */
+async function cbUpload(file,fname){
+  const fd=new FormData();
+  fd.append("reqtype","fileupload");
+  fd.append("userhash",CB_HASH);
+  fd.append("fileToUpload",file,fname||file.name||"file");
+  const r=await fetch("https://catbox.moe/user/api.php",{method:"POST",body:fd});
+  const url=(await r.text()).trim();
+  if(!url||!url.startsWith("http"))throw new Error("Upload failed: "+url.slice(0,80));
+  return url;
+}
+async function upImg(f){const ext=(f.name?.split('.').pop()||'jpg').toLowerCase();return cbUpload(f,"img_"+ME.uid+"_"+Date.now()+"."+ext);}
+async function upAudio(b){const f=new File([b],"voice_"+ME.uid+"_"+Date.now()+".webm",{type:b.type||"audio/webm"});return cbUpload(f,f.name);}
+
+/* ══════ BOOT ══════ */
+async function loadAdminsCfg(){
+  try{const s=await get(ref(db,"admins"));ADMINS=s.val()||{};}catch(e){}
+  try{const s=await get(ref(db,"config"));CFG=s.val()||{};}catch(e){}
+}
+function fullMsg(icon,title,msg){
+  document.body.innerHTML=`<div style="padding:70px 24px;text-align:center;color:#e9edef;"><i class="fas ${icon}" style="font-size:56px;color:#00a884;margin-bottom:20px;"></i><h2 style="font-size:22px;margin-bottom:10px;">${title}</h2><p style="color:#8696a0;">${esc(msg)}</p></div>`;
+}
+function boot(){
+  if(booted)return; booted=true;
+  // Offline / slow network fallback: never stay on splash forever
+  setTimeout(()=>{
+    if(!$("splash").classList.contains("on"))return;
+    const cm=cache.get("me");
+    if(cm&&cm.uid){ME=cm;toast("Offline mode");enterApp();}
+    else{toast("Check your internet");show("auth");}
+  },9000);
+  onAuthStateChanged(auth,async user=>{
+    if(!user){try{await signInAnonymously(auth);}catch(e){toast("Auth error: enable Anonymous sign-in in Firebase");show("auth");}return;}
+    await loadAdminsCfg();
+    const cm=cache.get("me");
+    if(CFG.maintenance&&!isAdmin(cm)){fullMsg("fa-tools","Under Maintenance",CFG.maintenanceMsg||"We'll be back soon!");return;}
+    if(cm&&cm.uid){
+      try{const s=await get(ref(db,"users/"+cm.uid));
+        if(s.exists()){ME={uid:cm.uid,...s.val()};cache.set("me",ME);enterApp();return;}
+      }catch(e){}
+    }
+    show("auth");
+  });
+}
+boot();
+const admInfo = u => { if(!u)return {}; const v = ADMINS[u.phone]||ADMINS[(u.phone||"").replace("+","")]||ADMINS[u.uid]; return (v&&typeof v==="object")?v:{}; };
+const isAdmin = u => !!(u && (ADMINS[u.phone]||ADMINS[(u.phone||"").replace("+","")]||(u.uid&&ADMINS[u.uid])));
+const meIsAdmin = () => isAdmin(ME);
+
+/* ══════ LOGIN ══════ */
+window.doLogin = async function(){
+  const raw = ($("phoneInp").value||"").trim();
+  if(raw.length<7){toast("Enter valid phone");return;}
+  const d = raw.replace(/[^\d+]/g,"");
+  let phone;
+  if(d.startsWith("+")) phone=d;
+  else if(d.startsWith("00")) phone="+"+d.slice(2);
+  else if(d.startsWith("0")) phone="+94"+d.slice(1);
+  else if(d.length===9) phone="+94"+d;
+  else phone="+"+d;
+  if(phone.replace(/\D/g,"").length<8||phone.replace(/\D/g,"").length>15){toast("Enter valid phone");return;}
+  const uid = puid(phone);
+  const b = $("loginBtn"); b.disabled=true; b.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+  try{
+    const s = await get(ref(db,"users/"+uid));
+    if(s.exists()){
+      ME = {uid,...s.val()}; cache.set("me",ME); enterApp();
+    } else {
+      ME = {uid,phone,name:"",about:"",photoURL:""};
+      $("sName").value=""; $("sAbout").value="";
+      $("sAvImg").style.display="none"; $("sAvInit").style.display="inline";
+      pendingAv=""; show("setup");
+    }
+  }catch(e){toast("Error: "+e.message);}
+  b.disabled=false; b.innerHTML='<i class="fas fa-arrow-right"></i> Continue';
+};
+
+window.pickSetupAv = async function(inp){
+  const f=inp.files[0]; if(!f)return;
+  if(f.size>5*1024*1024){toast("Max 5MB");inp.value="";return;}
+  toast("Uploading...");
+  try{const u=await upImg(f);pendingAv=u;$("sAvImg").src=u;$("sAvImg").style.display="block";$("sAvInit").style.display="none";toast("Done ✅");}
+  catch(e){toast("Failed");}
+};
+
+window.saveSetup = async function(){
+  const n=($("sName").value||"").trim(); if(!n){toast("Enter name");return;}
+  const ab=($("sAbout").value||"").trim()||"Hey there! I'm using ZERO CHAT";
+  const d={phone:ME.phone,name:n,about:ab,photoURL:pendingAv||"",createdAt:Date.now(),lastSeen:Date.now(),online:true};
+  await set(ref(db,"users/"+ME.uid),d);
+  ME={uid:ME.uid,...d}; cache.set("me",ME); enterApp();
+};
+
+/* ══════ ENTER APP ══════ */
+function enterApp(){
+  show("home");
+  if(appEntered){setTab(tab);return;}
+  appEntered=true;
+  unreadLocal=cache.get("unread",{});
+  updatePresence();
+  listenMe();
+  listenUsers();
+  listenChats();
+  listenStatus();
+  listenConfig();
+  setTab("chats");
+}
+function stopListeners(){
+  ["users","chats","status","config","admins"].forEach(p=>{try{off(ref(db,p));}catch(e){}});
+  try{if(ME)off(ref(db,"users/"+ME.uid));}catch(e){}
+  appEntered=false;
+}
+function listenMe(){
+  onValue(ref(db,"users/"+ME.uid),s=>{
+    const v=s.val(); if(!v||!ME)return;
+    ME={uid:ME.uid,...v}; cache.set("me",ME);
+    if(v.banned&&!isAdmin(ME)){stopListeners();fullMsg("fa-ban","Account Banned","Your account has been banned by admin.");}
+  });
+}
+function updatePresence(){
+  if(!ME)return;
+  const r = ref(db,"users/"+ME.uid);
+  update(r,{online:true,lastSeen:Date.now()});
+  onDisconnect(r).update({online:false,lastSeen:Date.now()});
+}
+function listenConfig(){
+  onValue(ref(db,"config"),s=>{CFG=s.val()||{};});
+  onValue(ref(db,"admins"),s=>{ADMINS=s.val()||{};});
+}
+function listenUsers(){
+  if(userUn)off(ref(db,"users"));
+  userUn = onValue(ref(db,"users"),s=>{
+    allUsers = s.val()||{};
+    delete allUsers[ME.uid];
+    cache.set("users",allUsers);
+    renderHome();
+  });
+}
+function listenChats(){
+  if(chatUn)off(ref(db,"chats"));
+  chatUn = onValue(ref(db,"chats"),s=>{
+    const all = s.val()||{};
+    myChats = {};
+    Object.entries(all).forEach(([cid,c])=>{
+      if(c.participants && c.participants[ME.uid]) myChats[cid]=c;
+    });
+    const counted = cache.get("counted",{});
+    Object.entries(myChats).forEach(([cid,c])=>{
+      if(!c.lastTime)return;
+      if(cid===curChatId){counted[cid]=c.lastTime;unreadLocal[cid]=0;return;}
+      if(c.lastTime>(counted[cid]||0)){
+        if(c.lastSender&&c.lastSender!==ME.uid)unreadLocal[cid]=(unreadLocal[cid]||0)+1;
+        counted[cid]=c.lastTime;
+      }
+    });
+    cache.set("counted",counted);cache.set("unread",unreadLocal);
+    cache.set("chats",myChats);
+    renderHome();
+  });
+}
+function listenStatus(){
+  if(statUn)off(ref(db,"status"));
+  statUn = onValue(ref(db,"status"),s=>{
+    STATUS=s.val()||{};
+    if(tab==="status")renderStatus();
+  });
+}
+
+/* ══════ HOME / TABS ══════ */
+window.setTab = function(t,el){
+  tab = t;
+  document.querySelectorAll('.tab-btn').forEach(c=>c.classList.toggle('on',c.dataset.tab===t));
+  document.querySelectorAll('.bnav a').forEach(a=>a.classList.toggle('on',a.dataset.nav===t));
+  renderHome();
+};
+window.toggleSearch = function(){
+  const sb = $("srch");
+  sb.classList.toggle("on");
+  if(sb.classList.contains("on"))$("searchInp").focus();
+  else{$("searchInp").value="";renderHome();}
+};
+function nameH(u){
+  const b = isAdmin(u) ? '<span class="bdg"><i class="fas fa-check"></i></span>' : "";
+  return `${esc(u.name||"User")}${b}`;
+}
+function avH(u){
+  const p = u.photoURL?`<img src="${u.photoURL}">`:ini(u.name);
+  const on = u.online?"on":"";
+  const c = isAdmin(u)?'<span class="crown"><i class="fas fa-check"></i></span>':"";
+  return `<div class="av ${on}">${p}<span class="dot"></span>${c}</div>`;
+}
+function renderHome(){
+  if(tab==="chats")renderChats();
+  else if(tab==="contacts")renderContacts();
+  else renderStatus();
+}
+
+function renderChats(){
+  const b = $("homeBody"), q = ($("searchInp")?.value||"").toLowerCase();
+  const list = Object.entries(myChats).map(([cid,c])=>{
+    const others = Object.keys(c.participants).filter(k=>k!==ME.uid);
+    if(c.type==="group")return{cid,chat:c,otherId:null,other:{name:c.groupName||"Group",photoURL:c.groupPhoto,online:false,isGroup:true}};
+    const oid = others[0], o = allUsers[oid]||{name:"User"};
+    return {cid,chat:c,otherId:oid,other:o};
+  }).filter(x=>!q || (x.other.name||"").toLowerCase().includes(q))
+    .sort((a,b)=>(b.chat.lastTime||0)-(a.chat.lastTime||0));
+
+  if(!list.length){
+    b.innerHTML = `<div class="empty"><i class="fas fa-comments"></i><h3>No chats yet</h3><p>Tap the + button to start chatting</p></div>`;
+    return;
+  }
+  b.innerHTML = list.map(({cid,chat,otherId,other})=>{
+    const unread = unreadLocal[cid]||0;
+    const last = chat.lastMessage||"";
+    const av = other.isGroup
+      ? `<div class="av">${other.photoURL?`<img src="${other.photoURL}">`:'<i class="fas fa-users"></i>'}</div>`
+      : avH(other);
+    return `<div class="ci" onclick="openChat('${otherId||cid}',${other.isGroup?true:false})">
+      ${av}
+      <div class="ci-info">
+        <div class="ci-top">
+          <div class="ci-name">${other.isGroup?esc(other.name):nameH(other)}</div>
+          <div class="ci-time">${fmtT(chat.lastTime)}</div>
+        </div>
+        <div class="ci-bot">
+          <div class="ci-msg">${esc(last)}</div>
+          ${unread?`<div class="ci-un">${unread}</div>`:""}
+        </div>
+      </div></div>`;
+  }).join("");
+}
+
+function renderContacts(){
+  const b = $("homeBody"), q = ($("searchInp")?.value||"").toLowerCase();
+  const list = Object.entries(allUsers).map(([uid,u])=>({uid,u}))
+    .filter(x=>!q || (x.u.name||"").toLowerCase().includes(q))
+    .sort((a,b)=>(a.u.name||"").localeCompare(b.u.name||""));
+  if(!list.length){
+    b.innerHTML = `<div class="empty"><i class="fas fa-users"></i><h3>No contacts yet</h3><p>Others will appear here once they join</p></div>`;
+    return;
+  }
+  b.innerHTML = list.map(({uid,u})=>`
+    <div class="ci" onclick="openChat('${uid}',false)">
+      ${avH(u)}
+      <div class="ci-info">
+        <div class="ci-top"><div class="ci-name">${nameH(u)}</div></div>
+        <div class="ci-bot"><div class="ci-msg">${esc(u.about||"Hey there!")}</div></div>
+      </div>
+    </div>`).join("");
+}
+
+function renderStatus(){
+  const b = $("homeBody"), now = Date.now();
+  let h = `<div class="ci" onclick="newStatus()">
+    ${avH({...ME,online:false})}
+    <div class="ci-info">
+      <div class="ci-top"><div class="ci-name">My Status</div></div>
+      <div class="ci-bot"><div class="ci-msg">Tap to add status update</div></div>
+    </div></div>`;
+  const entries = Object.entries(STATUS).filter(([uid,s])=>uid!==ME.uid&&s&&typeof s==="object"&&Object.keys(s).length>0);
+  const recent = entries.map(([uid,s])=>{
+    const l = Object.values(s).filter(x=>now-(x.ts||0)<86400000).sort((a,b)=>(b.ts||0)-(a.ts||0))[0];
+    return {uid,u:allUsers[uid],latest:l};
+  }).filter(x=>x.latest&&x.u);
+  if(recent.length){
+    h += `<div style="padding:14px 16px 6px;font-size:12px;font-weight:700;color:var(--gr2);text-transform:uppercase;letter-spacing:.5px;">Recent updates</div>`;
+    recent.forEach(({uid,u,latest})=>{
+      h += `<div class="ci" onclick="viewStatus('${uid}')">
+        <div class="av" style="border:3px solid var(--gr2);">${u.photoURL?`<img src="${u.photoURL}">`:ini(u.name)}</div>
+        <div class="ci-info">
+          <div class="ci-top"><div class="ci-name">${nameH(u)}</div><div class="ci-time">${fmtT(latest.ts)}</div></div>
+          <div class="ci-bot"><div class="ci-msg">${esc(latest.text||"📷 Photo")}</div></div>
+        </div></div>`;
+    });
+  } else {
+    h += `<div class="empty" style="padding:30px 20px;"><i class="fas fa-circle-notch"></i><p>No status from contacts</p></div>`;
+  }
+  b.innerHTML = h;
+}
+
+/* ══════ SHEET ══════ */
+function openSheet(html){
+  $("sheetIn").innerHTML = html;
+  $("sheet").classList.add("on");
+}
+window.closeSheet = () => $("sheet").classList.remove("on");
+
+/* ══════ NEW CHAT PICKER ══════ */
+window.newChatPicker = function(){
+  const list = Object.entries(allUsers).map(([uid,u])=>({uid,u}));
+  if(!list.length){toast("No users yet");return;}
+  const html = `<h3>New Chat</h3>
+    <input class="inp flat" id="pkSearch" placeholder="Search users..." oninput="filterPick(this.value)" style="margin-bottom:12px;width:100%;">
+    <div id="pkList">
+      ${list.map(({uid,u})=>`
+        <div class="pk" data-nm="${esc((u.name||"").toLowerCase())}" onclick="openChat('${uid}',false);closeSheet()">
+          ${avH(u)}
+          <div class="info">
+            <b>${nameH(u)}</b>
+            <small>${esc(u.about||"Hey there!")}</small>
+          </div>
+        </div>`).join("")}
+    </div>`;
+  openSheet(html);
+};
+window.filterPick = v => {
+  const q = (v||"").toLowerCase();
+  document.querySelectorAll('#pkList .pk').forEach(r=>{
+    r.style.display = (r.dataset.nm||"").includes(q)?"flex":"none";
+  });
+};
+
+/* ══════ NEW GROUP ══════ */
+window.newGroup = function(){
+  gSel.clear();
+  const list = Object.entries(allUsers).map(([uid,u])=>({uid,u}));
+  const html = `<h3>New Group</h3>
+    <input class="inp flat" id="gName" placeholder="Group name" style="margin-bottom:10px;width:100%;">
+    <input class="inp flat" id="gSearch" placeholder="Search members..." oninput="filterGroup(this.value)" style="margin-bottom:12px;width:100%;">
+    <div id="gList" style="max-height:280px;overflow-y:auto;">
+      ${list.map(({uid,u})=>`
+        <div class="pk" data-nm="${esc((u.name||"").toLowerCase())}" data-uid="${uid}" onclick="toggleMem('${uid}',this)">
+          ${avH(u)}
+          <div class="info"><b>${nameH(u)}</b><small>${esc(u.about||"")}</small></div>
+          <div class="chk"><i class="fas fa-check"></i></div>
+        </div>`).join("")}
+    </div>
+    <button class="btn1" style="margin-top:16px;" onclick="createGroup()"><i class="fas fa-users"></i> Create Group</button>`;
+  openSheet(html);
+};
+window.filterGroup = v => {
+  const q = (v||"").toLowerCase();
+  document.querySelectorAll('#gList .pk').forEach(r=>{
+    r.style.display = (r.dataset.nm||"").includes(q)?"flex":"none";
+  });
+};
+window.toggleMem = function(uid,el){
+  if(gSel.has(uid)){gSel.delete(uid);el.classList.remove("sel");}
+  else{gSel.add(uid);el.classList.add("sel");}
+};
+window.createGroup = async function(){
+  const nm = ($("gName").value||"").trim();
+  if(!nm){toast("Enter group name");return;}
+  if(!gSel.size){toast("Select at least 1");return;}
+  const parts = {[ME.uid]:true};
+  gSel.forEach(u=>parts[u]=true);
+  const cid = "g_"+Date.now();
+  await set(ref(db,"chats/"+cid),{
+    type:"group",groupName:nm,groupPhoto:"",participants:parts,admins:{[ME.uid]:true},
+    createdBy:ME.uid,createdAt:Date.now(),lastMessage:"Group created",lastTime:Date.now()
+  });
+  closeSheet(); toast("Group created ✅");
+};
+
+/* ══════ OPEN CHAT ══════ */
+window.openChat = async function(uid,isGroup,asAdmin){
+  adminViewing = !!asAdmin;
+  curChatId = (isGroup||asAdmin) ? uid : [ME.uid,uid].sort().join("__");
+
+  const s = await get(ref(db,"chats/"+curChatId));
+  let c = s.val();
+  if(!c){
+    if(isGroup){toast("Group not found");return;}
+    if(adminViewing){toast("Chat not found");return;}
+    c = {participants:{[ME.uid]:true,[uid]:true}};
+    await set(ref(db,"chats/"+curChatId),c);
+  }
+  curChat = c;
+  adminSides = [];
+  if(adminViewing&&!isGroup){
+    adminSides = Object.keys(c.participants||{});
+    const ua=allUsers[adminSides[0]]||(adminSides[0]===ME.uid?ME:{name:"User"}), ub=allUsers[adminSides[1]]||(adminSides[1]===ME.uid?ME:{name:"User"});
+    curOther = {name:(ua.name||"?")+" ↔ "+(ub.name||"?"),photoURL:ua.photoURL,online:false};
+  } else curOther = isGroup ? {name:c.groupName||"Group",isGroup:true} : (allUsers[uid]||{name:"User"});
+  MSGS = {};
+  unreadLocal[curChatId]=0;cache.set("unread",unreadLocal);{const ct=cache.get("counted",{});ct[curChatId]=c.lastTime||Date.now();cache.set("counted",ct);}
+
+  $("chName").innerHTML = isGroup?esc(curOther.name):nameH(curOther);
+  $("chStat").textContent = (adminViewing&&!isGroup) ? "Read-only view" : isGroup
+    ? `${Object.keys(c.participants).length} members`
+    : (curOther.online?"online":`last seen ${fmtT(curOther.lastSeen)}`);
+  $("chAv").innerHTML = isGroup
+    ? (c.groupPhoto?`<img src="${c.groupPhoto}">`:'<i class="fas fa-users"></i>')
+    : (curOther.photoURL?`<img src="${curOther.photoURL}">`:ini(curOther.name));
+
+  $("adminBadge").style.display = adminViewing ? "block" : "none";
+  document.querySelector('.cr-input').style.display = adminViewing ? "none" : "flex";
+  document.querySelectorAll('.cr-head .acts button').forEach(b => {
+    if(!adminViewing) return;
+    b.style.pointerEvents = "none";
+    b.style.opacity = "0.4";
+  });
+  // Re-enable when not admin viewing
+  if(!adminViewing){
+    document.querySelectorAll('.cr-head .acts button').forEach(b => {
+      b.style.pointerEvents = "";
+      b.style.opacity = "";
+    });
+  }
+
+  show("chatRoom");
+  $("msgs").innerHTML = '<div class="sp"></div>';
+  if(!adminViewing) setTimeout(()=>$("msgIn").focus(),100);
+  loadMessages();
+  if(!adminViewing) watchTyping();
+  clearReply();
+};
+
+window.closeChat = function(){
+  if(msgUn){off(ref(db,"messages/"+curChatId));msgUn=null;}
+  if(typUn){off(ref(db,"typing/"+curChatId));typUn=null;}
+  if(!adminViewing) remove(ref(db,"typing/"+curChatId+"/"+ME.uid)).catch(()=>{});
+  curChatId=null;curChat=null;curOther=null;adminViewing=false;adminSides=[];
+  // Restore input & actions
+  document.querySelector('.cr-input').style.display = "flex";
+  document.querySelectorAll('.cr-head .acts button').forEach(b => {
+    b.style.pointerEvents = "";
+    b.style.opacity = "";
+  });
+  $("adminBadge").style.display = "none";
+  show("home"); renderHome();
+};
+
+function loadMessages(){
+  const c = $("msgs");
+  c.innerHTML = '<div class="sp"></div>';
+  let first = true;
+  msgUn = onValue(ref(db,"messages/"+curChatId), s => {
+    const d = s.val()||{}, now = Date.now();
+    const list = Object.entries(d).map(([k,v])=>({id:k,...v}))
+      .filter(m => {
+        if(m.disappearAt && m.disappearAt<now)return false;
+        if(!adminViewing && m.deletedFor && m.deletedFor[ME.uid])return false;
+        return true;
+      })
+      .sort((a,b)=>(a.ts||0)-(b.ts||0));
+
+    // mark read (skip if admin viewing)
+    if(!adminViewing){
+      list.forEach(m=>{
+        if(m.sender!==ME.uid && m.status!=="read"){
+          update(ref(db,`messages/${curChatId}/${m.id}`),{status:"read"}).catch(()=>{});
+        }
+      });
+    }
+
+    if(!list.length){
+      c.innerHTML = `<div class="empty" style="padding:40px 20px;"><i class="fas fa-comment"></i><p>No messages yet.</p></div>`;
+      return;
+    }
+    list.forEach(m=>{MSGS[m.id]=m;});
+    const keep = c.scrollTop, nearBottom = (c.scrollHeight-c.scrollTop-c.clientHeight)<180;
+    c.innerHTML = list.map(m => renderMsg(m)).join("");
+    requestAnimationFrame(()=>{c.scrollTop = (first||nearBottom||list[list.length-1].sender===ME.uid) ? c.scrollHeight : keep; first=false;});
+  });
+}
+
+function renderMsg(m){
+  const isMe = adminViewing ? (!!adminSides[1] && m.sender===adminSides[1]) : m.sender === ME.uid;
+  let tick = "";
+  if(isMe && !adminViewing){
+    if(m.status==="read")tick='<i class="fas fa-check-double rd"></i>';
+    else if(m.status==="delivered")tick='<i class="fas fa-check-double"></i>';
+    else tick='<i class="fas fa-check"></i>';
+  }
+  let body = "";
+  if(m.type==="image"){
+    // Admin sees view-once images too
+    if(m.viewOnce && !isMe && !adminViewing){
+      body = `<div class="vo-hint" onclick="viewOnce('${m.id}')"><i class="fas fa-eye"></i> Tap to view · disappears</div>`;
+    } else if(m.viewOnce && isMe && !adminViewing){
+      body = `<div style="color:rgba(255,255,255,.5);font-size:12px;font-style:italic;">📷 View-once sent</div>`;
+    } else {
+      body = `<img class="mimg" src="${m.mediaUrl}" onclick="openViewer('${m.mediaUrl}')">` + (m.text?`<div>${esc(m.text)}</div>`:"");
+    }
+  } else if(m.type==="voice"){
+    body = `<div class="vo"><button onclick="playVoice('${m.mediaUrl}',this)"><i class="fas fa-play"></i></button><div style="flex:1;height:6px;background:rgba(255,255,255,.15);border-radius:10px;"></div><div class="dur">${fmtD(m.duration)}</div></div>`;
+  } else if(m.type==="deleted"){
+    body = `<i style="color:rgba(255,255,255,.5);font-style:italic;">🚫 This message was deleted</i>`;
+  } else {
+    body = esc(m.text||"");
+  }
+  let rep = m.replyTo ? `<div class="rep">↩ ${esc((m.replyText||"").slice(0,60))}</div>` : "";
+  let sname = "";
+  if((curChat?.type==="group" && !isMe) || adminViewing){
+    const u = allUsers[m.sender];
+    sname = `<div class="sndr">${esc(u?.name||"User")}</div>`;
+  }
+  let rx = "";
+  if(m.reactions && Object.keys(m.reactions).length){
+    const cc = {};
+    Object.values(m.reactions).forEach(e=>cc[e]=(cc[e]||0)+1);
+    rx = `<div class="rxs">${Object.entries(cc).map(([e,c])=>`<span>${e}${c>1?" "+c:""}</span>`).join("")}</div>`;
+  }
+  const ctx = adminViewing ? "" : `oncontextmenu="msgMenu(event,'${m.id}');return false" ondblclick="quickReact('${m.id}','❤️')"`;
+  return `<div class="msg ${isMe?'out':'in'}${rx?' hasrx':''}" data-mid="${m.id}" ${ctx}>
+    ${sname}${rep}
+    <div class="tx">${body}</div>
+    <div class="meta">${fmtT(m.ts)} ${tick}</div>
+    ${rx}
+  </div>`;
+}
+
+/* ══════ SEND ══════ */
+window.grow = function(el){el.style.height="auto";el.style.height=Math.min(el.scrollHeight,100)+"px";};
+window.msgKey = function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMsg();}};
+window.updateSendBtn = function(){
+  const h = ($("msgIn").value||"").trim().length>0;
+  $("sendBtn").style.display = h?"flex":"none";
+  $("micBtn").style.display = h?"none":"flex";
+};
+
+function blockMsg(){
+  if(!curChat||curChat.type==="group")return "";
+  const oid=Object.keys(curChat.participants).find(k=>k!==ME.uid);
+  if(ME.blocked&&ME.blocked[oid])return "You blocked this user. Unblock from chat menu.";
+  if(curOther&&curOther.blocked&&curOther.blocked[ME.uid])return "You can't message this user.";
+  return "";
+}
+window.sendMsg = async function(){
+  if(adminViewing){toast("Admin view — cannot send");return;}
+  const inp = $("msgIn");
+  const text = (inp.value||"").trim();
+  if(!text||!curChatId)return;
+  const bm=blockMsg(); if(bm){toast(bm);return;}
+  inp.value=""; inp.style.height="auto"; updateSendBtn();
+  const payload = {
+    sender:ME.uid, text, type:"text", ts:Date.now(), status:"sent",
+    replyTo: replyTo?replyTo.id:null, replyText: replyTo?replyTo.text:null
+  };
+  if(curChat?.disappear) payload.disappearAt = Date.now()+(curChat.disappear*1000);
+  const mRef = push(ref(db,"messages/"+curChatId));
+  try{
+    await set(mRef,payload);
+    await update(ref(db,"chats/"+curChatId),{
+      lastMessage:text,lastTime:payload.ts,lastSender:ME.uid,
+      participants:{...curChat.participants,[ME.uid]:true}
+    });
+    setTimeout(()=>update(mRef,{status:"delivered"}).catch(()=>{}),700);
+    remove(ref(db,"typing/"+curChatId+"/"+ME.uid)).catch(()=>{});
+    clearReply();
+  }catch(e){toast("Send failed");}
+};
+
+window.sendImg = async function(inp){
+  if(adminViewing){inp.value="";return;}
+  const f = inp.files[0]; if(!f)return;
+  const bm=blockMsg(); if(bm){toast(bm);inp.value="";return;}
+  if(f.size>5*1024*1024){toast("Max 5MB");inp.value="";return;}
+  toast("Uploading...");
+  try{
+    const u = await upImg(f);
+    const mRef = push(ref(db,"messages/"+curChatId));
+    await set(mRef,{sender:ME.uid,type:"image",mediaUrl:u,text:"",ts:Date.now(),status:"sent"});
+    await update(ref(db,"chats/"+curChatId),{lastMessage:"📷 Photo",lastTime:Date.now(),lastSender:ME.uid,participants:{...curChat.participants,[ME.uid]:true}});
+    toast("Sent ✅");
+  }catch(e){toast("Failed");}
+  inp.value="";
+};
+
+/* ══════ VOICE ══════ */
+window.recVoice = async function(){
+  if(adminViewing){toast("Admin view");return;}
+  if(recorder && recorder.state==="recording"){recorder.stop();return;}
+  if(!navigator.mediaDevices?.getUserMedia){toast("Mic not supported");return;}
+  {const bm=blockMsg(); if(bm){toast(bm);return;}}
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    recChunks = [];
+    recorder = new MediaRecorder(stream);
+    recorder.ondataavailable = e => recChunks.push(e.data);
+    recorder.onstop = async () => {
+      stream.getTracks().forEach(t=>t.stop());
+      $("micBtn").classList.remove("rc"); $("micBtn").innerHTML='<i class="fas fa-microphone"></i>'; updateSendBtn();
+      const blob = new Blob(recChunks,{type:recorder.mimeType||"audio/webm"});
+      const dur = Math.round((Date.now()-recordT)/1000);
+      toast("Sending voice...");
+      try{
+        const u = await upAudio(blob);
+        const mRef = push(ref(db,"messages/"+curChatId));
+        await set(mRef,{sender:ME.uid,type:"voice",mediaUrl:u,duration:dur,ts:Date.now(),status:"sent"});
+        await update(ref(db,"chats/"+curChatId),{lastMessage:"🎤 Voice message",lastTime:Date.now(),lastSender:ME.uid,participants:{...curChat.participants,[ME.uid]:true}});
+        toast("Sent ✅");
+      }catch(e){toast("Failed: "+e.message);}
+    };
+    recordT = Date.now();
+    recorder.start();
+    $("micBtn").classList.add("rc");
+    $("micBtn").innerHTML = '<i class="fas fa-stop"></i>';
+    toast("Recording... tap stop to send");
+  }catch(e){toast("Mic denied");}
+};
+
+window.playVoice = function(url,btn){
+  if(audios[url]){audios[url].pause();delete audios[url];btn.innerHTML='<i class="fas fa-play"></i>';return;}
+  const a = new Audio(url); audios[url]=a; a.play();
+  btn.innerHTML='<i class="fas fa-pause"></i>';
+  a.onended = ()=>{delete audios[url];btn.innerHTML='<i class="fas fa-play"></i>';};
+};
+
+/* ══════ TYPING ══════ */
+window.sig = function(){
+  if(!curChatId||adminViewing)return;
+  clearTimeout(typingT);
+  const r = ref(db,"typing/"+curChatId+"/"+ME.uid);
+  set(r,{at:Date.now()});
+  typingT = setTimeout(()=>remove(r).catch(()=>{}),3000);
+};
+function watchTyping(){
+  typUn = onValue(ref(db,"typing/"+curChatId),s=>{
+    const d = s.val()||{};
+    const any = Object.entries(d).some(([k,v])=>k!==ME.uid && v && Date.now()-(v.at||0)<5000);
+    if(any){$("chStat").textContent="typing...";$("chStat").classList.add("ty");}
+    else{
+      if(curChat?.type==="group")$("chStat").textContent = `${Object.keys(curChat.participants).length} members`;
+      else $("chStat").textContent = curOther?.online?"online":`last seen ${fmtT(curOther?.lastSeen)}`;
+      $("chStat").classList.remove("ty");
+    }
+  });
+}
+
+/* ══════ MESSAGE MENU ══════ */
+window.msgMenu = function(ev,mid){
+  ev.preventDefault();
+  if(MSGS[mid]?.type==="deleted")return;
+  const rx = ["❤️","😂","😮","😢","👍","🔥"];
+  const html = `<div style="display:flex;justify-content:space-around;padding:14px 6px;background:var(--bg3);border-radius:16px;margin-bottom:14px;font-size:26px;">
+      ${rx.map(e=>`<span onclick="reactTo('${mid}','${e}')" style="cursor:pointer;">${e}</span>`).join("")}
+    </div>
+    <div class="sheet-item" onclick="startReply('${mid}');closeSheet()"><i class="fas fa-reply"></i><div class="lbl"><b>Reply</b></div></div>
+    <div class="sheet-item" onclick="forwardMsg('${mid}');closeSheet()"><i class="fas fa-share"></i><div class="lbl"><b>Forward</b></div></div>
+    <div class="sheet-item" onclick="copyMsg('${mid}');closeSheet()"><i class="fas fa-copy"></i><div class="lbl"><b>Copy</b></div></div>
+    <div class="sheet-item" onclick="delMe('${mid}');closeSheet()"><i class="fas fa-trash"></i><div class="lbl"><b>Delete for me</b></div></div>
+    ${MSGS[mid]?.sender===ME.uid?`<div class="sheet-item" onclick="delAll('${mid}');closeSheet()"><i class="fas fa-trash" style="color:var(--rd);"></i><div class="lbl"><b style="color:var(--rd);">Delete for everyone</b></div></div>`:""}`;
+  openSheet(html);
+};
+window.quickReact = async function(mid,e){
+  const r = ref(db,`messages/${curChatId}/${mid}/reactions/${ME.uid}`);
+  const s = await get(r);
+  if(s.exists() && s.val()===e)remove(r); else set(r,e);
+};
+window.reactTo = async function(mid,e){await quickReact(mid,e);closeSheet();};
+window.startReply = async function(mid){
+  const s = await get(ref(db,`messages/${curChatId}/${mid}`));
+  const m = s.val(); if(!m)return;
+  replyTo = {id:mid,text:m.text||(m.type==="image"?"📷 Photo":m.type==="voice"?"🎤 Voice":"")};
+  $("replyBar").innerHTML = `<div class="rep-bar">↩ <span style="flex:1;">${esc(replyTo.text.slice(0,60))}</span><i class="fas fa-times x" onclick="clearReply()"></i></div>`;
+  $("msgIn").focus();
+};
+window.clearReply = function(){replyTo=null;$("replyBar").innerHTML="";};
+window.copyMsg = async function(mid){
+  const s = await get(ref(db,`messages/${curChatId}/${mid}`));
+  const m = s.val(); if(!m?.text)return;
+  try{await navigator.clipboard.writeText(m.text);toast("Copied");}catch(e){}
+};
+window.delMe = async function(mid){set(ref(db,`messages/${curChatId}/${mid}/deletedFor/${ME.uid}`),true);toast("Deleted for you");};
+window.delAll = async function(mid){
+  await update(ref(db,`messages/${curChatId}/${mid}`),{text:"🚫 This message was deleted",type:"deleted",deleted:true});
+  toast("Deleted for everyone");
+};
+window.forwardMsg = async function(mid){
+  const list = Object.entries(allUsers).map(([uid,u])=>({uid,u}));
+  const html = `<h3>Forward to...</h3>
+    ${list.map(({uid,u})=>`
+      <div class="pk" onclick="doForward('${mid}','${uid}')">
+        ${avH(u)}
+        <div class="info"><b>${nameH(u)}</b></div>
+      </div>`).join("")}`;
+  openSheet(html);
+};
+window.doForward = async function(mid,toUid){
+  const s = await get(ref(db,`messages/${curChatId}/${mid}`));
+  const m = s.val(); if(!m)return;
+  const tcid = [ME.uid,toUid].sort().join("__");
+  await update(ref(db,"chats/"+tcid),{participants:{[ME.uid]:true,[toUid]:true},lastMessage:"↩ Forwarded",lastTime:Date.now(),lastSender:ME.uid});
+  const r2 = push(ref(db,"messages/"+tcid));
+  await set(r2,{sender:ME.uid,text:m.text||"",type:m.type||"text",mediaUrl:m.mediaUrl||"",duration:m.duration||0,ts:Date.now(),status:"sent"});
+  toast("Forwarded ✅"); closeSheet();
+};
+
+/* ══════ VIEWER ══════ */
+window.openViewer = function(url){
+  $("viewerContent").innerHTML = `<img src="${url}"><button class="vc" onclick="closeViewer()">Close</button>`;
+  $("viewer").classList.add("on");
+};
+window.closeViewer = function(){$("viewer").classList.remove("on");};
+window.viewOnce = async function(mid){
+  const s = await get(ref(db,`messages/${curChatId}/${mid}`));
+  const m = s.val(); if(!m)return;
+  $("viewerContent").innerHTML = `<div class="vb"><i class="fas fa-eye-slash"></i> This will disappear after closing</div><img src="${m.mediaUrl}"><button class="vc" onclick="closeViewerAndDelete('${mid}')">Close & Delete</button>`;
+  $("viewer").classList.add("on");
+};
+window.closeViewerAndDelete = async function(mid){
+  remove(ref(db,`messages/${curChatId}/${mid}`)).catch(()=>{});
+  closeViewer();
+};
+
+/* ══════ CHAT MENU ══════ */
+window.chatMenu = function(){
+  if(adminViewing){
+    const html = `<h3>Admin View</h3>
+      <div class="sheet-item" onclick="closeSheet();exportChat()"><i class="fas fa-download"></i><div class="lbl"><b>Export chat</b><small>Save as JSON</small></div></div>
+      <div class="sheet-item" onclick="closeSheet();deleteChatAdmin()"><i class="fas fa-trash" style="color:var(--rd);"></i><div class="lbl"><b style="color:var(--rd);">Delete entire chat</b><small>Removes for all</small></div></div>`;
+    openSheet(html); return;
+  }
+  const boid = curChat?.type==="group"?null:Object.keys(curChat.participants).find(k=>k!==ME.uid);
+  const blk = !!(boid && ME.blocked && ME.blocked[boid]);
+  const html = `<h3>${esc(curOther?.name||"")}</h3>
+    <div class="sheet-item" onclick="closeSheet();toggleDisappear()"><i class="fas fa-clock"></i><div class="lbl"><b>Disappearing messages</b><small>${curChat?.disappear?curChat.disappear+"s":"Off"}</small></div></div>
+    <div class="sheet-item" onclick="closeSheet();blockUser()"><i class="fas fa-ban" style="color:var(--rd);"></i><div class="lbl"><b style="color:var(--rd);">${blk?"Unblock user":"Block user"}</b></div></div>
+    <div class="sheet-item" onclick="closeSheet();reportUser()"><i class="fas fa-flag" style="color:var(--am);"></i><div class="lbl"><b style="color:var(--am);">Report</b></div></div>
+    <div class="sheet-item" onclick="closeSheet();clearChat()"><i class="fas fa-broom" style="color:var(--rd);"></i><div class="lbl"><b style="color:var(--rd);">Clear chat</b></div></div>`;
+  openSheet(html);
+};
+window.toggleDisappear = async function(){
+  const {value} = await SW.fire({
+    title:"Disappearing messages", input:"select",
+    inputOptions:{0:"Off",30:"30 seconds",300:"5 minutes",3600:"1 hour",86400:"24 hours"},
+    inputValue:curChat?.disappear||0, showCancelButton:true, confirmButtonColor:"#00a884"
+  });
+  if(value===undefined)return;
+  const v = parseInt(value)||0;
+  await update(ref(db,"chats/"+curChatId),{disappear:v});
+  curChat.disappear=v; toast(v?"Enabled ✅":"Disabled");
+};
+window.blockUser = async function(){
+  if(curChat?.type==="group"){toast("Can't block a group");return;}
+  const oid = Object.keys(curChat.participants).find(k=>k!==ME.uid);
+  const was = !!(ME.blocked&&ME.blocked[oid]);
+  if(was) await remove(ref(db,"users/"+ME.uid+"/blocked/"+oid));
+  else await update(ref(db,"users/"+ME.uid+"/blocked"),{[oid]:true});
+  toast(was?"Unblocked":"Blocked");
+};
+window.reportUser = async function(){
+  const oid = curChat?.type==="group"?null:Object.keys(curChat.participants).find(k=>k!==ME.uid);
+  const {value:reason} = await SW.fire({title:"Report reason",input:"text",showCancelButton:true,confirmButtonColor:"#f15c6d"});
+  if(!reason)return;
+  const r = push(ref(db,"reports"));
+  await set(r,{by:ME.uid,against:oid||curChatId,chatId:curChatId,reason,ts:Date.now(),status:"pending"});
+  toast("Reported ✅");
+};
+window.clearChat = async function(){
+  const r = await SW.fire({icon:"warning",title:"Clear chat?",text:"Messages will be removed for everyone.",showCancelButton:true,confirmButtonColor:"#f15c6d",confirmButtonText:"Clear"});
+  if(!r.isConfirmed)return;
+  const s = await get(ref(db,"messages/"+curChatId));
+  const msgs = s.val()||{};
+  for(const id of Object.keys(msgs)) remove(ref(db,`messages/${curChatId}/${id}`));
+  update(ref(db,"chats/"+curChatId),{lastMessage:""}).catch(()=>{});
+  toast("Cleared");
+};
+window.exportChat = async function(){
+  const s = await get(ref(db,"messages/"+curChatId));
+  const data = {chat:curChat,messages:s.val()||{}};
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `chat_${curChatId}.json`;
+  a.click();
+  toast("Exported ✅");
+};
+window.deleteChatAdmin = async function(){
+  const r = await SW.fire({icon:"warning",title:"Delete entire chat?",html:"Messages ඔක්කොම හැමෝටම delete වේවි.",showCancelButton:true,confirmButtonColor:"#f15c6d",confirmButtonText:"Delete"});
+  if(!r.isConfirmed)return;
+  await remove(ref(db,"messages/"+curChatId));
+  await remove(ref(db,"chats/"+curChatId));
+  toast("Deleted ✅"); closeChat();
+};
+
+/* ══════ CALLS ══════ */
+window.startCall = function(type){
+  if(adminViewing){toast("Admin view");return;}
+  const oid = Object.keys(curChat.participants).find(k=>k!==ME.uid);
+  const room = "zc"+[ME.uid,oid].sort().join("").replace(/[^a-z0-9]/gi,"").slice(0,20);
+  const url = `https://meet.jit.si/${room}#userInfo.displayName="${encodeURIComponent(ME.name||'User')}"&config.disableDeepLinking=true&config.prejoinPageEnabled=false&config.startWithAudioMuted=false&config.startWithVideoMuted=${type==='voice'}`;
+  $("callName").textContent = curOther?.name||"User";
+  $("callType").textContent = type==="voice"?"Voice Call":"Video Call";
+  $("callFrame").src = url;
+  $("callScr").classList.add("on");
+};
+window.endCall = function(){$("callFrame").src="";$("callScr").classList.remove("on");};
+
+/* ══════ STATUS ══════ */
+window.newStatus = async function(){
+  const inp = document.createElement("input");
+  inp.type="file"; inp.accept="image/*";
+  inp.onchange = async () => {
+    const f = inp.files[0]; if(!f)return;
+    toast("Uploading...");
+    try{
+      const u = await upImg(f);
+      const {value:text} = await SW.fire({title:"Caption (optional)",input:"text",showCancelButton:true,confirmButtonColor:"#00a884"});
+      const sid = "s"+Date.now();
+      await set(ref(db,`status/${ME.uid}/${sid}`),{type:"image",mediaUrl:u,text:text||"",ts:Date.now()});
+      toast("Status posted ✅");
+      renderStatus();
+    }catch(e){toast("Failed: "+e.message);}
+  };
+  inp.click();
+};
+window.viewStatus = async function(uid){
+  const s = await get(ref(db,"status/"+uid));
+  const list = Object.values(s.val()||{}).filter(x=>Date.now()-(x.ts||0)<86400000).sort((a,b)=>(a.ts||0)-(b.ts||0));
+  if(!list.length)return;
+  let i = 0;
+  const u = allUsers[uid]||{name:"User"};
+  const view = () => {
+    const st = list[i];
+    $("viewerContent").innerHTML = `
+      <div class="vb">${esc(u.name||"")} · ${fmtT(st.ts)}</div>
+      ${st.type==="image"?`<img src="${st.mediaUrl}">`:""}
+      ${st.text?`<div style="padding:10px;font-size:14px;color:#fff;">${esc(st.text)}</div>`:""}
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        ${i>0?`<button class="vc" onclick="__prev()"><i class="fas fa-chevron-left"></i></button>`:""}
+        <button class="vc" onclick="__next()">${i<list.length-1?"Next":"Close"} <i class="fas fa-chevron-right"></i></button>
+      </div>`;
+    $("viewer").classList.add("on");
+  };
+  window.__next = ()=>{ if(i>=list.length-1){closeViewer();return;} i++; view(); };
+  window.__prev = ()=>{ if(i>0){i--;view();} };
+  view();
+};
+
+/* ══════ ME / PROFILE ══════ */
+window.openMe = function(){
+  if(!ME)return;
+  const isA = meIsAdmin();
+  const info = admInfo(ME);
+  const hid = info.hidden===true;
+  const phD = hid
+    ? `<span style="color:var(--tx3);font-style:italic;"><i class="fas fa-eye-slash"></i> Hidden (admin)</span>`
+    : esc(ME.phone||"");
+  const bd = isA?'<span class="bdg"><i class="fas fa-check"></i></span>':"";
+  const pv = ME.photoURL?`<img src="${ME.photoURL}">`:ini(ME.name);
+  const adm = isA ? `
+    <div class="adp">
+      <h4><i class="fas fa-shield-alt"></i> ADMIN ACCESS</h4>
+      <div class="rw"><span>Status</span><b>Super Admin</b></div>
+      <div class="rw"><span>Phone</span><b>${hid?"Hidden 🔒":"Visible"}</b></div>
+      <div class="rw"><span>Total Users</span><b>${Object.keys(allUsers).length}</b></div>
+      <div class="rw"><span>My Chats</span><b>${Object.keys(myChats).length}</b></div>
+    </div>
+    <button class="btn1" style="background:linear-gradient(135deg,#f0b232,#f59e0b);color:#fff;margin:8px 0;" onclick="openAdmin()"><i class="fas fa-shield-alt"></i> Open Admin Panel</button>` : "";
+  const html = `
+    <div class="prh">
+      <div class="av">${pv}</div>
+      <div class="nm">${esc(ME.name||"User")} ${bd}</div>
+      <div class="ph">${phD}</div>
+      <div class="ab">${esc(ME.about||"Hey there!")}</div>
+    </div>
+    ${adm}
+    <div class="sheet-item" onclick="editMe()"><i class="fas fa-user-edit"></i><div class="lbl"><b>Edit Profile</b><small>Name, about, photo</small></div></div>
+    <div class="sheet-item" onclick="closeSheet();openSettings()"><i class="fas fa-cog"></i><div class="lbl"><b>Settings</b></div></div>
+    <div class="sheet-item" onclick="closeSheet();doLogout()"><i class="fas fa-sign-out-alt" style="color:var(--rd);"></i><div class="lbl"><b style="color:var(--rd);">Logout</b></div></div>`;
+  openSheet(html);
+};
+
+window.editMe = function(){
+  pendingAv = ME.photoURL||"";
+  const html = `<h3>Edit Profile</h3>
+    <div style="text-align:center;margin-bottom:16px;">
+      <div class="av" style="width:92px;height:92px;font-size:32px;margin:0 auto;cursor:pointer;" onclick="document.getElementById('eAv').click()">
+        ${ME.photoURL?`<img id="eAvImg" src="${ME.photoURL}">`:ini(ME.name)}
+      </div>
+      <input type="file" id="eAv" accept="image/*" hidden onchange="pickEditAv(this)">
+      <div style="color:var(--gr);font-size:12px;margin-top:8px;font-weight:600;"><i class="fas fa-camera"></i> Change</div>
+    </div>
+    <div class="fld"><label>Name</label><input class="inp" id="eName" value="${esc(ME.name||"")}" maxlength="30"></div>
+    <div class="fld"><label>About</label><input class="inp" id="eAbout" value="${esc(ME.about||"")}" maxlength="100"></div>
+    <button class="btn1" onclick="saveEditMe()"><i class="fas fa-save"></i> Save</button>`;
+  openSheet(html);
+};
+window.pickEditAv = async function(inp){
+  const f = inp.files[0]; if(!f)return;
+  toast("Uploading...");
+  try{
+    const u = await upImg(f);
+    pendingAv = u;
+    const i = $("eAvImg");
+    if(i)i.src = u;
+    else $("sheetIn").querySelector('.av').innerHTML = `<img src="${u}">`;
+    toast("Done");
+  }catch(e){toast("Failed");}
+};
+window.saveEditMe = async function(){
+  const n = ($("eName").value||"").trim();
+  const ab = ($("eAbout").value||"").trim();
+  if(!n){toast("Name required");return;}
+  await update(ref(db,"users/"+ME.uid),{name:n,about:ab,photoURL:pendingAv||ME.photoURL||""});
+  ME.name=n; ME.about=ab; ME.photoURL=pendingAv||ME.photoURL;
+  cache.set("me",ME); closeSheet(); toast("Saved ✅");
+};
+
+/* ══════ SETTINGS ══════ */
+window.openSettings = function(){
+  const html = `<h3>Settings</h3>
+    <div class="sheet-item"><i class="fas fa-moon"></i><div class="lbl"><b>Dark Mode</b><small>Always on</small></div></div>
+    <div class="sheet-item" onclick="toast('Coming soon')"><i class="fas fa-bell"></i><div class="lbl"><b>Notifications</b></div></div>
+    <div class="sheet-item" onclick="toast('Coming soon')"><i class="fas fa-lock"></i><div class="lbl"><b>Privacy</b></div></div>
+    <div class="sheet-item" onclick="clearCache()"><i class="fas fa-trash" style="color:var(--rd);"></i><div class="lbl"><b style="color:var(--rd);">Clear Cache</b></div></div>
+    <div style="text-align:center;padding:22px 0 4px;font-size:11.5px;color:var(--tx3);">ZERO CHAT v1.0.0 · by Omidu Dewditha</div>`;
+  openSheet(html);
+};
+window.clearCache = function(){
+  const me = cache.get("me"); cache.clear(); if(me)cache.set("me",me);
+  toast("Cache cleared ✅");
+};
+
+/* ══════════════════════════════════════
+   ADMIN PANEL — FULL CONTROL
+   ══════════════════════════════════════ */
+window.openAdmin = function(){
+  if(!meIsAdmin()){toast("Not admin");return;}
+  renderAdminPanel("stats");
+};
+
+function renderAdminPanel(t){
+  const allU = Object.entries(allUsers).map(([uid,u])=>({uid,...u}));
+  const stats = {
+    users: allU.length,
+    chats: Object.keys(myChats).length,
+    online: allU.filter(u=>u.online).length
+  };
+  let content = "";
+  if(t==="stats"){
+    content = `<div class="adp">
+      <h4><i class="fas fa-chart-line"></i> OVERVIEW</h4>
+      <div class="rw"><span>Total Users</span><b>${stats.users}</b></div>
+      <div class="rw"><span>Online Now</span><b>${stats.online}</b></div>
+      <div class="rw"><span>My Chats</span><b>${stats.chats}</b></div>
+      <div class="rw"><span>Admin Phone</span><b>${admInfo(ME).hidden?"Hidden 🔒":"Visible"}</b></div>
+    </div>
+    <div class="sheet-item" onclick="adminViewAllChats()"><i class="fas fa-eye"></i><div class="lbl"><b>View All User Chats</b><small>Every conversation</small></div></div>
+    <div class="sheet-item" onclick="adminViewAllMedia()"><i class="fas fa-images"></i><div class="lbl"><b>View All Media</b><small>Photos, videos, view-once</small></div></div>
+    <div class="sheet-item" onclick="adminViewAllVoices()"><i class="fas fa-microphone"></i><div class="lbl"><b>View All Voice Messages</b></div></div>`;
+  }
+  if(t==="users"){
+    content = `<div style="max-height:60vh;overflow-y:auto;">${allU.map(u=>`
+      <div class="ad-row">
+        ${avH(u)}
+        <div class="inf">
+          <b>${esc(u.name||"User")} ${isAdmin(u)?'<span class="tag y">ADMIN</span>':''} ${u.banned?'<span class="tag r">BANNED</span>':''}</b>
+          <small>${esc(u.phone||"")}</small>
+        </div>
+        <button class="btn-mini ${u.banned?'btn-red on':'btn-red'}" onclick="toggleBan('${u.uid}')">${u.banned?"UNBAN":"BAN"}</button>
+      </div>`).join("")}</div>`;
+  }
+  if(t==="chats"){
+    // Fetch all chats (admin sees everything)
+    content = `<div id="adminChatsList"><div class="sp"></div></div>`;
+    setTimeout(loadAdminChats, 50);
+  }
+  if(t==="reports"){
+    content = `<div id="adminReportsList"><div class="sp"></div></div>`;
+    setTimeout(loadAdminReports, 50);
+  }
+  if(t==="flags"){
+    content = `<div class="sheet-item">
+        <i class="fas fa-tools"></i>
+        <div class="lbl"><b>Maintenance Mode</b><small>${CFG.maintenance?"ON":"OFF"}</small></div>
+        <div class="chk" style="${CFG.maintenance?'background:var(--gr);border-color:var(--gr);':''}" onclick="toggleFlag('maintenance')"><i class="fas fa-check"></i></div>
+      </div>
+      <div class="fld" style="margin-top:12px;">
+        <label>Maintenance message</label>
+        <input class="inp" id="mmMsg" value="${esc(CFG.maintenanceMsg||"We'll be back soon!")}">
+        <button class="btn1" style="margin-top:10px;" onclick="saveMM()"><i class="fas fa-save"></i> Save</button>
+      </div>`;
+  }
+  if(t==="broadcast"){
+    content = `<div class="fld">
+        <label>Broadcast message to all users</label>
+        <textarea class="inp" id="bcMsg" rows="4" placeholder="Message..." style="padding:12px 14px;resize:vertical;"></textarea>
+      </div>
+      <button class="btn1" onclick="sendBroadcast()"><i class="fas fa-bullhorn"></i> Send to all users</button>`;
+  }
+
+  const html = `<h3><i class="fas fa-shield-alt" style="color:#f0b232;"></i> Admin Panel</h3>
+    <div class="admin-tabs">
+      <button class="atab ${t==='stats'?'on':''}" onclick="renderAdminPanel('stats')">Stats</button>
+      <button class="atab ${t==='users'?'on':''}" onclick="renderAdminPanel('users')">Users</button>
+      <button class="atab ${t==='chats'?'on':''}" onclick="renderAdminPanel('chats')">All Chats</button>
+      <button class="atab ${t==='reports'?'on':''}" onclick="renderAdminPanel('reports')">Reports</button>
+      <button class="atab ${t==='flags'?'on':''}" onclick="renderAdminPanel('flags')">Flags</button>
+      <button class="atab ${t==='broadcast'?'on':''}" onclick="renderAdminPanel('broadcast')">Broadcast</button>
+    </div>
+    <div id="adContent">${content}</div>`;
+  openSheet(html);
+}
+window.renderAdminPanel = renderAdminPanel;
+
+/* Load all chats for admin */
+async function loadAdminChats(){
+  const el = $("adminChatsList");
+  if(!el)return;
+  try{
+    const s = await get(ref(db,"chats"));
+    const chats = s.val()||{};
+    const list = Object.entries(chats).map(([cid,c])=>({cid,chat:c}))
+      .sort((a,b)=>(b.chat.lastTime||0)-(a.chat.lastTime||0));
+    if(!list.length){
+      el.innerHTML = `<div class="empty" style="padding:30px;"><p>No chats yet</p></div>`;
+      return;
+    }
+    el.innerHTML = list.map(({cid,chat})=>{
+      let title = "", av = "";
+      if(chat.type==="group"){
+        title = chat.groupName||"Group";
+        av = `<div class="av"><i class="fas fa-users"></i></div>`;
+      } else {
+        const others = Object.keys(chat.participants).filter(k=>k!==ME.uid);
+        const firstUid = others[0];
+        // For admin, participants may not include ME
+        const allParts = Object.keys(chat.participants);
+        const u1 = allUsers[allParts[0]]||{name:"User"};
+        const u2 = allUsers[allParts[1]]||{name:"User"};
+        title = `${u1.name||"?"} ↔ ${u2.name||"?"}`;
+        av = avH(u1);
+      }
+      return `<div class="ad-row" onclick="closeSheet();openChat('${cid}',${chat.type==='group'},true)" style="cursor:pointer;">
+        ${av}
+        <div class="inf">
+          <b style="font-size:13px;">${esc(title)}</b>
+          <small style="font-family:inherit;">${esc(chat.lastMessage||"").slice(0,40)} · ${fmtT(chat.lastTime)}</small>
+        </div>
+        <i class="fas fa-chevron-right" style="color:var(--tx3);"></i>
+      </div>`;
+    }).join("");
+  }catch(e){
+    el.innerHTML = `<div style="padding:20px;color:var(--rd);">Error: ${esc(e.message)}</div>`;
+  }
+}
+
+window.adminViewAllChats = () => renderAdminPanel("chats");
+
+/* Admin view all media */
+window.adminViewAllMedia = async function(){
+  closeSheet();
+  const html = `<h3>All Media</h3><div id="allMediaList"><div class="sp"></div></div>`;
+  openSheet(html);
+  setTimeout(async()=>{
+    const el = $("allMediaList");
+    try{
+      const s = await get(ref(db,"messages"));
+      const all = s.val()||{};
+      const items = [];
+      Object.entries(all).forEach(([cid,msgs])=>{
+        Object.entries(msgs||{}).forEach(([mid,m])=>{
+          if(m.type==="image")items.push({cid,mid,m});
+        });
+      });
+      items.sort((a,b)=>(b.m.ts||0)-(a.m.ts||0));
+      if(!items.length){el.innerHTML = `<div class="empty" style="padding:30px;"><p>No media</p></div>`;return;}
+      el.innerHTML = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-height:65vh;overflow-y:auto;">
+        ${items.map(({cid,mid,m})=>`
+          <div style="position:relative;height:calc((100vw - 64px)/3);overflow:hidden;border-radius:8px;cursor:pointer;" onclick="openViewer('${m.mediaUrl}')">
+            <img src="${m.mediaUrl}" style="width:100%;height:100%;object-fit:cover;">
+            ${m.viewOnce?'<div style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);color:#fff;padding:2px 6px;border-radius:6px;font-size:9px;font-weight:700;">VIEW ONCE</div>':''}
+          </div>`).join("")}
+      </div>`;
+    }catch(e){el.innerHTML = `<div style="padding:20px;color:var(--rd);">Error</div>`;}
+  },50);
+};
+
+window.adminViewAllVoices = async function(){
+  closeSheet();
+  const html = `<h3>All Voice Messages</h3><div id="allVoiceList"><div class="sp"></div></div>`;
+  openSheet(html);
+  setTimeout(async()=>{
+    const el = $("allVoiceList");
+    try{
+      const s = await get(ref(db,"messages"));
+      const all = s.val()||{};
+      const items = [];
+      Object.entries(all).forEach(([cid,msgs])=>{
+        Object.entries(msgs||{}).forEach(([mid,m])=>{
+          if(m.type==="voice")items.push({cid,mid,m});
+        });
+      });
+      items.sort((a,b)=>(b.m.ts||0)-(a.m.ts||0));
+      if(!items.length){el.innerHTML = `<div class="empty" style="padding:30px;"><p>No voice messages</p></div>`;return;}
+      el.innerHTML = `<div style="max-height:65vh;overflow-y:auto;">
+        ${items.map(({m})=>`
+          <div style="padding:12px 8px;border-bottom:1px solid var(--bd);">
+            <div style="font-size:12px;color:var(--tx2);margin-bottom:6px;">${fmtT(m.ts)}</div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <button class="btn-mini btn-gr" onclick="adminPlayVoice('${m.mediaUrl}',this)"><i class="fas fa-play"></i> Play</button>
+              <span style="font-size:13px;">Duration: ${fmtD(m.duration)}</span>
+            </div>
+          </div>`).join("")}
+      </div>`;
+    }catch(e){el.innerHTML = `<div style="padding:20px;color:var(--rd);">Error</div>`;}
+  },50);
+};
+window.adminPlayVoice = function(url,btn){
+  if(audios[url]){audios[url].pause();delete audios[url];btn.innerHTML='<i class="fas fa-play"></i> Play';return;}
+  const a = new Audio(url); audios[url]=a; a.play();
+  btn.innerHTML='<i class="fas fa-pause"></i> Pause';
+  a.onended = ()=>{delete audios[url];btn.innerHTML='<i class="fas fa-play"></i> Play';};
+};
+
+/* Load reports */
+async function loadAdminReports(){
+  const el = $("adminReportsList");
+  if(!el)return;
+  try{
+    const s = await get(ref(db,"reports"));
+    const reps = s.val()||{};
+    const list = Object.entries(reps).map(([k,v])=>({id:k,...v})).sort((a,b)=>(b.ts||0)-(a.ts||0));
+    if(!list.length){
+      el.innerHTML = `<div class="empty" style="padding:30px;"><i class="fas fa-flag"></i><p>No reports</p></div>`;
+      return;
+    }
+    el.innerHTML = list.map(r=>`
+      <div style="padding:12px 4px;border-bottom:1px solid var(--bd);">
+        <div style="font-size:13px;">
+          <b>${esc(allUsers[r.by]?.name||r.by)}</b> → <b>${esc(allUsers[r.against]?.name||r.against||"?")}</b>
+        </div>
+        <div style="font-size:12.5px;color:var(--tx2);margin-top:4px;">${esc(r.reason||"")}</div>
+        <div style="font-size:11px;color:var(--tx3);margin-top:4px;">${fmtT(r.ts)} · <span class="tag ${r.status==='resolved'?'g':'y'}">${r.status}</span></div>
+        <div style="margin-top:8px;"><button class="btn-mini btn-gr" onclick="resolveRep('${r.id}')">Mark Resolved</button></div>
+      </div>`).join("");
+  }catch(e){el.innerHTML = `<div style="padding:20px;color:var(--rd);">Error</div>`;}
+}
+
+window.toggleFlag = async function(k){
+  const v = !CFG[k];
+  await update(ref(db,"config"),{[k]:v});
+  CFG[k]=v; toast(v?"Enabled":"Disabled");
+  renderAdminPanel("flags");
+};
+window.saveMM = async function(){
+  const m = ($("mmMsg").value||"").trim();
+  await update(ref(db,"config"),{maintenanceMsg:m});
+  CFG.maintenanceMsg = m; toast("Saved");
+};
+window.sendBroadcast = async function(){
+  const m = ($("bcMsg").value||"").trim();
+  if(!m){toast("Type a message");return;}
+  const ids = Object.keys(allUsers);
+  if(!ids.length){toast("No users");return;}
+  let done = 0;
+  for(const uid of ids){
+    const cid = [ME.uid,uid].sort().join("__");
+    const r = push(ref(db,"messages/"+cid));
+    await set(r,{sender:ME.uid,text:"📢 "+m,type:"text",ts:Date.now(),status:"sent"});
+    await update(ref(db,"chats/"+cid),{participants:{[ME.uid]:true,[uid]:true},lastMessage:"📢 "+m,lastTime:Date.now(),lastSender:ME.uid});
+    done++;
+  }
+  toast(`Broadcast sent to ${done} ✅`);
+  closeSheet();
+};
+window.toggleBan = async function(uid){
+  const u = allUsers[uid]; if(!u)return;
+  await update(ref(db,"users/"+uid),{banned:!u.banned});
+  toast(u.banned?"Unbanned":"Banned");
+  renderAdminPanel("users");
+};
+window.resolveRep = async function(id){
+  await update(ref(db,"reports/"+id),{status:"resolved"});
+  toast("Resolved");
+  loadAdminReports();
+};
+
+/* ══════ MENU ══════ */
+window.openMenu = function(){
+  const html = `<h3>Menu</h3>
+    <div class="sheet-item" onclick="closeSheet();newGroup()"><i class="fas fa-users"></i><div class="lbl"><b>New Group</b><small>Create group chat</small></div></div>
+    <div class="sheet-item" onclick="closeSheet();openMe()"><i class="fas fa-user-circle"></i><div class="lbl"><b>My Profile</b><small>Name, photo, about</small></div></div>
+    <div class="sheet-item" onclick="closeSheet();openSettings()"><i class="fas fa-cog"></i><div class="lbl"><b>Settings</b><small>Privacy & chats</small></div></div>
+    ${meIsAdmin()?`<div class="sheet-item" onclick="closeSheet();openAdmin()"><i class="fas fa-shield-alt" style="color:var(--am);"></i><div class="lbl"><b style="color:var(--am);">Admin Panel</b><small>Full control</small></div></div>`:""}
+    <div class="sheet-item" onclick="closeSheet();doLogout()"><i class="fas fa-sign-out-alt" style="color:var(--rd);"></i><div class="lbl"><b style="color:var(--rd);">Logout</b><small>Sign out</small></div></div>
+    <div style="text-align:center;padding:20px 0 4px;font-size:11.5px;color:var(--tx3);">ZERO CHAT v1.0.0<br>by Omidu Dewditha</div>`;
+  openSheet(html);
+};
+
+/* ══════ LOGOUT ══════ */
+window.doLogout = async function(){
+  const r = await SW.fire({icon:"question",title:"Logout?",showCancelButton:true,confirmButtonColor:"#f15c6d",confirmButtonText:"Logout"});
+  if(!r.isConfirmed)return;
+  try{await update(ref(db,"users/"+ME.uid),{online:false,lastSeen:Date.now()});}catch(e){}
+  try{await signOut(auth);}catch(e){}
+  stopListeners();
+  cache.clear();
+  ME=null; allUsers={}; myChats={}; unreadLocal={}; ADMINS={};
+  show("auth"); $("phoneInp").value="";
+  try{await signInAnonymously(auth);}catch(e){}
+};
+
+document.addEventListener("visibilitychange",()=>{if(!ME||!appEntered)return;if(document.hidden)update(ref(db,"users/"+ME.uid),{online:false,lastSeen:Date.now()}).catch(()=>{});else updatePresence();});
+/* long-press on message = menu (mobile) */
+(()=>{
+  const el=$("msgs"); let t=null;
+  el.addEventListener("touchstart",e=>{
+    if(adminViewing)return;
+    const m=e.target.closest(".msg[data-mid]"); if(!m)return;
+    clearTimeout(t);
+    t=setTimeout(()=>{if(navigator.vibrate)navigator.vibrate(15);msgMenu({preventDefault(){}},m.dataset.mid);},450);
+  },{passive:true});
+  ["touchmove","touchend","touchcancel"].forEach(ev=>el.addEventListener(ev,()=>clearTimeout(t),{passive:true}));
+})();
+/* Android back button + status bar */
+(()=>{
+  const P=window.Capacitor?.Plugins||{};
+  try{P.StatusBar?.setStyle?.({style:"DARK"});P.StatusBar?.setBackgroundColor?.({color:"#0b141a"});}catch(e){}
+  const A=P.App; if(!A?.addListener)return;
+  A.addListener("backButton",()=>{
+    const on=id=>$(id).classList.contains("on");
+    if(document.querySelector(".swal2-container")){try{Swal.close();}catch(e){}return;}
+    if(on("viewer"))return closeViewer();
+    if(on("sheet"))return closeSheet();
+    if(on("callScr"))return endCall();
+    if(on("chatRoom"))return closeChat();
+    if(on("home")&&on("srch"))return toggleSearch();
+    if(on("home")&&tab!=="chats")return setTab("chats");
+    (A.minimizeApp||A.exitApp).call(A);
+  });
+})();
+window.addEventListener("beforeunload",()=>{if(ME)update(ref(db,"users/"+ME.uid),{online:false,lastSeen:Date.now()});});
+</script>
+</body>
+</html>
