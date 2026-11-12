@@ -18,10 +18,11 @@ jobs:
         with:
           node-version: 20
 
-      - uses: actions/setup-java@v4
+      - name: Setup Java (Stable Version)
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 17
 
       - run: npm install
 
@@ -65,7 +66,7 @@ jobs:
 
       - name: Patch MainActivity (Handle Shared File)
         run: |
-          python3 << 'EOF'
+          python3 << 'PYEOF'
           import sys, os
           java_file = None
           for root, dirs, files in os.walk("android/app/src/main/java"):
@@ -73,6 +74,7 @@ jobs:
                   if file == "MainActivity.java":
                       java_file = os.path.join(root, file)
                       break
+          
           if not java_file:
               print("MainActivity.java not found")
               sys.exit(1)
@@ -128,7 +130,7 @@ jobs:
           with open(java_file, "w") as f:
               f.write(code)
           print("✅ MainActivity patched for File Handling")
-          EOF
+          PYEOF
 
       - run: npx capacitor-assets generate --android --iconBackgroundColor '#080b1a' --splashBackgroundColor '#080b1a' || true
       
